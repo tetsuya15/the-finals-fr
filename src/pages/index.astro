@@ -6,165 +6,593 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { NAV_SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const latestPosts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 4);
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const featured = allPosts[0];
+const latest = allPosts.slice(1, 5);
+
+const categoryCounts = NAV_SECTIONS.reduce<Record<string, number>>((acc, s) => {
+	acc[s.slug] = allPosts.filter((p) => p.data.category === s.label).length;
+	return acc;
+}, {});
 ---
 
 <!doctype html>
 <html lang="fr">
 	<head>
 		<BaseHead title={`${SITE_TITLE} — Ranked, Meta & Esport`} description={SITE_DESCRIPTION} />
-		<style>
-			.hero {
-				text-align: center;
-				padding: 3em 1em 2em 1em;
-			}
-			.hero-eyebrow {
-				display: inline-block;
-				text-transform: uppercase;
-				letter-spacing: 0.15em;
-				font-size: 0.8em;
-				font-weight: 700;
-				color: rgb(var(--accent));
-				margin-bottom: 0.75em;
-			}
-			.hero h1 {
-				font-size: 2.6em;
-				line-height: 1.1;
-				margin: 0 0 0.4em 0;
-			}
-			.hero p {
-				font-size: 1.1em;
-				color: rgb(var(--gray-dark));
-				max-width: 640px;
-				margin: 0 auto;
-			}
-			.sections {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-				gap: 1.25em;
-				margin: 2.5em 0;
-			}
-			.section-card {
-				display: block;
-				padding: 1.5em;
-				border-radius: 14px;
-				background: white;
-				box-shadow: 0 4px 12px rgba(var(--black), 6%);
-				text-decoration: none;
-				color: var(--black);
-				transition: transform 0.15s ease, box-shadow 0.15s ease;
-			}
-			.section-card:hover {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 18px rgba(var(--black), 10%);
-			}
-			.section-card h3 {
-				margin: 0 0 0.5em 0;
-				font-size: 1.3em;
-			}
-			.section-card p {
-				margin: 0;
-				color: rgb(var(--gray));
-				font-size: 0.95em;
-				line-height: 1.5;
-			}
-			.latest h2 {
-				margin-top: 2em;
-				font-size: 1.5em;
-			}
-			.latest ul {
-				list-style: none;
-				padding: 0;
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-				gap: 1.5em;
-				margin: 1em 0 0 0;
-			}
-			.latest li {
-				background: white;
-				border-radius: 12px;
-				padding: 1.25em;
-				box-shadow: 0 2px 8px rgba(var(--black), 4%);
-			}
-			.latest li a {
-				text-decoration: none;
-				color: var(--black);
-			}
-			.latest li h4 {
-				margin: 0.25em 0;
-				line-height: 1.25;
-			}
-			.latest li .date {
-				color: rgb(var(--gray));
-				font-size: 0.85em;
-			}
-			.latest li .cat {
-				display: inline-block;
-				font-size: 0.7em;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: rgb(var(--accent));
-				font-weight: 700;
-			}
-			.empty {
-				text-align: center;
-				color: rgb(var(--gray));
-				padding: 1em;
-				font-style: italic;
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
+			<!-- HERO -->
 			<section class="hero">
-				<span class="hero-eyebrow">Communauté francophone · The Finals</span>
-				<h1>Grimpe plus vite. Joue plus smart.</h1>
-				<p>
-					Le site français dédié au <strong>compétitif sur The Finals</strong> — guides ranked, analyses
-					meta chaque patch, couverture esport (The Grand Major, équipes pro), et un wiki complet des
-					classes, armes et cartes.
-				</p>
-			</section>
+				<div class="hero-bg" aria-hidden="true"></div>
+				<div class="tfr-container hero-inner">
+					<span class="tfr-eyebrow">The Finals <span class="tfr-pipe">|</span> Communauté FR</span>
 
-			<section>
-				<div class="sections">
-					{
-						NAV_SECTIONS.map((s) => (
-							<a class="section-card" href={`/${s.slug}/`}>
-								<h3>{s.label}</h3>
-								<p>{s.description}</p>
-							</a>
-						))
-					}
+					<h1 class="hero-title">
+						Grimpe <span class="accent">plus vite.</span><br />
+						Joue <span class="accent">plus smart.</span>
+					</h1>
+
+					<p class="hero-desc">
+						Le site français <strong>100% compétitif</strong> sur The Finals. Guides ranked par classe,
+						analyses meta à chaque patch, couverture esport du Grand Major, et un wiki complet.
+					</p>
+
+					<div class="hero-ctas">
+						<a class="tfr-btn" href="/ranked/">
+							Voir les guides Ranked
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+								<path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+							</svg>
+						</a>
+						<a class="tfr-btn -ghost" href="/blog/">Tous les articles</a>
+					</div>
+
+					<dl class="hero-stats">
+						<div>
+							<dt>Saison couverte</dt>
+							<dd>S10 · Fantasy League</dd>
+						</div>
+						<div>
+							<dt>Focus</dt>
+							<dd>Ranked · Meta · Esport</dd>
+						</div>
+						<div>
+							<dt>Langue</dt>
+							<dd>100% Français</dd>
+						</div>
+					</dl>
 				</div>
 			</section>
 
-			<section class="latest">
-				<h2>Derniers articles</h2>
-				{
-					latestPosts.length === 0 ? (
-						<p class="empty">Les premiers articles arrivent bientôt — on construit le site en ce moment.</p>
-					) : (
-						<ul>
-							{latestPosts.map((post) => (
-								<li>
-									<a href={`/blog/${post.id}/`}>
-										<span class="cat">{post.data.category ?? 'Article'}</span>
-										<h4>{post.data.title}</h4>
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
+			<!-- SECTIONS GRID -->
+			<section class="sections-wrap">
+				<div class="tfr-container">
+					<header class="section-head">
+						<span class="tfr-eyebrow">The Finals FR <span class="tfr-pipe">|</span> Catégories</span>
+						<h2 class="tfr-display section-h">Explore le site</h2>
+					</header>
+
+					<div class="sections-grid">
+						{NAV_SECTIONS.map((s) => (
+							<a class="sec-card" href={`/${s.slug}/`} data-cat={s.label}>
+								<div class="sec-card__top">
+									<span class="sec-card__num">0{NAV_SECTIONS.indexOf(s) + 1}</span>
+									<span class="sec-card__count">
+										{categoryCounts[s.slug]} article{categoryCounts[s.slug] > 1 ? 's' : ''}
+									</span>
+								</div>
+								<h3 class="sec-card__title">{s.label}</h3>
+								<p class="sec-card__desc">{s.description}</p>
+								<span class="sec-card__arrow" aria-hidden="true">→</span>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<!-- FEATURED + LATEST -->
+			<section class="latest-wrap">
+				<div class="tfr-container">
+					<header class="section-head -between">
+						<div>
+							<span class="tfr-eyebrow">The Finals FR <span class="tfr-pipe">|</span> Derniers articles</span>
+							<h2 class="tfr-display section-h">Le flux</h2>
+						</div>
+						<a class="tfr-arrow" href="/blog/">Tout voir</a>
+					</header>
+
+					{featured ? (
+						<div class="feed">
+							<a class="feat" href={`/blog/${featured.id}/`}>
+								<div class="feat-frame">
+									<span class="tfr-badge" data-cat={featured.data.category ?? 'Actus'}>
+										{featured.data.category ?? 'Article'}
+									</span>
+									<span class="feat-label">À la une</span>
+								</div>
+								<h3 class="feat-title">{featured.data.title}</h3>
+								<p class="feat-desc">{featured.data.description}</p>
+								<div class="feat-meta">
+									<FormattedDate date={featured.data.pubDate} />
+									{featured.data.author && <span>· par {featured.data.author}</span>}
+								</div>
+							</a>
+
+							<ul class="feed-list">
+								{latest.length === 0 ? (
+									<li class="feed-empty">
+										<p>
+											<strong>Les prochains articles arrivent dans les jours qui viennent.</strong>
+											<br />
+											Premier guide Ranked Medium, tier list S10, et couverture du Grand Major en
+											préparation.
 										</p>
-									</a>
-								</li>
-							))}
-						</ul>
-					)
-				}
+									</li>
+								) : (
+									latest.map((post) => (
+										<li>
+											<a class="feed-item" href={`/blog/${post.id}/`}>
+												<span class="tfr-badge" data-cat={post.data.category ?? 'Actus'}>
+													{post.data.category ?? 'Article'}
+												</span>
+												<h4>{post.data.title}</h4>
+												<span class="date"><FormattedDate date={post.data.pubDate} /></span>
+											</a>
+										</li>
+									))
+								)}
+							</ul>
+						</div>
+					) : (
+						<div class="feed-empty-full">
+							<p>
+								<strong>Les premiers articles arrivent dans les jours qui viennent.</strong>
+								<br />
+								Premier guide Ranked, tier list saison 10 et couverture du Grand Major en préparation.
+							</p>
+						</div>
+					)}
+				</div>
+			</section>
+
+			<!-- MANIFESTO STRIP -->
+			<section class="manifesto">
+				<div class="tfr-container manifesto-inner">
+					<span class="tfr-eyebrow -center">The Finals FR <span class="tfr-pipe">|</span> Manifesto</span>
+					<p class="manifesto-text">
+						On ne couvre <em>pas</em> dix jeux à la fois. On fait <em>un</em> jeu, à fond,
+						<em>en français</em>. Guides ranked qui t'aident vraiment à grimper, meta à jour à chaque
+						patch, couverture sérieuse du compétitif.
+					</p>
+					<a class="tfr-arrow" href="/a-propos/">En savoir plus sur le projet</a>
+				</div>
 			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		padding-bottom: 2rem;
+	}
+
+	/* ------------------------------------------------------- HERO */
+	.hero {
+		position: relative;
+		padding: 6rem 0 5rem;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hero-bg {
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(ellipse 60% 50% at 80% 20%, color-mix(in oklab, var(--color-accent) 8%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 20% 80%, rgba(34, 211, 238, 0.06), transparent 70%);
+		pointer-events: none;
+	}
+
+	.hero-inner {
+		position: relative;
+	}
+
+	.hero-title {
+		margin-top: 1.5rem;
+		font-size: clamp(2.5rem, 7vw, 5.5rem);
+		font-weight: 700;
+		letter-spacing: -0.025em;
+		line-height: 0.98;
+		text-transform: uppercase;
+	}
+
+	.hero-title .accent {
+		color: var(--color-accent);
+	}
+
+	.hero-desc {
+		margin-top: 1.5rem;
+		max-width: 60ch;
+		font-size: 1.1rem;
+		color: var(--color-text-muted);
+		line-height: 1.65;
+	}
+
+	.hero-desc strong {
+		color: var(--color-text);
+		font-weight: 600;
+	}
+
+	.hero-ctas {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 2rem;
+	}
+
+	.hero-stats {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin: 3rem 0 0;
+		padding: 1.5rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	@media (min-width: 640px) {
+		.hero-stats {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.hero-stats > div {
+		border-left: 2px solid var(--color-accent);
+		padding-left: 1rem;
+	}
+
+	.hero-stats dt {
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+		margin-bottom: 0.4rem;
+	}
+
+	.hero-stats dd {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 0.95rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: var(--color-text);
+	}
+
+	/* ------------------------------------------------------- SECTION HEAD */
+	.section-head {
+		margin-bottom: 2.5rem;
+	}
+
+	.section-head.-between {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1.5rem;
+	}
+
+	.section-h {
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		margin-top: 0.75rem;
+	}
+
+	/* ------------------------------------------------------- SECTIONS GRID */
+	.sections-wrap {
+		padding: 5rem 0;
+	}
+
+	.sections-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1px;
+		background: var(--color-border);
+		border: 1px solid var(--color-border);
+	}
+
+	@media (min-width: 640px) {
+		.sections-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.sections-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	.sec-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem 1.75rem;
+		background: var(--color-bg);
+		transition: background 0.2s ease;
+		overflow: hidden;
+	}
+
+	.sec-card::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 3px;
+		background: var(--color-accent);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.25s ease;
+	}
+
+	.sec-card[data-cat='Meta']::after { background: var(--color-cat-meta); }
+	.sec-card[data-cat='Esport']::after { background: var(--color-cat-esport); }
+	.sec-card[data-cat='Wiki']::after { background: var(--color-cat-wiki); }
+	.sec-card[data-cat='Actus']::after { background: var(--color-cat-actus); }
+	.sec-card[data-cat='Lore']::after { background: var(--color-cat-lore); }
+
+	.sec-card:hover {
+		background: var(--color-bg-elevated);
+	}
+
+	.sec-card:hover::after {
+		transform: scaleX(1);
+	}
+
+	.sec-card__top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 2rem;
+	}
+
+	.sec-card__num {
+		font-family: var(--font-display);
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		color: var(--color-text-dim);
+	}
+
+	.sec-card__count {
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+		padding: 0.25rem 0.55rem;
+		border: 1px solid var(--color-border);
+	}
+
+	.sec-card__title {
+		font-size: 2rem;
+		text-transform: uppercase;
+		letter-spacing: -0.01em;
+		margin-bottom: 0.6rem;
+		transition: color 0.2s ease;
+	}
+
+	.sec-card:hover .sec-card__title {
+		color: var(--color-accent);
+	}
+
+	.sec-card[data-cat='Meta']:hover .sec-card__title { color: var(--color-cat-meta); }
+	.sec-card[data-cat='Esport']:hover .sec-card__title { color: var(--color-cat-esport); }
+	.sec-card[data-cat='Wiki']:hover .sec-card__title { color: var(--color-cat-wiki); }
+	.sec-card[data-cat='Actus']:hover .sec-card__title { color: var(--color-cat-actus); }
+	.sec-card[data-cat='Lore']:hover .sec-card__title { color: var(--color-cat-lore); }
+
+	.sec-card__desc {
+		color: var(--color-text-muted);
+		font-size: 0.95rem;
+		line-height: 1.55;
+		flex-grow: 1;
+	}
+
+	.sec-card__arrow {
+		margin-top: 1.5rem;
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		color: var(--color-text-dim);
+		transition: transform 0.2s ease, color 0.2s ease;
+	}
+
+	.sec-card:hover .sec-card__arrow {
+		color: var(--color-accent);
+		transform: translateX(6px);
+	}
+
+	/* ------------------------------------------------------- LATEST */
+	.latest-wrap {
+		padding: 5rem 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.feed {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	@media (min-width: 900px) {
+		.feed {
+			grid-template-columns: 1.3fr 1fr;
+			gap: 3rem;
+		}
+	}
+
+	.feat {
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		background: var(--color-bg-card);
+		border: 1px solid var(--color-border);
+		transition: border-color 0.2s ease;
+	}
+
+	.feat:hover {
+		border-color: var(--color-accent);
+	}
+
+	.feat-frame {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.feat-label {
+		font-family: var(--font-display);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	.feat-title {
+		font-size: clamp(1.5rem, 3vw, 2.25rem);
+		text-transform: uppercase;
+		line-height: 1.1;
+		margin-bottom: 1rem;
+	}
+
+	.feat:hover .feat-title {
+		color: var(--color-accent);
+	}
+
+	.feat-desc {
+		color: var(--color-text-muted);
+		margin-bottom: 1.5rem;
+		line-height: 1.6;
+	}
+
+	.feat-meta {
+		font-family: var(--font-display);
+		font-size: 0.75rem;
+		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.feed-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.feed-list li {
+		border-top: 1px solid var(--color-border);
+	}
+
+	.feed-list li:last-child {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.feed-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		padding: 1.25rem 0;
+		transition: padding 0.2s ease;
+	}
+
+	.feed-item:hover {
+		padding-left: 0.75rem;
+	}
+
+	.feed-item:hover h4 {
+		color: var(--color-accent);
+	}
+
+	.feed-item h4 {
+		font-size: 1.1rem;
+		line-height: 1.3;
+		font-weight: 600;
+		text-transform: none;
+		letter-spacing: 0;
+	}
+
+	.feed-item .date {
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+	}
+
+	.feed-empty {
+		padding: 2rem 0;
+		color: var(--color-text-muted);
+		border-top: 1px dashed var(--color-border);
+		border-bottom: 1px dashed var(--color-border);
+	}
+
+	.feed-empty strong {
+		color: var(--color-text);
+	}
+
+	.feed-empty-full {
+		padding: 3rem;
+		border: 1px dashed var(--color-border);
+		text-align: center;
+		color: var(--color-text-muted);
+	}
+
+	.feed-empty-full strong {
+		color: var(--color-text);
+	}
+
+	/* ------------------------------------------------------- MANIFESTO */
+	.manifesto {
+		padding: 5rem 0;
+		border-top: 1px solid var(--color-border);
+		background:
+			radial-gradient(ellipse 50% 80% at 50% 50%, color-mix(in oklab, var(--color-accent) 4%, transparent), transparent);
+	}
+
+	.manifesto-inner {
+		text-align: center;
+		max-width: 58rem;
+	}
+
+	.manifesto-text {
+		margin: 1.75rem 0 2rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+		font-weight: 600;
+		line-height: 1.3;
+		letter-spacing: -0.01em;
+		color: var(--color-text);
+	}
+
+	.manifesto-text em {
+		color: var(--color-accent);
+		font-style: normal;
+	}
+</style>

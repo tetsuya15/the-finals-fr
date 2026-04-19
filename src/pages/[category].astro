@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
@@ -13,8 +12,8 @@ export async function getStaticPaths() {
 
 const { category } = Astro.params;
 const section = NAV_SECTIONS.find((s) => s.slug === category)!;
-
 const label = section.label;
+
 const posts = (await getCollection('blog'))
 	.filter((p) => p.data.category === label)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -27,112 +26,206 @@ const posts = (await getCollection('blog'))
 			title={`${section.label} — ${SITE_TITLE}`}
 			description={section.description}
 		/>
-		<style>
-			main {
-				width: 960px;
-				max-width: calc(100% - 2em);
-			}
-			header.page {
-				padding: 2em 0 1em 0;
-				text-align: center;
-			}
-			header.page h1 {
-				margin: 0;
-				font-size: 2.4em;
-			}
-			header.page p {
-				max-width: 560px;
-				margin: 0.5em auto 0;
-				color: rgb(var(--gray-dark));
-			}
-			.empty {
-				margin: 3em 0;
-				padding: 2em;
-				border-radius: 12px;
-				background: white;
-				box-shadow: 0 2px 8px rgba(var(--black), 4%);
-				text-align: center;
-				color: rgb(var(--gray));
-			}
-			.empty strong {
-				color: var(--black);
-			}
-			ul.posts {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 1.5rem;
-				list-style: none;
-				padding: 0;
-				margin: 1.5em 0;
-			}
-			ul.posts li {
-				width: calc(50% - 0.75rem);
-				background: white;
-				border-radius: 12px;
-				box-shadow: 0 2px 8px rgba(var(--black), 4%);
-				padding: 1em;
-			}
-			ul.posts a {
-				text-decoration: none;
-				color: var(--black);
-			}
-			ul.posts img {
-				border-radius: 8px;
-				margin-bottom: 0.5em;
-				width: 100%;
-			}
-			ul.posts h4 {
-				margin: 0.25em 0;
-				line-height: 1.2;
-			}
-			ul.posts .date {
-				color: rgb(var(--gray));
-				font-size: 0.85em;
-				margin: 0;
-			}
-			@media (max-width: 720px) {
-				ul.posts li {
-					width: 100%;
-				}
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<header class="page">
-				<h1>{section.label}</h1>
-				<p>{section.description}</p>
-			</header>
+			<section class="cat-hero">
+				<div class="tfr-container">
+					<span class="tfr-eyebrow">
+						{SITE_TITLE} <span class="tfr-pipe">|</span> Catégorie
+					</span>
+					<h1 class="cat-title" data-cat={label}>{label}</h1>
+					<p class="cat-desc">{section.description}</p>
+					<p class="cat-count">
+						{posts.length === 0
+							? 'Aucun article pour l\'instant'
+							: `${posts.length} article${posts.length > 1 ? 's' : ''} publié${posts.length > 1 ? 's' : ''}`}
+					</p>
+				</div>
+			</section>
 
-			{
-				posts.length === 0 ? (
-					<div class="empty">
-						<p>
-							<strong>Cette section arrive bientôt.</strong>
-							<br />
-							Les premiers contenus "{section.label}" sont en préparation. Reviens d'ici quelques jours.
-						</p>
-					</div>
-				) : (
-					<ul class="posts">
-						{posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={640} height={320} src={post.data.heroImage} alt="" />
-									)}
-									<h4>{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))}
-					</ul>
-				)
-			}
+			<section class="cat-list">
+				<div class="tfr-container">
+					{posts.length === 0 ? (
+						<div class="empty">
+							<span class="tfr-eyebrow">Bientôt <span class="tfr-pipe">|</span> En production</span>
+							<h2 class="tfr-display empty-title">Cette section<br />arrive bientôt.</h2>
+							<p class="empty-text">
+								Les premiers contenus <strong>{label}</strong> sont en préparation. Reviens d'ici
+								quelques jours — on publie en continu.
+							</p>
+							<a class="tfr-btn -ghost" href="/">← Retour à l'accueil</a>
+						</div>
+					) : (
+						<ul class="posts">
+							{posts.map((post) => (
+								<li>
+									<a class="post-row" href={`/blog/${post.id}/`}>
+										<span class="post-date">
+											<FormattedDate date={post.data.pubDate} />
+										</span>
+										<div class="post-body">
+											<span class="tfr-badge" data-cat={post.data.category ?? label}>
+												{post.data.category ?? label}
+											</span>
+											<h3>{post.data.title}</h3>
+											<p>{post.data.description}</p>
+										</div>
+										<span class="post-arrow" aria-hidden="true">→</span>
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		padding-bottom: 2rem;
+	}
+
+	.cat-hero {
+		padding: 5rem 0 3rem;
+		border-bottom: 1px solid var(--color-border);
+		background:
+			radial-gradient(ellipse 40% 60% at 0% 0%, color-mix(in oklab, var(--color-accent) 6%, transparent), transparent 60%);
+	}
+
+	.cat-title {
+		font-size: clamp(3rem, 10vw, 7rem);
+		text-transform: uppercase;
+		letter-spacing: -0.04em;
+		line-height: 0.9;
+		margin-top: 1.25rem;
+	}
+
+	.cat-title[data-cat='Ranked'] { color: var(--color-cat-ranked); }
+	.cat-title[data-cat='Meta']   { color: var(--color-cat-meta); }
+	.cat-title[data-cat='Esport'] { color: var(--color-cat-esport); }
+	.cat-title[data-cat='Wiki']   { color: var(--color-cat-wiki); }
+	.cat-title[data-cat='Actus']  { color: var(--color-cat-actus); }
+	.cat-title[data-cat='Lore']   { color: var(--color-cat-lore); }
+
+	.cat-desc {
+		margin-top: 1.5rem;
+		max-width: 60ch;
+		font-size: 1.1rem;
+		color: var(--color-text-muted);
+		line-height: 1.65;
+	}
+
+	.cat-count {
+		margin-top: 1.5rem;
+		font-family: var(--font-display);
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+	}
+
+	.cat-list {
+		padding: 4rem 0;
+	}
+
+	.empty {
+		max-width: 42rem;
+		padding: 3rem 0;
+	}
+
+	.empty-title {
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		margin: 1.25rem 0 1.5rem;
+	}
+
+	.empty-text {
+		color: var(--color-text-muted);
+		font-size: 1.05rem;
+		line-height: 1.65;
+		margin-bottom: 2rem;
+	}
+
+	.empty-text strong {
+		color: var(--color-text);
+	}
+
+	.posts {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.posts li {
+		border-top: 1px solid var(--color-border);
+	}
+
+	.posts li:last-child {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.post-row {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 1rem;
+		padding: 2rem 0;
+		transition: padding 0.2s ease;
+	}
+
+	@media (min-width: 768px) {
+		.post-row {
+			grid-template-columns: 160px 1fr auto;
+			gap: 2.5rem;
+			align-items: start;
+		}
+	}
+
+	.post-row:hover {
+		padding-left: 1rem;
+	}
+
+	.post-date {
+		font-family: var(--font-display);
+		font-size: 0.8rem;
+		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+	}
+
+	.post-body h3 {
+		font-size: clamp(1.3rem, 2vw, 1.75rem);
+		text-transform: uppercase;
+		line-height: 1.15;
+		margin: 0.75rem 0 0.5rem;
+		transition: color 0.2s ease;
+	}
+
+	.post-row:hover .post-body h3 {
+		color: var(--color-accent);
+	}
+
+	.post-body p {
+		color: var(--color-text-muted);
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+
+	.post-arrow {
+		font-family: var(--font-display);
+		font-size: 1.4rem;
+		color: var(--color-text-dim);
+		transition: color 0.2s ease, transform 0.2s ease;
+		align-self: center;
+	}
+
+	.post-row:hover .post-arrow {
+		color: var(--color-accent);
+		transform: translateX(6px);
+	}
+</style>

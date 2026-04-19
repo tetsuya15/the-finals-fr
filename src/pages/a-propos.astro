@@ -12,66 +12,236 @@ import { SITE_TITLE } from '../consts';
 			title={`À propos — ${SITE_TITLE}`}
 			description={`À propos de ${SITE_TITLE}, le site francophone dédié au compétitif sur The Finals.`}
 		/>
-		<style>
-			main {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: 2em auto;
-				padding: 0 1em;
-			}
-			h1 {
-				margin-bottom: 0.5em;
-			}
-			.intro {
-				font-size: 1.1em;
-				color: rgb(var(--gray-dark));
-			}
-			h2 {
-				margin-top: 1.5em;
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>À propos</h1>
-			<p class="intro">
-				<strong>{SITE_TITLE}</strong> est le site communautaire francophone dédié au
-				<em>compétitif</em> sur The Finals : ranked, meta, esport, et tout ce qu'il faut pour grimper et
-				comprendre le jeu en profondeur.
-			</p>
+			<section class="about-hero">
+				<div class="tfr-container">
+					<span class="tfr-eyebrow">{SITE_TITLE} <span class="tfr-pipe">|</span> À propos</span>
+					<h1 class="about-title">
+						Un seul jeu.<br />
+						Un seul angle. <span class="accent">À fond.</span>
+					</h1>
+					<p class="about-lead">
+						<strong>{SITE_TITLE}</strong> est le site communautaire francophone dédié au
+						<em>compétitif</em> sur The Finals : ranked, meta, esport, et tout ce qu'il faut
+						pour grimper et comprendre le jeu en profondeur.
+					</p>
+				</div>
+			</section>
 
-			<h2>Pourquoi ce site</h2>
-			<p>
-				Parce que The Finals a une scène compétitive qui explose (Grand Major, équipes pro, circuit mondial)
-				et que personne ne la couvre sérieusement <strong>en français</strong>. Les sites FR existants traitent
-				le jeu en passant, au milieu de 50 autres titres. Ici on ne fait qu'une chose, mais on la fait à fond.
-			</p>
+			<section class="about-block">
+				<div class="tfr-container">
+					<div class="block-grid">
+						<div>
+							<span class="tfr-eyebrow">01 <span class="tfr-pipe">|</span> Pourquoi</span>
+							<h2 class="h">Parce que personne ne le fait, <span class="accent">en français.</span></h2>
+						</div>
+						<p>
+							The Finals a une scène compétitive qui explose — <strong>Grand Major</strong>,
+							équipes pro, circuit mondial — et pourtant, en français, personne ne la couvre
+							sérieusement. Les sites FR existants traitent le jeu à la volée, au milieu de
+							cinquante autres titres. Ici, on fait <strong>une chose</strong>, à fond.
+						</p>
+					</div>
+				</div>
+			</section>
 
-			<h2>Ce qu'on publie</h2>
-			<ul>
-				<li><strong>Guides Ranked</strong> — comment grimper, par classe et par mode.</li>
-				<li><strong>Meta hebdo</strong> — tier lists armes, builds OP, changements à chaque patch.</li>
-				<li><strong>Esport</strong> — suivi du Grand Major, équipes pro, résultats et analyses de matchs.</li>
-				<li><strong>Wiki</strong> — fiches classes, armes, spécialisations, gadgets, cartes.</li>
-				<li><strong>Actus</strong> — patch notes décryptés, saisons, events communautaires.</li>
-				<li><strong>Lore</strong> — l'univers du show, les candidats, l'ADN dystopique du jeu.</li>
-			</ul>
+			<section class="about-block -alt">
+				<div class="tfr-container">
+					<div class="block-grid">
+						<div>
+							<span class="tfr-eyebrow">02 <span class="tfr-pipe">|</span> Ce qu'on publie</span>
+							<h2 class="h">Six verticales, <span class="accent">zéro dilution.</span></h2>
+						</div>
+						<ul class="feat-list">
+							<li><span class="tfr-badge" data-cat="Ranked">Ranked</span> Guides pour grimper — par classe, par mode, par saison.</li>
+							<li><span class="tfr-badge" data-cat="Meta">Meta</span> Tier lists armes, builds OP, lecture des patchs.</li>
+							<li><span class="tfr-badge" data-cat="Esport">Esport</span> Grand Major, équipes pro, analyses de matchs.</li>
+							<li><span class="tfr-badge" data-cat="Wiki">Wiki</span> Fiches classes, armes, spécialisations, gadgets, cartes.</li>
+							<li><span class="tfr-badge" data-cat="Actus">Actus</span> Patch notes décryptés, saisons, events communautaires.</li>
+							<li><span class="tfr-badge" data-cat="Lore">Lore</span> L'univers du show, les candidats, la dystopie Embark.</li>
+						</ul>
+					</div>
+				</div>
+			</section>
 
-			<h2>L'aventure derrière</h2>
-			<p>
-				{SITE_TITLE} est construit en public dans le cadre d'une reconversion vers l'IA. Les articles sont
-				produits via un workflow IA (draft automatique + recherche web + validation humaine avant
-				publication). Rien ne part en ligne sans relecture humaine. Le code du site est
-				<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">public sur GitHub</a>.
-			</p>
+			<section class="about-block">
+				<div class="tfr-container">
+					<div class="block-grid">
+						<div>
+							<span class="tfr-eyebrow">03 <span class="tfr-pipe">|</span> Comment</span>
+							<h2 class="h">Construit en public, <span class="accent">workflow IA.</span></h2>
+						</div>
+						<p>
+							Ce site est construit dans le cadre d'une reconversion vers l'IA. Les articles
+							sont produits via un <strong>workflow IA</strong> (draft automatique + recherche web
+							+ mise en forme), puis <strong>validés à la main</strong> avant publication.
+							Rien ne part en ligne sans relecture humaine.
+						</p>
+						<p>
+							Le code du site est <a href="https://github.com/tetsuya15" target="_blank" rel="noopener">open-source sur GitHub</a>.
+							Les articles sont sous licence CC BY-NC-SA 4.0.
+						</p>
+					</div>
+				</div>
+			</section>
 
-			<h2>Contact</h2>
-			<p>
-				Tu veux contribuer, signaler une erreur, ou parler du projet ? Ouvre une issue sur GitHub ou écris
-				via les réseaux (liens à venir).
-			</p>
+			<section class="about-cta">
+				<div class="tfr-container cta-inner">
+					<span class="tfr-eyebrow -center">{SITE_TITLE} <span class="tfr-pipe">|</span> Premier objectif</span>
+					<p class="cta-text">
+						Boucler les fondations dans les semaines qui viennent — premier guide Medium ranked,
+						tier list d'armes à jour, fiches classes, et couverture de la prochaine étape du Grand Major.
+					</p>
+					<a class="tfr-btn" href="/blog/">Lire les articles</a>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		padding-bottom: 2rem;
+	}
+
+	.accent {
+		color: var(--color-accent);
+	}
+
+	.about-hero {
+		padding: 5rem 0 3rem;
+		border-bottom: 1px solid var(--color-border);
+		background:
+			radial-gradient(ellipse 60% 50% at 100% 0%, color-mix(in oklab, var(--color-accent) 6%, transparent), transparent 60%);
+	}
+
+	.about-title {
+		font-size: clamp(2.5rem, 7vw, 5.5rem);
+		text-transform: uppercase;
+		letter-spacing: -0.03em;
+		line-height: 0.98;
+		margin-top: 1.25rem;
+	}
+
+	.about-lead {
+		margin-top: 1.5rem;
+		max-width: 60ch;
+		font-size: 1.15rem;
+		color: var(--color-text-muted);
+		line-height: 1.65;
+	}
+
+	.about-lead strong {
+		color: var(--color-text);
+	}
+
+	.about-lead em {
+		color: var(--color-accent);
+		font-style: normal;
+	}
+
+	.about-block {
+		padding: 4rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.about-block.-alt {
+		background: var(--color-bg-elevated);
+	}
+
+	.block-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	@media (min-width: 900px) {
+		.block-grid {
+			grid-template-columns: 1fr 1.4fr;
+			gap: 4rem;
+			align-items: start;
+		}
+	}
+
+	.h {
+		margin-top: 1rem;
+		font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+		text-transform: uppercase;
+		letter-spacing: -0.02em;
+		line-height: 1.1;
+	}
+
+	.about-block p {
+		color: #d4d4d8;
+		font-size: 1.05rem;
+		line-height: 1.75;
+	}
+
+	.about-block p + p {
+		margin-top: 1em;
+	}
+
+	.about-block p strong {
+		color: var(--color-text);
+	}
+
+	.about-block p a {
+		color: var(--color-accent);
+		border-bottom: 1px solid color-mix(in oklab, var(--color-accent) 40%, transparent);
+	}
+
+	.about-block p a:hover {
+		color: var(--color-accent-hot);
+		border-bottom-color: var(--color-accent-hot);
+	}
+
+	.feat-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.feat-list li {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.9rem;
+		padding: 1rem 1.25rem;
+		background: var(--color-bg-card);
+		border: 1px solid var(--color-border);
+		color: #d4d4d8;
+		font-size: 0.98rem;
+		line-height: 1.5;
+	}
+
+	.about-block.-alt .feat-list li {
+		background: var(--color-bg);
+	}
+
+	.about-cta {
+		padding: 5rem 0;
+		background:
+			radial-gradient(ellipse 60% 80% at 50% 50%, color-mix(in oklab, var(--color-accent) 5%, transparent), transparent 70%);
+	}
+
+	.cta-inner {
+		max-width: 50rem;
+		text-align: center;
+	}
+
+	.cta-text {
+		margin: 1.5rem 0 2.25rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+		font-weight: 600;
+		line-height: 1.35;
+		color: var(--color-text);
+	}
+</style>

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -16,124 +15,171 @@ const posts = (await getCollection('blog')).sort(
 <html lang="fr">
 	<head>
 		<BaseHead title={`Tous les articles — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			h1 {
-				margin: 0.5em 0 0.25em 0;
-			}
-			.subtitle {
-				color: rgb(var(--gray));
-				margin-bottom: 2em;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1.15;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			.cat {
-				display: inline-block;
-				font-size: 0.7em;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: rgb(var(--accent));
-				font-weight: 700;
-				margin-bottom: 0.25em;
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Tous les articles</h1>
-			<p class="subtitle">Guides, meta, analyses esport, patchs — le flux complet de {SITE_TITLE}.</p>
-			<section>
-				{
-					posts.length === 0 ? (
-						<p style="color: rgb(var(--gray)); font-style: italic;">
-							Les premiers articles arrivent bientôt — on construit le site en ce moment.
-						</p>
+			<section class="blog-hero">
+				<div class="tfr-container">
+					<span class="tfr-eyebrow">{SITE_TITLE} <span class="tfr-pipe">|</span> Archive</span>
+					<h1 class="blog-title">Tous les articles</h1>
+					<p class="blog-desc">
+						Guides ranked, analyses meta, couverture esport, patchs — le flux complet.
+					</p>
+				</div>
+			</section>
+
+			<section class="blog-list">
+				<div class="tfr-container">
+					{posts.length === 0 ? (
+						<div class="empty">
+							<p>
+								<strong>Les premiers articles arrivent dans les jours qui viennent.</strong><br />
+								On construit le site en public — reviens vite.
+							</p>
+						</div>
 					) : (
-						<ul>
+						<ul class="posts">
 							{posts.map((post) => (
 								<li>
-									<a href={`/blog/${post.id}/`}>
-										{post.data.heroImage && (
-											<Image width={720} height={360} src={post.data.heroImage} alt="" />
-										)}
-										{post.data.category && <span class="cat">{post.data.category}</span>}
-										<h4 class="title">{post.data.title}</h4>
-										<p class="date">
+									<a class="post-row" href={`/blog/${post.id}/`}>
+										<span class="post-date">
 											<FormattedDate date={post.data.pubDate} />
-										</p>
+										</span>
+										<div class="post-body">
+											{post.data.category && (
+												<span class="tfr-badge" data-cat={post.data.category}>
+													{post.data.category}
+												</span>
+											)}
+											<h3>{post.data.title}</h3>
+											<p>{post.data.description}</p>
+										</div>
+										<span class="post-arrow" aria-hidden="true">→</span>
 									</a>
 								</li>
 							))}
 						</ul>
-					)
-				}
+					)}
+				</div>
 			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		padding-bottom: 2rem;
+	}
+
+	.blog-hero {
+		padding: 5rem 0 3rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.blog-title {
+		font-size: clamp(3rem, 9vw, 6rem);
+		text-transform: uppercase;
+		letter-spacing: -0.03em;
+		line-height: 0.95;
+		margin-top: 1.25rem;
+	}
+
+	.blog-desc {
+		margin-top: 1.25rem;
+		max-width: 60ch;
+		color: var(--color-text-muted);
+		font-size: 1.1rem;
+		line-height: 1.65;
+	}
+
+	.blog-list {
+		padding: 4rem 0;
+	}
+
+	.empty {
+		padding: 3rem;
+		border: 1px dashed var(--color-border);
+		text-align: center;
+		color: var(--color-text-muted);
+	}
+
+	.empty strong {
+		color: var(--color-text);
+	}
+
+	.posts {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.posts li {
+		border-top: 1px solid var(--color-border);
+	}
+
+	.posts li:last-child {
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.post-row {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 1rem;
+		padding: 2rem 0;
+		transition: padding 0.2s ease;
+	}
+
+	@media (min-width: 768px) {
+		.post-row {
+			grid-template-columns: 160px 1fr auto;
+			gap: 2.5rem;
+			align-items: start;
+		}
+	}
+
+	.post-row:hover {
+		padding-left: 1rem;
+	}
+
+	.post-date {
+		font-family: var(--font-display);
+		font-size: 0.8rem;
+		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--color-text-dim);
+	}
+
+	.post-body h3 {
+		font-size: clamp(1.3rem, 2vw, 1.75rem);
+		text-transform: uppercase;
+		line-height: 1.15;
+		margin: 0.75rem 0 0.5rem;
+		transition: color 0.2s ease;
+	}
+
+	.post-row:hover .post-body h3 {
+		color: var(--color-accent);
+	}
+
+	.post-body p {
+		color: var(--color-text-muted);
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+
+	.post-arrow {
+		font-family: var(--font-display);
+		font-size: 1.4rem;
+		color: var(--color-text-dim);
+		transition: color 0.2s ease, transform 0.2s ease;
+		align-self: center;
+	}
+
+	.post-row:hover .post-arrow {
+		color: var(--color-accent);
+		transform: translateX(6px);
+	}
+</style>

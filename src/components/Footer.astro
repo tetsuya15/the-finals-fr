@@ -1,51 +1,192 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { NAV_SECTIONS, SITE_TITLE } from '../consts';
+
 const today = new Date();
 ---
 
-<footer>
-	<p class="brand">{SITE_TITLE}</p>
-	<p class="meta">
-		Site communautaire indépendant — non affilié à Embark Studios ni à Nexon.<br />
-		The Finals, ses logos et assets appartiennent à leurs propriétaires respectifs.
-	</p>
-	<p class="copy">
-		&copy; {today.getFullYear()} {SITE_TITLE} — tous les articles sous licence
-		<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.
-	</p>
-	<p class="github">
-		<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">Code source & contributions sur GitHub →</a>
-	</p>
+<footer class="tfr-footer">
+	<div class="tfr-container">
+		<div class="top">
+			<div class="brand-col">
+				<div class="brand">
+					<span class="mark" aria-hidden="true">TF</span>
+					<span class="name">The Finals<span class="fr">FR</span></span>
+				</div>
+				<p class="pitch">
+					Le site communautaire francophone dédié au compétitif sur The Finals —
+					ranked, meta, esport, wiki.
+				</p>
+				<p class="disclaim">
+					Site indépendant — non affilié à Embark Studios ni à Nexon.<br />
+					<span>The Finals, ses logos et assets appartiennent à leurs propriétaires respectifs.</span>
+				</p>
+			</div>
+
+			<div class="links-col">
+				<p class="col-title">Explorer</p>
+				<ul>
+					{NAV_SECTIONS.map((s) => (
+						<li><a href={`/${s.slug}/`}>{s.label}</a></li>
+					))}
+				</ul>
+			</div>
+
+			<div class="links-col">
+				<p class="col-title">Le site</p>
+				<ul>
+					<li><a href="/">Accueil</a></li>
+					<li><a href="/blog/">Tous les articles</a></li>
+					<li><a href="/a-propos/">À propos</a></li>
+					<li><a href="/rss.xml">Flux RSS</a></li>
+					<li>
+						<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">
+							GitHub
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="bottom">
+			<p>&copy; {today.getFullYear()} {SITE_TITLE}</p>
+			<p>
+				Articles sous licence
+				<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener">
+					CC BY-NC-SA 4.0
+				</a>
+				— code source sous licence MIT.
+			</p>
+			<p class="build">Construit en public · Astro · Vercel</p>
+		</div>
+	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
-		font-size: 0.9em;
+	.tfr-footer {
+		margin-top: 6rem;
+		padding: 4rem 0 2.5rem;
+		border-top: 1px solid var(--color-border);
+		background: linear-gradient(180deg, transparent, rgba(255, 206, 27, 0.02));
 	}
+
+	.top {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 3rem;
+		padding-bottom: 3rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	@media (min-width: 768px) {
+		.top {
+			grid-template-columns: 1.5fr 1fr 1fr;
+			gap: 2.5rem;
+		}
+	}
+
 	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.7rem;
+		margin-bottom: 1rem;
+	}
+
+	.mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		background: var(--color-accent);
+		color: #0a0a0f;
+		font-family: var(--font-display);
 		font-weight: 700;
-		color: var(--black);
-		font-size: 1.1em;
-		margin: 0 0 0.5em 0;
+		font-size: 0.85rem;
+		letter-spacing: -0.03em;
 	}
-	.meta {
-		font-size: 0.85em;
-		margin: 0.25em 0;
+
+	.name {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1rem;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: var(--color-text);
 	}
-	.copy {
-		margin: 0.75em 0 0.25em 0;
+
+	.name .fr {
+		color: var(--color-accent);
+		margin-left: 0.35rem;
 	}
-	.github {
-		margin: 0.5em 0 0 0;
+
+	.pitch {
+		color: var(--color-text-muted);
+		font-size: 0.95rem;
+		line-height: 1.6;
+		max-width: 34ch;
+		margin-bottom: 1.25rem;
 	}
-	footer a {
-		color: rgb(var(--gray));
-		text-decoration: underline;
+
+	.disclaim {
+		color: var(--color-text-dim);
+		font-size: 0.8rem;
+		line-height: 1.55;
 	}
-	footer a:hover {
-		color: rgb(var(--gray-dark));
+
+	.col-title {
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		margin-bottom: 1rem;
+	}
+
+	.links-col ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+
+	.links-col a {
+		color: var(--color-text-muted);
+		font-size: 0.9rem;
+		transition: color 0.15s ease;
+	}
+
+	.links-col a:hover {
+		color: var(--color-accent);
+	}
+
+	.bottom {
+		padding-top: 2rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.5rem 1.5rem;
+		font-size: 0.8rem;
+		color: var(--color-text-dim);
+	}
+
+	.bottom a {
+		color: var(--color-text-muted);
+		border-bottom: 1px solid transparent;
+		transition: all 0.15s ease;
+	}
+
+	.bottom a:hover {
+		color: var(--color-accent);
+		border-bottom-color: var(--color-accent);
+	}
+
+	.bottom .build {
+		font-family: var(--font-display);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		font-size: 0.7rem;
 	}
 </style>

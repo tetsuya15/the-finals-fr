@@ -8,89 +8,173 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, category } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category, author } = Astro.props;
 ---
 
 <html lang="fr">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1.1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.category {
-				display: inline-block;
-				font-size: 0.75em;
-				text-transform: uppercase;
-				letter-spacing: 0.12em;
-				font-weight: 700;
-				color: rgb(var(--accent));
-				margin-bottom: 0.5em;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
 
 	<body>
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						{category && <div class="category">{category}</div>}
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Dernière mise à jour le <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+				<header class="article-hero">
+					<div class="tfr-container">
+						<a class="back" href="/blog/">← Tous les articles</a>
+
+						<div class="meta-row">
+							{category && (
+								<span class="tfr-badge" data-cat={category}>{category}</span>
+							)}
+							<span class="date">
+								<FormattedDate date={pubDate} />
+								{author && <span class="author"> · par {author}</span>}
+							</span>
 						</div>
-						<h1>{title}</h1>
-						<hr />
+
+						<h1 class="article-title">{title}</h1>
+
+						<p class="article-desc">{description}</p>
+
+						{updatedDate && (
+							<p class="updated">
+								Dernière mise à jour le <FormattedDate date={updatedDate} />
+							</p>
+						)}
 					</div>
-					<slot />
+				</header>
+
+				{heroImage && (
+					<div class="hero-image">
+						<div class="tfr-container">
+							<Image width={1280} height={640} src={heroImage} alt="" />
+						</div>
+					</div>
+				)}
+
+				<div class="article-body">
+					<div class="tfr-container">
+						<div class="prose tfr-prose">
+							<slot />
+						</div>
+
+						<footer class="article-footer">
+							<a class="tfr-arrow" href="/blog/">Tous les articles</a>
+							<a class="tfr-arrow" href="/">Retour à l'accueil</a>
+						</footer>
+					</div>
 				</div>
 			</article>
 		</main>
 		<Footer />
+
+		<style>
+			main {
+				padding-bottom: 2rem;
+			}
+
+			.article-hero {
+				padding: 3rem 0 2.5rem;
+				border-bottom: 1px solid var(--color-border);
+				background:
+					radial-gradient(ellipse 40% 60% at 0% 0%, color-mix(in oklab, var(--color-accent) 5%, transparent), transparent 60%);
+			}
+
+			.back {
+				display: inline-block;
+				font-family: var(--font-display);
+				font-size: 0.75rem;
+				font-weight: 600;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--color-text-dim);
+				margin-bottom: 2rem;
+				transition: color 0.15s ease;
+			}
+
+			.back:hover {
+				color: var(--color-accent);
+			}
+
+			.meta-row {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 1rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.meta-row .date {
+				font-family: var(--font-display);
+				font-size: 0.78rem;
+				font-weight: 500;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--color-text-dim);
+			}
+
+			.meta-row .author {
+				color: var(--color-text-muted);
+			}
+
+			.article-title {
+				font-size: clamp(2rem, 5vw, 3.75rem);
+				text-transform: uppercase;
+				letter-spacing: -0.025em;
+				line-height: 1.02;
+				max-width: 22ch;
+			}
+
+			.article-desc {
+				margin-top: 1.5rem;
+				max-width: 60ch;
+				font-size: 1.1rem;
+				line-height: 1.65;
+				color: var(--color-text-muted);
+			}
+
+			.updated {
+				margin-top: 1.5rem;
+				font-family: var(--font-display);
+				font-size: 0.72rem;
+				font-weight: 500;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--color-text-dim);
+			}
+
+			.hero-image {
+				padding: 2.5rem 0 0;
+			}
+
+			.hero-image img {
+				display: block;
+				width: 100%;
+				height: auto;
+				border: 1px solid var(--color-border);
+			}
+
+			.article-body {
+				padding: 3rem 0;
+			}
+
+			.prose {
+				max-width: 44rem;
+				margin: 0 auto;
+			}
+
+			.article-footer {
+				margin: 4rem auto 0;
+				max-width: 44rem;
+				padding-top: 2rem;
+				border-top: 1px solid var(--color-border);
+				display: flex;
+				justify-content: space-between;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+		</style>
 	</body>
 </html>
