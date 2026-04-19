@@ -1,165 +1,107 @@
 ---
-import { NAV_SECTIONS, SITE_TAGLINE, SITE_TITLE } from '../consts';
+import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<header class="tfr-header">
-	<div class="tfr-container tfr-header__inner">
-		<a class="brand" href="/" aria-label={`${SITE_TITLE} — accueil`}>
-			<span class="brand-mark" aria-hidden="true">TF</span>
-			<span class="brand-text">
-				<span class="brand-title">The Finals<span class="fr">FR</span></span>
-				<span class="brand-tagline">{SITE_TAGLINE}</span>
-			</span>
+<header class="tfr-nav">
+	<div class="inner">
+		<a class="logo" href="/" aria-label={`${SITE_TITLE} — accueil`}>
+			<span class="red">The</span>&nbsp;Finals <em>FR</em>
 		</a>
 
-		<nav class="nav" aria-label="Navigation principale">
+		<nav class="links" aria-label="Navigation principale">
 			<HeaderLink href="/">Accueil</HeaderLink>
 			{NAV_SECTIONS.map((s) => <HeaderLink href={`/${s.slug}/`}>{s.label}</HeaderLink>)}
+			<HeaderLink href="/blog/">Tout</HeaderLink>
 			<HeaderLink href="/a-propos/">À propos</HeaderLink>
 		</nav>
-
-		<a class="cta" href="/blog/">
-			<span>Tous les articles</span>
-			<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-				<path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
-			</svg>
-		</a>
 	</div>
 </header>
 
 <style>
-	.tfr-header {
+	.tfr-nav {
 		position: sticky;
 		top: 0;
-		z-index: 50;
-		background: rgba(10, 10, 15, 0.85);
+		z-index: 1000;
+		background: rgba(8, 8, 8, 0.92);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid var(--color-border);
+		border-bottom: 1px solid rgba(200, 16, 46, 0.3);
 	}
 
-	.tfr-header__inner {
+	.inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+		min-height: 64px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 2rem;
-		height: 72px;
+		gap: 1rem;
 	}
 
-	/* Brand */
-	.brand {
+	@media (min-width: 768px) {
+		.inner { padding: 0 2rem; }
+	}
+
+	.logo {
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		font-weight: 900;
+		letter-spacing: 0.14em;
+		color: var(--color-blanc);
+		text-transform: uppercase;
 		display: inline-flex;
 		align-items: center;
-		gap: 0.8rem;
+		gap: 0.5rem;
 		flex-shrink: 0;
 	}
 
-	.brand-mark {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 38px;
-		height: 38px;
-		background: var(--color-accent);
-		color: #0a0a0f;
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: 0.95rem;
-		letter-spacing: -0.03em;
-		box-shadow: 0 0 24px -6px color-mix(in oklab, var(--color-accent) 60%, transparent);
-	}
+	.logo .red { color: var(--color-rouge); }
 
-	.brand-text {
-		display: flex;
-		flex-direction: column;
+	.logo em {
+		font-style: normal;
+		color: var(--color-or);
+		font-size: 0.65rem;
+		font-family: var(--font-mono);
+		letter-spacing: 0.12em;
+		background: rgba(244, 168, 17, 0.12);
+		border: 1px solid rgba(244, 168, 17, 0.35);
+		padding: 2px 7px;
+		border-radius: 2px;
 		line-height: 1;
 	}
 
-	.brand-title {
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: 1rem;
-		letter-spacing: 0.02em;
-		text-transform: uppercase;
-		color: var(--color-text);
-	}
-
-	.brand-title .fr {
-		color: var(--color-accent);
-		margin-left: 0.35rem;
-	}
-
-	.brand-tagline {
-		margin-top: 0.25rem;
-		font-family: var(--font-display);
-		font-size: 0.62rem;
-		font-weight: 500;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: var(--color-text-dim);
-	}
-
-	.nav {
+	.links {
 		display: none;
 	}
 
 	@media (min-width: 1024px) {
-		.nav {
+		.links {
 			display: flex;
-			gap: 1.75rem;
+			gap: 0.2rem;
 			align-items: center;
 		}
 	}
 
-	.cta {
-		display: none;
-	}
-
-	@media (min-width: 768px) {
-		.cta {
-			display: inline-flex;
-			align-items: center;
-			gap: 0.55rem;
-			padding: 0.6rem 1rem;
-			border: 1px solid var(--color-border-strong);
-			color: var(--color-text);
-			font-family: var(--font-display);
-			font-size: 0.72rem;
-			font-weight: 600;
-			letter-spacing: 0.14em;
-			text-transform: uppercase;
-			transition: all 0.15s ease;
-		}
-
-		.cta:hover {
-			border-color: var(--color-accent);
-			color: var(--color-accent);
-		}
-	}
-
-	/* Mobile: collapse nav into a scrollable row below brand */
+	/* Mobile: scroll-wrap nav below logo */
 	@media (max-width: 1023px) {
-		.tfr-header__inner {
-			height: auto;
+		.inner {
 			flex-wrap: wrap;
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-			gap: 0.75rem 1.5rem;
+			padding-top: 0.8rem;
+			padding-bottom: 0.8rem;
 		}
 
-		.nav {
+		.links {
 			display: flex;
 			order: 3;
 			width: 100%;
-			gap: 1.2rem;
+			gap: 0.15rem;
 			overflow-x: auto;
-			padding-bottom: 0.25rem;
+			padding-bottom: 0.15rem;
 			scrollbar-width: none;
 		}
 
-		.nav::-webkit-scrollbar {
-			display: none;
-		}
+		.links::-webkit-scrollbar { display: none; }
 	}
 </style>

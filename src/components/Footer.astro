@@ -5,188 +5,228 @@ const today = new Date();
 ---
 
 <footer class="tfr-footer">
-	<div class="tfr-container">
-		<div class="top">
-			<div class="brand-col">
-				<div class="brand">
-					<span class="mark" aria-hidden="true">TF</span>
-					<span class="name">The Finals<span class="fr">FR</span></span>
-				</div>
-				<p class="pitch">
-					Le site communautaire francophone dédié au compétitif sur The Finals —
-					ranked, meta, esport, wiki.
-				</p>
-				<p class="disclaim">
-					Site indépendant — non affilié à Embark Studios ni à Nexon.<br />
-					<span>The Finals, ses logos et assets appartiennent à leurs propriétaires respectifs.</span>
-				</p>
-			</div>
-
-			<div class="links-col">
-				<p class="col-title">Explorer</p>
-				<ul>
-					{NAV_SECTIONS.map((s) => (
-						<li><a href={`/${s.slug}/`}>{s.label}</a></li>
-					))}
-				</ul>
-			</div>
-
-			<div class="links-col">
-				<p class="col-title">Le site</p>
-				<ul>
-					<li><a href="/">Accueil</a></li>
-					<li><a href="/blog/">Tous les articles</a></li>
-					<li><a href="/a-propos/">À propos</a></li>
-					<li><a href="/rss.xml">Flux RSS</a></li>
-					<li>
-						<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">
-							GitHub
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-
-		<div class="bottom">
-			<p>&copy; {today.getFullYear()} {SITE_TITLE}</p>
-			<p>
-				Articles sous licence
-				<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener">
-					CC BY-NC-SA 4.0
-				</a>
-				— code source sous licence MIT.
+	<div class="grid">
+		<div class="brand">
+			<a class="logo" href="/">
+				<span class="red">The</span>&nbsp;Finals <em>FR</em>
+			</a>
+			<p class="desc">
+				Site communautaire francophone dédié au compétitif sur The Finals — ranked,
+				meta, esport, wiki. Construit en public, propulsé par un workflow IA avec
+				validation humaine.
 			</p>
-			<p class="build">Construit en public · Astro · Vercel</p>
+			<div class="social">
+				<a class="chip" href="https://github.com/tetsuya15" target="_blank" rel="noopener">GitHub</a>
+				<a class="chip" href="/rss.xml">RSS</a>
+			</div>
 		</div>
+
+		<div class="col">
+			<h4>Sections</h4>
+			<ul>
+				{NAV_SECTIONS.map((s) => (
+					<li><a href={`/${s.slug}/`}>{s.label}</a></li>
+				))}
+			</ul>
+		</div>
+
+		<div class="col">
+			<h4>Le site</h4>
+			<ul>
+				<li><a href="/">Accueil</a></li>
+				<li><a href="/blog/">Tous les articles</a></li>
+				<li><a href="/a-propos/">À propos</a></li>
+				<li><a href="/rss.xml">Flux RSS</a></li>
+			</ul>
+		</div>
+
+		<div class="col">
+			<h4>Ressources</h4>
+			<ul>
+				<li><a href="https://www.reachthefinals.com" target="_blank" rel="noopener">Site officiel</a></li>
+				<li><a href="https://liquipedia.net/thefinals" target="_blank" rel="noopener">Liquipedia</a></li>
+				<li><a href="https://www.reddit.com/r/thefinals/" target="_blank" rel="noopener">Reddit</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="bottom">
+		<p class="copy">
+			&copy; {today.getFullYear()} {SITE_TITLE} — Site communautaire<br />
+			Articles sous licence
+			<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+			— code sous licence MIT.
+		</p>
+		<p class="disclaimer">
+			THE FINALS™ est une marque déposée d'Embark Studios. Ce fan site est indépendant
+			et n'est pas affilié, approuvé ou sponsorisé par Embark Studios AB ou Nexon.
+		</p>
 	</div>
 </footer>
 
 <style>
 	.tfr-footer {
 		margin-top: 6rem;
-		padding: 4rem 0 2.5rem;
-		border-top: 1px solid var(--color-border);
-		background: linear-gradient(180deg, transparent, rgba(255, 206, 27, 0.02));
-	}
-
-	.top {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 3rem;
-		padding-bottom: 3rem;
-		border-bottom: 1px solid var(--color-border);
+		background: var(--color-gris-3);
+		border-top: 1px solid rgba(200, 16, 46, 0.25);
+		padding: 3.5rem 1.5rem 1.5rem;
 	}
 
 	@media (min-width: 768px) {
-		.top {
-			grid-template-columns: 1.5fr 1fr 1fr;
-			gap: 2.5rem;
+		.tfr-footer { padding: 3.5rem 2rem 1.5rem; }
+	}
+
+	.grid {
+		max-width: 1200px;
+		margin: 0 auto 3rem;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+
+	@media (min-width: 640px) {
+		.grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (min-width: 1024px) {
+		.grid {
+			grid-template-columns: 2fr 1fr 1fr 1fr;
+			gap: 3rem;
 		}
 	}
 
-	.brand {
+	.brand .logo {
+		font-family: var(--font-display);
+		font-size: 1.2rem;
+		font-weight: 900;
+		letter-spacing: 0.14em;
+		color: var(--color-blanc);
+		text-transform: uppercase;
 		display: inline-flex;
 		align-items: center;
-		gap: 0.7rem;
+		gap: 0.5rem;
 		margin-bottom: 1rem;
 	}
 
-	.mark {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 34px;
-		height: 34px;
-		background: var(--color-accent);
-		color: #0a0a0f;
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: 0.85rem;
-		letter-spacing: -0.03em;
+	.brand .logo .red { color: var(--color-rouge); }
+
+	.brand .logo em {
+		font-style: normal;
+		color: var(--color-or);
+		font-size: 0.6rem;
+		font-family: var(--font-mono);
+		letter-spacing: 0.12em;
+		background: rgba(244, 168, 17, 0.12);
+		border: 1px solid rgba(244, 168, 17, 0.3);
+		padding: 2px 6px;
+		border-radius: 2px;
+		line-height: 1;
 	}
 
-	.name {
-		font-family: var(--font-display);
-		font-weight: 700;
-		font-size: 1rem;
-		letter-spacing: 0.02em;
-		text-transform: uppercase;
-		color: var(--color-text);
-	}
-
-	.name .fr {
-		color: var(--color-accent);
-		margin-left: 0.35rem;
-	}
-
-	.pitch {
-		color: var(--color-text-muted);
-		font-size: 0.95rem;
-		line-height: 1.6;
-		max-width: 34ch;
+	.desc {
+		font-size: 0.9rem;
+		color: rgba(240, 234, 214, 0.5);
+		line-height: 1.65;
 		margin-bottom: 1.25rem;
+		max-width: 40ch;
 	}
 
-	.disclaim {
-		color: var(--color-text-dim);
-		font-size: 0.8rem;
-		line-height: 1.55;
+	.social {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
 
-	.col-title {
-		font-family: var(--font-display);
-		font-size: 0.72rem;
-		font-weight: 700;
+	.chip {
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
-		color: var(--color-accent);
+		padding: 0.45rem 0.85rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		color: var(--color-gris);
+		border-radius: 1px;
+		transition: all 0.2s ease;
+	}
+
+	.chip:hover {
+		border-color: var(--color-rouge);
+		color: var(--color-rouge-2);
+		background: rgba(200, 16, 46, 0.08);
+	}
+
+	.col h4 {
+		font-family: var(--font-display);
+		font-size: 0.85rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		color: var(--color-blanc);
 		margin-bottom: 1rem;
 	}
 
-	.links-col ul {
+	.col ul {
 		list-style: none;
 		padding: 0;
 		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.65rem;
 	}
 
-	.links-col a {
-		color: var(--color-text-muted);
+	.col li {
+		margin-bottom: 0.55rem;
+	}
+
+	.col a {
+		font-family: var(--font-sans);
 		font-size: 0.9rem;
-		transition: color 0.15s ease;
+		color: rgba(240, 234, 214, 0.5);
+		transition: color 0.2s ease;
 	}
 
-	.links-col a:hover {
-		color: var(--color-accent);
+	.col a:hover {
+		color: var(--color-or);
 	}
 
 	.bottom {
-		padding-top: 2rem;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.06);
 		display: flex;
-		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: 0.5rem 1.5rem;
-		font-size: 0.8rem;
-		color: var(--color-text-dim);
+		gap: 1.5rem;
+		flex-wrap: wrap;
 	}
 
-	.bottom a {
-		color: var(--color-text-muted);
+	.copy,
+	.disclaimer {
+		font-family: var(--font-mono);
+		font-size: 0.65rem;
+		line-height: 1.6;
+		letter-spacing: 0.05em;
+	}
+
+	.copy {
+		color: var(--color-gris);
+	}
+
+	.copy a {
+		color: rgba(240, 234, 214, 0.7);
 		border-bottom: 1px solid transparent;
-		transition: all 0.15s ease;
+		transition: all 0.2s ease;
 	}
 
-	.bottom a:hover {
-		color: var(--color-accent);
-		border-bottom-color: var(--color-accent);
+	.copy a:hover {
+		color: var(--color-or);
+		border-bottom-color: var(--color-or);
 	}
 
-	.bottom .build {
-		font-family: var(--font-display);
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		font-size: 0.7rem;
+	.disclaimer {
+		color: rgba(136, 136, 136, 0.5);
+		max-width: 420px;
+		text-align: right;
+	}
+
+	@media (max-width: 768px) {
+		.disclaimer { text-align: left; }
 	}
 </style>

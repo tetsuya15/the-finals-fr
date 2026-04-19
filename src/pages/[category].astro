@@ -1,10 +1,27 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { NAV_SECTIONS, SITE_TITLE } from '../consts';
+
+import catRanked from '../assets/cat-ranked.jpg';
+import catMeta from '../assets/cat-meta.jpg';
+import catEsport from '../assets/cat-esport.jpg';
+import catWiki from '../assets/cat-wiki.jpg';
+import catActus from '../assets/cat-actus.jpg';
+import catLore from '../assets/cat-lore.jpg';
+
+const CAT_IMG = {
+	ranked: catRanked,
+	meta: catMeta,
+	esport: catEsport,
+	wiki: catWiki,
+	actus: catActus,
+	lore: catLore,
+};
 
 export async function getStaticPaths() {
 	return NAV_SECTIONS.map((s) => ({ params: { category: s.slug } }));
@@ -13,6 +30,7 @@ export async function getStaticPaths() {
 const { category } = Astro.params;
 const section = NAV_SECTIONS.find((s) => s.slug === category)!;
 const label = section.label;
+const headerImage = CAT_IMG[category as keyof typeof CAT_IMG];
 
 const posts = (await getCollection('blog'))
 	.filter((p) => p.data.category === label)
@@ -25,54 +43,87 @@ const posts = (await getCollection('blog'))
 		<BaseHead
 			title={`${section.label} — ${SITE_TITLE}`}
 			description={section.description}
+			image={headerImage}
 		/>
 	</head>
 	<body>
 		<Header />
 		<main>
 			<section class="cat-hero">
-				<div class="tfr-container">
-					<span class="tfr-eyebrow">
-						{SITE_TITLE} <span class="tfr-pipe">|</span> Catégorie
-					</span>
+				<div class="cat-hero-img" aria-hidden="true">
+					<Image src={headerImage} alt="" width={1920} height={800} loading="eager" />
+					<div class="cat-hero-overlay"></div>
+				</div>
+				<div class="scanlines" aria-hidden="true"></div>
+
+				<div class="container cat-hero-content">
+					<div class="section-label">{SITE_TITLE} — Catégorie</div>
 					<h1 class="cat-title" data-cat={label}>{label}</h1>
+					<p class="cat-tagline">{section.tagline}</p>
 					<p class="cat-desc">{section.description}</p>
-					<p class="cat-count">
-						{posts.length === 0
-							? 'Aucun article pour l\'instant'
-							: `${posts.length} article${posts.length > 1 ? 's' : ''} publié${posts.length > 1 ? 's' : ''}`}
-					</p>
+					<div class="cat-meta">
+						<span class="tag tag-cat" data-cat={label}>{label}</span>
+						<span class="cat-count">
+							{posts.length === 0
+								? '· Section bientôt disponible'
+								: `· ${posts.length} article${posts.length > 1 ? 's' : ''} publié${posts.length > 1 ? 's' : ''}`}
+						</span>
+					</div>
 				</div>
 			</section>
 
 			<section class="cat-list">
-				<div class="tfr-container">
+				<div class="container">
 					{posts.length === 0 ? (
-						<div class="empty">
-							<span class="tfr-eyebrow">Bientôt <span class="tfr-pipe">|</span> En production</span>
-							<h2 class="tfr-display empty-title">Cette section<br />arrive bientôt.</h2>
+						<div class="empty card">
+							<div class="section-label">Bientôt — En production</div>
+							<h2 class="empty-title">
+								Cette section<br />
+								<em>arrive bientôt.</em>
+							</h2>
 							<p class="empty-text">
-								Les premiers contenus <strong>{label}</strong> sont en préparation. Reviens d'ici
-								quelques jours — on publie en continu.
+								Les premiers contenus <strong>{label}</strong> sont en préparation. Le
+								workflow IA de rédaction est en cours de calibration — les articles
+								arriveront d'ici quelques jours.
 							</p>
-							<a class="tfr-btn -ghost" href="/">← Retour à l'accueil</a>
+							<div class="empty-tags">
+								<span class="tag tag-red">En cours</span>
+								<span class="tag tag-gold">Workflow IA</span>
+								<span class="tag tag-white">Reviens bientôt</span>
+							</div>
+							<a class="btn btn-outline" href="/" style="margin-top: 2rem;">
+								← Retour à l'accueil
+							</a>
 						</div>
 					) : (
 						<ul class="posts">
 							{posts.map((post) => (
 								<li>
-									<a class="post-row" href={`/blog/${post.id}/`}>
-										<span class="post-date">
-											<FormattedDate date={post.data.pubDate} />
-										</span>
+									<a class="post card" href={`/blog/${post.id}/`}>
+										{post.data.heroImage && (
+											<div class="post-img">
+												<Image
+													src={post.data.heroImage}
+													alt=""
+													width={480}
+													height={270}
+													loading="lazy"
+												/>
+											</div>
+										)}
 										<div class="post-body">
-											<span class="tfr-badge" data-cat={post.data.category ?? label}>
-												{post.data.category ?? label}
-											</span>
+											<div class="post-tags">
+												<span class="tag tag-cat" data-cat={post.data.category ?? label}>
+													{post.data.category ?? label}
+												</span>
+											</div>
 											<h3>{post.data.title}</h3>
 											<p>{post.data.description}</p>
+											<div class="post-meta">
+												<FormattedDate date={post.data.pubDate} />
+												{post.data.author && <span>· par {post.data.author}</span>}
+											</div>
 										</div>
-										<span class="post-arrow" aria-hidden="true">→</span>
 									</a>
 								</li>
 							))}
@@ -82,150 +133,236 @@ const posts = (await getCollection('blog'))
 			</section>
 		</main>
 		<Footer />
+
+		<style>
+			main { padding-bottom: 2rem; }
+
+			/* ============ HERO CATÉGORIE ============ */
+			.cat-hero {
+				position: relative;
+				min-height: 52vh;
+				display: flex;
+				align-items: flex-end;
+				padding: 5rem 0 3.5rem;
+				overflow: hidden;
+				border-bottom: 1px solid rgba(200, 16, 46, 0.25);
+			}
+
+			.cat-hero-img {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+			}
+
+			.cat-hero-img img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				filter: grayscale(0.25) contrast(1.1) brightness(0.55);
+			}
+
+			.cat-hero-overlay {
+				position: absolute;
+				inset: 0;
+				background:
+					radial-gradient(ellipse 60% 80% at 0% 100%, rgba(200,16,46,0.35), transparent 60%),
+					linear-gradient(180deg, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.85) 100%);
+			}
+
+			.scanlines {
+				position: absolute;
+				inset: 0;
+				background: repeating-linear-gradient(
+					0deg,
+					transparent 0,
+					transparent 2px,
+					rgba(0, 0, 0, 0.1) 2px,
+					rgba(0, 0, 0, 0.1) 4px
+				);
+				z-index: 2;
+				pointer-events: none;
+			}
+
+			.cat-hero-content {
+				position: relative;
+				z-index: 3;
+			}
+
+			.cat-title {
+				font-size: clamp(3.5rem, 11vw, 7.5rem);
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: -0.03em;
+				line-height: 0.9;
+				margin: 0.8rem 0 0;
+				text-shadow: 0 0 60px rgba(200, 16, 46, 0.5);
+			}
+
+			.cat-title[data-cat='Ranked'] { color: var(--color-cat-ranked); text-shadow: 0 0 60px rgba(244, 168, 17, 0.4); }
+			.cat-title[data-cat='Meta']   { color: var(--color-cat-meta);   text-shadow: 0 0 60px rgba(200, 16, 46, 0.6); }
+			.cat-title[data-cat='Esport'] { color: var(--color-cat-esport); text-shadow: 0 0 60px rgba(79, 195, 247, 0.35); }
+			.cat-title[data-cat='Wiki']   { color: var(--color-cat-wiki);   text-shadow: 0 0 60px rgba(240, 234, 214, 0.3); }
+			.cat-title[data-cat='Actus']  { color: var(--color-cat-actus);  text-shadow: 0 0 60px rgba(102, 187, 106, 0.35); }
+			.cat-title[data-cat='Lore']   { color: var(--color-cat-lore);   text-shadow: 0 0 60px rgba(185, 131, 255, 0.4); }
+
+			.cat-tagline {
+				font-family: var(--font-display);
+				font-size: clamp(1.1rem, 2vw, 1.5rem);
+				font-weight: 600;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+				color: var(--color-or);
+				margin-top: 1.2rem;
+			}
+
+			.cat-desc {
+				margin-top: 1rem;
+				max-width: 60ch;
+				font-size: 1rem;
+				color: rgba(240, 234, 214, 0.7);
+				line-height: 1.65;
+			}
+
+			.cat-meta {
+				margin-top: 1.5rem;
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+
+			.cat-count {
+				font-family: var(--font-mono);
+				font-size: 0.7rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--color-gris);
+			}
+
+			/* ============ LISTE ============ */
+			.cat-list {
+				padding: 4rem 0;
+			}
+
+			.empty {
+				max-width: 46rem;
+				padding: 3rem 2rem;
+				text-align: left;
+			}
+
+			.empty-title {
+				font-size: clamp(2.2rem, 5vw, 3.5rem);
+				margin: 1rem 0 1.2rem;
+				text-transform: uppercase;
+				line-height: 1;
+			}
+
+			.empty-title em {
+				font-style: normal;
+				color: var(--color-rouge-2);
+			}
+
+			.empty-text {
+				color: rgba(240, 234, 214, 0.65);
+				font-size: 1rem;
+				line-height: 1.7;
+				max-width: 48rem;
+			}
+
+			.empty-text strong { color: var(--color-blanc); }
+
+			.empty-tags {
+				display: flex;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+				margin-top: 1.5rem;
+			}
+
+			.posts {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.2rem;
+			}
+
+			@media (min-width: 768px) {
+				.posts { grid-template-columns: repeat(2, 1fr); }
+			}
+
+			@media (min-width: 1024px) {
+				.posts { grid-template-columns: repeat(3, 1fr); }
+			}
+
+			.post {
+				display: flex;
+				flex-direction: column;
+				text-decoration: none;
+				overflow: hidden;
+			}
+
+			.post-img {
+				aspect-ratio: 16 / 9;
+				overflow: hidden;
+				background: var(--color-noir);
+			}
+
+			.post-img img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			.post:hover .post-img img { transform: scale(1.05); }
+
+			.post-body {
+				padding: 1.5rem;
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+			}
+
+			.post-tags {
+				display: flex;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+				margin-bottom: 0.9rem;
+			}
+
+			.post-body h3 {
+				font-family: var(--font-display);
+				font-size: 1.4rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+				line-height: 1.15;
+				color: var(--color-blanc);
+				margin-bottom: 0.7rem;
+				transition: color 0.2s ease;
+			}
+
+			.post:hover .post-body h3 { color: var(--color-rouge-2); }
+
+			.post-body p {
+				color: rgba(240, 234, 214, 0.6);
+				font-size: 0.92rem;
+				line-height: 1.55;
+				margin-bottom: 1rem;
+				flex-grow: 1;
+			}
+
+			.post-meta {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-gris);
+				display: flex;
+				gap: 0.4rem;
+				flex-wrap: wrap;
+			}
+		</style>
 	</body>
 </html>
-
-<style>
-	main {
-		padding-bottom: 2rem;
-	}
-
-	.cat-hero {
-		padding: 5rem 0 3rem;
-		border-bottom: 1px solid var(--color-border);
-		background:
-			radial-gradient(ellipse 40% 60% at 0% 0%, color-mix(in oklab, var(--color-accent) 6%, transparent), transparent 60%);
-	}
-
-	.cat-title {
-		font-size: clamp(3rem, 10vw, 7rem);
-		text-transform: uppercase;
-		letter-spacing: -0.04em;
-		line-height: 0.9;
-		margin-top: 1.25rem;
-	}
-
-	.cat-title[data-cat='Ranked'] { color: var(--color-cat-ranked); }
-	.cat-title[data-cat='Meta']   { color: var(--color-cat-meta); }
-	.cat-title[data-cat='Esport'] { color: var(--color-cat-esport); }
-	.cat-title[data-cat='Wiki']   { color: var(--color-cat-wiki); }
-	.cat-title[data-cat='Actus']  { color: var(--color-cat-actus); }
-	.cat-title[data-cat='Lore']   { color: var(--color-cat-lore); }
-
-	.cat-desc {
-		margin-top: 1.5rem;
-		max-width: 60ch;
-		font-size: 1.1rem;
-		color: var(--color-text-muted);
-		line-height: 1.65;
-	}
-
-	.cat-count {
-		margin-top: 1.5rem;
-		font-family: var(--font-display);
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--color-text-dim);
-	}
-
-	.cat-list {
-		padding: 4rem 0;
-	}
-
-	.empty {
-		max-width: 42rem;
-		padding: 3rem 0;
-	}
-
-	.empty-title {
-		font-size: clamp(2.5rem, 6vw, 4rem);
-		margin: 1.25rem 0 1.5rem;
-	}
-
-	.empty-text {
-		color: var(--color-text-muted);
-		font-size: 1.05rem;
-		line-height: 1.65;
-		margin-bottom: 2rem;
-	}
-
-	.empty-text strong {
-		color: var(--color-text);
-	}
-
-	.posts {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.posts li {
-		border-top: 1px solid var(--color-border);
-	}
-
-	.posts li:last-child {
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.post-row {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: 1rem;
-		padding: 2rem 0;
-		transition: padding 0.2s ease;
-	}
-
-	@media (min-width: 768px) {
-		.post-row {
-			grid-template-columns: 160px 1fr auto;
-			gap: 2.5rem;
-			align-items: start;
-		}
-	}
-
-	.post-row:hover {
-		padding-left: 1rem;
-	}
-
-	.post-date {
-		font-family: var(--font-display);
-		font-size: 0.8rem;
-		font-weight: 500;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-text-dim);
-	}
-
-	.post-body h3 {
-		font-size: clamp(1.3rem, 2vw, 1.75rem);
-		text-transform: uppercase;
-		line-height: 1.15;
-		margin: 0.75rem 0 0.5rem;
-		transition: color 0.2s ease;
-	}
-
-	.post-row:hover .post-body h3 {
-		color: var(--color-accent);
-	}
-
-	.post-body p {
-		color: var(--color-text-muted);
-		font-size: 0.95rem;
-		line-height: 1.55;
-	}
-
-	.post-arrow {
-		font-family: var(--font-display);
-		font-size: 1.4rem;
-		color: var(--color-text-dim);
-		transition: color 0.2s ease, transform 0.2s ease;
-		align-self: center;
-	}
-
-	.post-row:hover .post-arrow {
-		color: var(--color-accent);
-		transform: translateX(6px);
-	}
-</style>

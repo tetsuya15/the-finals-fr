@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
@@ -20,21 +21,26 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section class="blog-hero">
-				<div class="tfr-container">
-					<span class="tfr-eyebrow">{SITE_TITLE} <span class="tfr-pipe">|</span> Archive</span>
-					<h1 class="blog-title">Tous les articles</h1>
+				<div class="container">
+					<div class="section-label">{SITE_TITLE} — Archive</div>
+					<h1 class="blog-title">Tous les <em>articles</em></h1>
 					<p class="blog-desc">
-						Guides ranked, analyses meta, couverture esport, patchs — le flux complet.
+						Guides ranked, analyses meta, couverture esport, patchs décryptés — le flux complet.
 					</p>
+					<div class="blog-meta">
+						<span class="tag tag-red">{posts.length} article{posts.length > 1 ? 's' : ''}</span>
+						<span class="tag tag-gold">Mis à jour en continu</span>
+					</div>
 				</div>
 			</section>
 
 			<section class="blog-list">
-				<div class="tfr-container">
+				<div class="container">
 					{posts.length === 0 ? (
-						<div class="empty">
+						<div class="empty card">
 							<p>
-								<strong>Les premiers articles arrivent dans les jours qui viennent.</strong><br />
+								<strong>Les premiers articles arrivent dans les jours qui viennent.</strong>
+								<br />
 								On construit le site en public — reviens vite.
 							</p>
 						</div>
@@ -42,20 +48,33 @@ const posts = (await getCollection('blog')).sort(
 						<ul class="posts">
 							{posts.map((post) => (
 								<li>
-									<a class="post-row" href={`/blog/${post.id}/`}>
-										<span class="post-date">
-											<FormattedDate date={post.data.pubDate} />
-										</span>
+									<a class="post card" href={`/blog/${post.id}/`}>
+										{post.data.heroImage && (
+											<div class="post-img">
+												<Image
+													src={post.data.heroImage}
+													alt=""
+													width={640}
+													height={360}
+													loading="lazy"
+												/>
+											</div>
+										)}
 										<div class="post-body">
-											{post.data.category && (
-												<span class="tfr-badge" data-cat={post.data.category}>
-													{post.data.category}
-												</span>
-											)}
+											<div class="post-tags">
+												{post.data.category && (
+													<span class="tag tag-cat" data-cat={post.data.category}>
+														{post.data.category}
+													</span>
+												)}
+											</div>
 											<h3>{post.data.title}</h3>
 											<p>{post.data.description}</p>
+											<div class="post-meta">
+												<FormattedDate date={post.data.pubDate} />
+												{post.data.author && <span>· par {post.data.author}</span>}
+											</div>
 										</div>
-										<span class="post-arrow" aria-hidden="true">→</span>
 									</a>
 								</li>
 							))}
@@ -65,121 +84,142 @@ const posts = (await getCollection('blog')).sort(
 			</section>
 		</main>
 		<Footer />
+
+		<style>
+			main { padding-bottom: 2rem; }
+
+			.blog-hero {
+				padding: 5rem 0 3rem;
+				border-bottom: 1px solid rgba(200, 16, 46, 0.2);
+				background:
+					radial-gradient(ellipse 60% 50% at 0% 0%, rgba(200,16,46,0.1), transparent 60%);
+			}
+
+			.blog-title {
+				font-size: clamp(3rem, 9vw, 6rem);
+				text-transform: uppercase;
+				letter-spacing: -0.02em;
+				line-height: 0.95;
+				margin-top: 1.2rem;
+			}
+
+			.blog-title em {
+				font-style: normal;
+				color: var(--color-rouge-2);
+			}
+
+			.blog-desc {
+				margin-top: 1.2rem;
+				max-width: 60ch;
+				color: rgba(240, 234, 214, 0.65);
+				font-size: 1rem;
+				line-height: 1.65;
+			}
+
+			.blog-meta {
+				margin-top: 1.5rem;
+				display: flex;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+			}
+
+			.blog-list { padding: 4rem 0; }
+
+			.empty {
+				padding: 3rem;
+				text-align: center;
+				color: rgba(240, 234, 214, 0.65);
+				font-size: 1rem;
+				line-height: 1.7;
+			}
+
+			.empty strong { color: var(--color-blanc); }
+
+			.posts {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.2rem;
+			}
+
+			@media (min-width: 768px) {
+				.posts { grid-template-columns: repeat(2, 1fr); }
+			}
+
+			@media (min-width: 1024px) {
+				.posts { grid-template-columns: repeat(3, 1fr); }
+			}
+
+			.post {
+				display: flex;
+				flex-direction: column;
+				text-decoration: none;
+				overflow: hidden;
+			}
+
+			.post-img {
+				aspect-ratio: 16 / 9;
+				overflow: hidden;
+				background: var(--color-noir);
+			}
+
+			.post-img img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			.post:hover .post-img img { transform: scale(1.05); }
+
+			.post-body {
+				padding: 1.5rem;
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+			}
+
+			.post-tags {
+				display: flex;
+				gap: 0.5rem;
+				flex-wrap: wrap;
+				margin-bottom: 0.9rem;
+			}
+
+			.post-body h3 {
+				font-family: var(--font-display);
+				font-size: 1.4rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+				line-height: 1.15;
+				color: var(--color-blanc);
+				margin-bottom: 0.7rem;
+				transition: color 0.2s ease;
+			}
+
+			.post:hover .post-body h3 { color: var(--color-rouge-2); }
+
+			.post-body p {
+				color: rgba(240, 234, 214, 0.6);
+				font-size: 0.92rem;
+				line-height: 1.55;
+				margin-bottom: 1rem;
+				flex-grow: 1;
+			}
+
+			.post-meta {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-gris);
+				display: flex;
+				gap: 0.4rem;
+				flex-wrap: wrap;
+			}
+		</style>
 	</body>
 </html>
-
-<style>
-	main {
-		padding-bottom: 2rem;
-	}
-
-	.blog-hero {
-		padding: 5rem 0 3rem;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.blog-title {
-		font-size: clamp(3rem, 9vw, 6rem);
-		text-transform: uppercase;
-		letter-spacing: -0.03em;
-		line-height: 0.95;
-		margin-top: 1.25rem;
-	}
-
-	.blog-desc {
-		margin-top: 1.25rem;
-		max-width: 60ch;
-		color: var(--color-text-muted);
-		font-size: 1.1rem;
-		line-height: 1.65;
-	}
-
-	.blog-list {
-		padding: 4rem 0;
-	}
-
-	.empty {
-		padding: 3rem;
-		border: 1px dashed var(--color-border);
-		text-align: center;
-		color: var(--color-text-muted);
-	}
-
-	.empty strong {
-		color: var(--color-text);
-	}
-
-	.posts {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.posts li {
-		border-top: 1px solid var(--color-border);
-	}
-
-	.posts li:last-child {
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.post-row {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		gap: 1rem;
-		padding: 2rem 0;
-		transition: padding 0.2s ease;
-	}
-
-	@media (min-width: 768px) {
-		.post-row {
-			grid-template-columns: 160px 1fr auto;
-			gap: 2.5rem;
-			align-items: start;
-		}
-	}
-
-	.post-row:hover {
-		padding-left: 1rem;
-	}
-
-	.post-date {
-		font-family: var(--font-display);
-		font-size: 0.8rem;
-		font-weight: 500;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--color-text-dim);
-	}
-
-	.post-body h3 {
-		font-size: clamp(1.3rem, 2vw, 1.75rem);
-		text-transform: uppercase;
-		line-height: 1.15;
-		margin: 0.75rem 0 0.5rem;
-		transition: color 0.2s ease;
-	}
-
-	.post-row:hover .post-body h3 {
-		color: var(--color-accent);
-	}
-
-	.post-body p {
-		color: var(--color-text-muted);
-		font-size: 0.95rem;
-		line-height: 1.55;
-	}
-
-	.post-arrow {
-		font-family: var(--font-display);
-		font-size: 1.4rem;
-		color: var(--color-text-dim);
-		transition: color 0.2s ease, transform 0.2s ease;
-		align-self: center;
-	}
-
-	.post-row:hover .post-arrow {
-		color: var(--color-accent);
-		transform: translateX(6px);
-	}
-</style>

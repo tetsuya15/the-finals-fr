@@ -4,7 +4,7 @@ description: "On lance le premier site francophone 100% dédié au compétitif s
 pubDate: "2026-04-19"
 category: Actus
 author: Benjamin
-heroImage: "../../assets/blog-placeholder-1.jpg"
+heroImage: "../../assets/hero-bienvenue.jpg"
 ---
 
 The Finals a une scène compétitive qui explose — **Grand Major**, équipes pro, circuit mondial, saisons qui se suivent sans répit — et pourtant, en français, **personne ne la couvre sérieusement**. Les sites FR existants traitent le jeu à la volée, au milieu de cinquante autres titres. Pas de suivi ranked digne de ce nom, pas d'analyse meta à chaque patch, pas de couverture esport. Ce site est là pour combler ce trou.
