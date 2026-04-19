@@ -1,0 +1,51 @@
+---
+import { SITE_TITLE } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<p class="brand">{SITE_TITLE}</p>
+	<p class="meta">
+		Site communautaire indépendant — non affilié à Embark Studios ni à Nexon.<br />
+		The Finals, ses logos et assets appartiennent à leurs propriétaires respectifs.
+	</p>
+	<p class="copy">
+		&copy; {today.getFullYear()} {SITE_TITLE} — tous les articles sous licence
+		<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>.
+	</p>
+	<p class="github">
+		<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">Code source & contributions sur GitHub →</a>
+	</p>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+		font-size: 0.9em;
+	}
+	.brand {
+		font-weight: 700;
+		color: var(--black);
+		font-size: 1.1em;
+		margin: 0 0 0.5em 0;
+	}
+	.meta {
+		font-size: 0.85em;
+		margin: 0.25em 0;
+	}
+	.copy {
+		margin: 0.75em 0 0.25em 0;
+	}
+	.github {
+		margin: 0.5em 0 0 0;
+	}
+	footer a {
+		color: rgb(var(--gray));
+		text-decoration: underline;
+	}
+	footer a:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>

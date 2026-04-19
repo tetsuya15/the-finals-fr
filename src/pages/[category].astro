@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { NAV_SECTIONS, SITE_TITLE } from '../consts';
+
+export async function getStaticPaths() {
+	return NAV_SECTIONS.map((s) => ({ params: { category: s.slug } }));
+}
+
+const { category } = Astro.params;
+const section = NAV_SECTIONS.find((s) => s.slug === category)!;
+
+const label = section.label;
+const posts = (await getCollection('blog'))
+	.filter((p) => p.data.category === label)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`${section.label} — ${SITE_TITLE}`}
+			description={section.description}
+		/>
+		<style>
+			main {
+				width: 960px;
+				max-width: calc(100% - 2em);
+			}
+			header.page {
+				padding: 2em 0 1em 0;
+				text-align: center;
+			}
+			header.page h1 {
+				margin: 0;
+				font-size: 2.4em;
+			}
+			header.page p {
+				max-width: 560px;
+				margin: 0.5em auto 0;
+				color: rgb(var(--gray-dark));
+			}
+			.empty {
+				margin: 3em 0;
+				padding: 2em;
+				border-radius: 12px;
+				background: white;
+				box-shadow: 0 2px 8px rgba(var(--black), 4%);
+				text-align: center;
+				color: rgb(var(--gray));
+			}
+			.empty strong {
+				color: var(--black);
+			}
+			ul.posts {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5rem;
+				list-style: none;
+				padding: 0;
+				margin: 1.5em 0;
+			}
+			ul.posts li {
+				width: calc(50% - 0.75rem);
+				background: white;
+				border-radius: 12px;
+				box-shadow: 0 2px 8px rgba(var(--black), 4%);
+				padding: 1em;
+			}
+			ul.posts a {
+				text-decoration: none;
+				color: var(--black);
+			}
+			ul.posts img {
+				border-radius: 8px;
+				margin-bottom: 0.5em;
+				width: 100%;
+			}
+			ul.posts h4 {
+				margin: 0.25em 0;
+				line-height: 1.2;
+			}
+			ul.posts .date {
+				color: rgb(var(--gray));
+				font-size: 0.85em;
+				margin: 0;
+			}
+			@media (max-width: 720px) {
+				ul.posts li {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="page">
+				<h1>{section.label}</h1>
+				<p>{section.description}</p>
+			</header>
+
+			{
+				posts.length === 0 ? (
+					<div class="empty">
+						<p>
+							<strong>Cette section arrive bientôt.</strong>
+							<br />
+							Les premiers contenus "{section.label}" sont en préparation. Reviens d'ici quelques jours.
+						</p>
+					</div>
+				) : (
+					<ul class="posts">
+						{posts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<Image width={640} height={320} src={post.data.heroImage} alt="" />
+									)}
+									<h4>{post.data.title}</h4>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>

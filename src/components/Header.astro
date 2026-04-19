@@ -1,0 +1,74 @@
+---
+import { NAV_SECTIONS, SITE_TAGLINE, SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+	<nav>
+		<a class="brand" href="/">
+			<span class="brand-title">{SITE_TITLE}</span>
+			<span class="brand-tagline">{SITE_TAGLINE}</span>
+		</a>
+		<div class="internal-links">
+			<HeaderLink href="/">Accueil</HeaderLink>
+			{NAV_SECTIONS.map((s) => <HeaderLink href={`/${s.slug}/`}>{s.label}</HeaderLink>)}
+			<HeaderLink href="/a-propos/">À propos</HeaderLink>
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.5em;
+	}
+	.brand {
+		display: flex;
+		flex-direction: column;
+		padding: 0.75em 0.5em 0.75em 0;
+		text-decoration: none;
+		line-height: 1.1;
+	}
+	.brand-title {
+		font-weight: 800;
+		font-size: 1.15em;
+		color: var(--black);
+		letter-spacing: -0.01em;
+	}
+	.brand-tagline {
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.internal-links {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	@media (max-width: 720px) {
+		.internal-links {
+			gap: 0.1em;
+		}
+		nav a {
+			padding: 0.6em 0.5em;
+		}
+	}
+</style>

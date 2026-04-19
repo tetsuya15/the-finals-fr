@@ -1,0 +1,77 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`À propos — ${SITE_TITLE}`}
+			description={`À propos de ${SITE_TITLE}, le site francophone dédié au compétitif sur The Finals.`}
+		/>
+		<style>
+			main {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 2em auto;
+				padding: 0 1em;
+			}
+			h1 {
+				margin-bottom: 0.5em;
+			}
+			.intro {
+				font-size: 1.1em;
+				color: rgb(var(--gray-dark));
+			}
+			h2 {
+				margin-top: 1.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>À propos</h1>
+			<p class="intro">
+				<strong>{SITE_TITLE}</strong> est le site communautaire francophone dédié au
+				<em>compétitif</em> sur The Finals : ranked, meta, esport, et tout ce qu'il faut pour grimper et
+				comprendre le jeu en profondeur.
+			</p>
+
+			<h2>Pourquoi ce site</h2>
+			<p>
+				Parce que The Finals a une scène compétitive qui explose (Grand Major, équipes pro, circuit mondial)
+				et que personne ne la couvre sérieusement <strong>en français</strong>. Les sites FR existants traitent
+				le jeu en passant, au milieu de 50 autres titres. Ici on ne fait qu'une chose, mais on la fait à fond.
+			</p>
+
+			<h2>Ce qu'on publie</h2>
+			<ul>
+				<li><strong>Guides Ranked</strong> — comment grimper, par classe et par mode.</li>
+				<li><strong>Meta hebdo</strong> — tier lists armes, builds OP, changements à chaque patch.</li>
+				<li><strong>Esport</strong> — suivi du Grand Major, équipes pro, résultats et analyses de matchs.</li>
+				<li><strong>Wiki</strong> — fiches classes, armes, spécialisations, gadgets, cartes.</li>
+				<li><strong>Actus</strong> — patch notes décryptés, saisons, events communautaires.</li>
+				<li><strong>Lore</strong> — l'univers du show, les candidats, l'ADN dystopique du jeu.</li>
+			</ul>
+
+			<h2>L'aventure derrière</h2>
+			<p>
+				{SITE_TITLE} est construit en public dans le cadre d'une reconversion vers l'IA. Les articles sont
+				produits via un workflow IA (draft automatique + recherche web + validation humaine avant
+				publication). Rien ne part en ligne sans relecture humaine. Le code du site est
+				<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">public sur GitHub</a>.
+			</p>
+
+			<h2>Contact</h2>
+			<p>
+				Tu veux contribuer, signaler une erreur, ou parler du projet ? Ouvre une issue sur GitHub ou écris
+				via les réseaux (liens à venir).
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

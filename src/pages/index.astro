@@ -1,0 +1,170 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { NAV_SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const latestPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={`${SITE_TITLE} — Ranked, Meta & Esport`} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				text-align: center;
+				padding: 3em 1em 2em 1em;
+			}
+			.hero-eyebrow {
+				display: inline-block;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				font-size: 0.8em;
+				font-weight: 700;
+				color: rgb(var(--accent));
+				margin-bottom: 0.75em;
+			}
+			.hero h1 {
+				font-size: 2.6em;
+				line-height: 1.1;
+				margin: 0 0 0.4em 0;
+			}
+			.hero p {
+				font-size: 1.1em;
+				color: rgb(var(--gray-dark));
+				max-width: 640px;
+				margin: 0 auto;
+			}
+			.sections {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1.25em;
+				margin: 2.5em 0;
+			}
+			.section-card {
+				display: block;
+				padding: 1.5em;
+				border-radius: 14px;
+				background: white;
+				box-shadow: 0 4px 12px rgba(var(--black), 6%);
+				text-decoration: none;
+				color: var(--black);
+				transition: transform 0.15s ease, box-shadow 0.15s ease;
+			}
+			.section-card:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 18px rgba(var(--black), 10%);
+			}
+			.section-card h3 {
+				margin: 0 0 0.5em 0;
+				font-size: 1.3em;
+			}
+			.section-card p {
+				margin: 0;
+				color: rgb(var(--gray));
+				font-size: 0.95em;
+				line-height: 1.5;
+			}
+			.latest h2 {
+				margin-top: 2em;
+				font-size: 1.5em;
+			}
+			.latest ul {
+				list-style: none;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1.5em;
+				margin: 1em 0 0 0;
+			}
+			.latest li {
+				background: white;
+				border-radius: 12px;
+				padding: 1.25em;
+				box-shadow: 0 2px 8px rgba(var(--black), 4%);
+			}
+			.latest li a {
+				text-decoration: none;
+				color: var(--black);
+			}
+			.latest li h4 {
+				margin: 0.25em 0;
+				line-height: 1.25;
+			}
+			.latest li .date {
+				color: rgb(var(--gray));
+				font-size: 0.85em;
+			}
+			.latest li .cat {
+				display: inline-block;
+				font-size: 0.7em;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: rgb(var(--accent));
+				font-weight: 700;
+			}
+			.empty {
+				text-align: center;
+				color: rgb(var(--gray));
+				padding: 1em;
+				font-style: italic;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<span class="hero-eyebrow">Communauté francophone · The Finals</span>
+				<h1>Grimpe plus vite. Joue plus smart.</h1>
+				<p>
+					Le site français dédié au <strong>compétitif sur The Finals</strong> — guides ranked, analyses
+					meta chaque patch, couverture esport (The Grand Major, équipes pro), et un wiki complet des
+					classes, armes et cartes.
+				</p>
+			</section>
+
+			<section>
+				<div class="sections">
+					{
+						NAV_SECTIONS.map((s) => (
+							<a class="section-card" href={`/${s.slug}/`}>
+								<h3>{s.label}</h3>
+								<p>{s.description}</p>
+							</a>
+						))
+					}
+				</div>
+			</section>
+
+			<section class="latest">
+				<h2>Derniers articles</h2>
+				{
+					latestPosts.length === 0 ? (
+						<p class="empty">Les premiers articles arrivent bientôt — on construit le site en ce moment.</p>
+					) : (
+						<ul>
+							{latestPosts.map((post) => (
+								<li>
+									<a href={`/blog/${post.id}/`}>
+										<span class="cat">{post.data.category ?? 'Article'}</span>
+										<h4>{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+									</a>
+								</li>
+							))}
+						</ul>
+					)
+				}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
