@@ -35,6 +35,11 @@ const headerImage = CAT_IMG[category as keyof typeof CAT_IMG];
 const posts = (await getCollection('blog'))
 	.filter((p) => p.data.category === label)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const splitChars = (text: string) => Array.from(text);
+const sectionLabelText = `${SITE_TITLE} — Catégorie`;
+const titleText = label;
+const taglineText = section.tagline;
 ---
 
 <!doctype html>
@@ -56,11 +61,44 @@ const posts = (await getCollection('blog'))
 				</div>
 
 				<div class="container cat-hero-content">
-					<div class="section-label reveal" style="--rev: 1">{SITE_TITLE} — Catégorie</div>
-					<h1 class="cat-title reveal" data-cat={label} style="--rev: 2">{label}</h1>
-					<p class="cat-tagline reveal" style="--rev: 3">{section.tagline}</p>
-					<p class="cat-desc reveal" style="--rev: 4">{section.description}</p>
-					<div class="cat-meta reveal" style="--rev: 5">
+					<div class="section-label">
+						<span class="split-line" aria-label={sectionLabelText} style="--base: 0s">
+							{splitChars(sectionLabelText).map((ch, i) => (
+								<span
+									class={'split-char' + (ch === ' ' ? ' space' : '')}
+									style={`--i: ${i}`}
+									aria-hidden="true"
+								>{ch === ' ' ? '\u00A0' : ch}</span>
+							))}
+						</span>
+					</div>
+
+					<h1 class="cat-title" data-cat={label}>
+						<span class="split-line" aria-label={titleText} style="--base: 0.45s">
+							{splitChars(titleText).map((ch, i) => (
+								<span
+									class={'split-char' + (ch === ' ' ? ' space' : '')}
+									style={`--i: ${i}`}
+									aria-hidden="true"
+								>{ch === ' ' ? '\u00A0' : ch}</span>
+							))}
+						</span>
+					</h1>
+
+					<p class="cat-tagline">
+						<span class="split-line" aria-label={taglineText} style="--base: 0.85s">
+							{splitChars(taglineText).map((ch, i) => (
+								<span
+									class={'split-char' + (ch === ' ' ? ' space' : '')}
+									style={`--i: ${i}`}
+									aria-hidden="true"
+								>{ch === ' ' ? '\u00A0' : ch}</span>
+							))}
+						</span>
+					</p>
+
+					<p class="cat-desc">{section.description}</p>
+					<div class="cat-meta">
 						<span class="tag tag-cat" data-cat={label}>{label}</span>
 						<span class="cat-count">
 							{posts.length === 0
@@ -76,7 +114,7 @@ const posts = (await getCollection('blog'))
 			<section class="cat-list">
 				<div class="container">
 					{posts.length === 0 ? (
-						<div class="empty card reveal" style="--rev: 6">
+						<div class="empty card">
 							<div class="section-label">Bientôt — En production</div>
 							<h2 class="empty-title">
 								Cette section<br />
@@ -97,8 +135,8 @@ const posts = (await getCollection('blog'))
 						</div>
 					) : (
 						<ul class="posts">
-							{posts.map((post, idx) => (
-								<li class="reveal" style={`--rev: ${6 + idx}`}>
+							{posts.map((post) => (
+								<li>
 									<a class="post card" href={`/blog/${post.id}/`}>
 										{post.data.heroImage && (
 											<div class="post-img">
@@ -137,38 +175,11 @@ const posts = (await getCollection('blog'))
 		<style>
 			main { padding-bottom: 2rem; }
 
-			/* ============ CSS-only reveal animation (no JS dependency) ============ */
-			.reveal {
-				opacity: 0;
-				transform: translateY(60px);
-				will-change: transform, opacity;
-				animation: tfr-reveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-				animation-delay: calc(0.3s + var(--rev, 0) * 220ms);
-			}
-
-			@keyframes tfr-reveal {
-				0%   { opacity: 0; transform: translateY(60px); }
-				100% { opacity: 1; transform: translateY(0); }
-			}
-
-			/* Cat title — bigger travel, longer duration, with scale */
-			.cat-title.reveal {
-				animation-name: tfr-reveal-title;
-				animation-duration: 1.6s;
-				transform: translateY(70px) scale(0.92);
-			}
-			@keyframes tfr-reveal-title {
-				0%   { opacity: 0; transform: translateY(70px) scale(0.92); }
-				100% { opacity: 1; transform: translateY(0) scale(1); }
-			}
-
-			@media (prefers-reduced-motion: reduce) {
-				.reveal {
-					animation: none;
-					opacity: 1;
-					transform: none;
-					clip-path: none;
-				}
+			/* Per-line base delay so the 3 hero text elements cascade sequentially
+			   (label -> title -> tagline), matching the split-letter reveal used
+			   on the homepage hero. */
+			.cat-hero-content .split-char {
+				animation-delay: calc(var(--base, 0s) + 0.04s * var(--i, 0));
 			}
 
 			/* ============ HERO CATÉGORIE ============ */
