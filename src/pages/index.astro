@@ -389,7 +389,7 @@ const latest = allPosts.slice(1, 5);
 				height: 100%;
 				object-fit: cover;
 				object-position: center;
-				opacity: 0.1;
+				opacity: 0.2;
 			}
 
 			/* Very soft tint — image is already at 18% opacity on its own */
@@ -415,16 +415,13 @@ const latest = allPosts.slice(1, 5);
 				font-family: var(--font-mono);
 				font-size: 0.72rem;
 				color: var(--color-rouge);
-				background: var(--color-blanc);
-				padding: 0.55rem 1rem;
-				border: 1px solid rgba(228, 0, 43, 0.35);
-				border-radius: 2px;
+				padding: 0.2rem 0;
 				letter-spacing: 0.22em;
 				text-transform: uppercase;
 				margin-bottom: 1.6rem;
 				flex-wrap: wrap;
 				justify-content: center;
-				box-shadow: 0 4px 14px -6px rgba(228, 0, 43, 0.25);
+				text-shadow: 0 1px 2px rgba(245, 241, 232, 0.7);
 			}
 
 			.broadcast .dot { color: var(--color-rouge); font-size: 0.55rem; }
@@ -460,17 +457,14 @@ const latest = allPosts.slice(1, 5);
 
 			.hero-sub {
 				font-family: var(--font-sans);
-				font-size: 1.05rem;
-				font-weight: 400;
-				color: var(--color-noir-2);
-				max-width: 620px;
+				font-size: 1.1rem;
+				font-weight: 500;
+				color: var(--color-noir);
+				max-width: 640px;
 				margin: 1.5rem auto 2.3rem;
 				line-height: 1.65;
 				animation: heroIn 0.9s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-				background: rgba(255, 255, 255, 0.7);
-				padding: 0.8rem 1.2rem;
-				border-radius: 2px;
-				backdrop-filter: blur(4px);
+				text-shadow: 0 1px 2px rgba(245, 241, 232, 0.8);
 			}
 
 			.hero-sub strong { color: var(--color-rouge); font-weight: 700; }
