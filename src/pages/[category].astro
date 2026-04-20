@@ -56,11 +56,11 @@ const posts = (await getCollection('blog'))
 				</div>
 
 				<div class="container cat-hero-content">
-					<div class="section-label">{SITE_TITLE} — Catégorie</div>
-					<h1 class="cat-title" data-cat={label}>{label}</h1>
-					<p class="cat-tagline">{section.tagline}</p>
-					<p class="cat-desc">{section.description}</p>
-					<div class="cat-meta">
+					<div class="section-label fade-up" style="--fade-delay: 0s">{SITE_TITLE} — Catégorie</div>
+					<h1 class="cat-title" data-cat={label} data-split>{label}</h1>
+					<p class="cat-tagline fade-up" style="--fade-delay: 0.35s">{section.tagline}</p>
+					<p class="cat-desc fade-up" style="--fade-delay: 0.5s">{section.description}</p>
+					<div class="cat-meta fade-up" style="--fade-delay: 0.65s">
 						<span class="tag tag-cat" data-cat={label}>{label}</span>
 						<span class="cat-count">
 							{posts.length === 0
@@ -76,21 +76,20 @@ const posts = (await getCollection('blog'))
 			<section class="cat-list">
 				<div class="container">
 					{posts.length === 0 ? (
-						<div class="empty card">
+						<div class="empty card fade-up" style="--fade-delay: 0.85s">
 							<div class="section-label">Bientôt — En production</div>
 							<h2 class="empty-title">
 								Cette section<br />
 								<em>arrive bientôt.</em>
 							</h2>
 							<p class="empty-text">
-								Les premiers contenus <strong>{label}</strong> sont en préparation. Le
-								workflow IA de rédaction est en cours de calibration — les articles
-								arriveront d'ici quelques jours.
+								Les premiers contenus <strong>{label}</strong> sont en préparation.
+								Les articles arriveront d'ici quelques jours.
 							</p>
 							<div class="empty-tags">
 								<span class="tag tag-red">En cours</span>
-								<span class="tag tag-dark">Workflow IA</span>
-								<span class="tag tag-white">Reviens bientôt</span>
+								<span class="tag tag-dark">Bientôt</span>
+								<span class="tag tag-white">Reviens plus tard</span>
 							</div>
 							<a class="btn btn-outline" href="/" style="margin-top: 2rem;">
 								← Retour à l'accueil
@@ -98,8 +97,8 @@ const posts = (await getCollection('blog'))
 						</div>
 					) : (
 						<ul class="posts">
-							{posts.map((post) => (
-								<li>
+							{posts.map((post, idx) => (
+								<li class="fade-up" style={`--fade-delay: ${(0.85 + idx * 0.08).toFixed(2)}s`}>
 									<a class="post card" href={`/blog/${post.id}/`}>
 										{post.data.heroImage && (
 											<div class="post-img">
@@ -134,6 +133,41 @@ const posts = (await getCollection('blog'))
 			</section>
 		</main>
 		<Footer />
+
+		<script>
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// Reveal fade-up elements on scroll / on load
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((e) => {
+					if (e.isIntersecting) {
+						e.target.classList.add('visible');
+						observer.unobserve(e.target);
+					}
+				});
+			}, { threshold: 0.12 });
+			document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+			// Split-letter cascade on the category title
+			if (!reduced) {
+				document.querySelectorAll('[data-split]').forEach((el) => {
+					const node = /** @type {HTMLElement} */ (el);
+					const text = node.textContent || '';
+					node.classList.add('split-line');
+					node.setAttribute('aria-label', text);
+					node.textContent = '';
+					let i = 0;
+					for (const ch of text) {
+						const span = document.createElement('span');
+						span.className = 'split-char' + (ch === ' ' ? ' space' : '');
+						span.style.setProperty('--i', String(i++));
+						span.setAttribute('aria-hidden', 'true');
+						span.textContent = ch === ' ' ? '\u00A0' : ch;
+						node.appendChild(span);
+					}
+				});
+			}
+		</script>
 
 		<style>
 			main { padding-bottom: 2rem; }

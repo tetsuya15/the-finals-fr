@@ -345,7 +345,6 @@ const latest = allPosts.slice(1, 5);
 		<Footer />
 
 		<script>
-			const init = () => {
 			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const canHover = window.matchMedia('(hover: hover)').matches;
 
@@ -498,9 +497,6 @@ const latest = allPosts.slice(1, 5);
 					});
 				});
 			}
-			};
-
-			document.addEventListener('astro:page-load', init);
 		</script>
 
 		<style>

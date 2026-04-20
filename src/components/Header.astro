@@ -3,11 +3,10 @@ import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<div class="scroll-progress" id="tfrScrollProgress" aria-hidden="true" transition:persist></div>
-<div class="tfr-page-wipe" id="tfrPageWipe" aria-hidden="true" transition:persist></div>
+<div class="scroll-progress" id="tfrScrollProgress" aria-hidden="true"></div>
 <div class="tfr-stripes -thin" aria-hidden="true"></div>
 
-<header class="tfr-nav" transition:persist>
+<header class="tfr-nav">
 	<div class="inner">
 		<a class="logo" href="/" aria-label={`${SITE_TITLE} — accueil`}>
 			<span class="mark" aria-hidden="true">
@@ -163,19 +162,6 @@ import HeaderLink from './HeaderLink.astro';
 		};
 		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('resize', onScroll, { passive: true });
-		document.addEventListener('astro:page-load', update);
-		document.addEventListener('astro:after-swap', update);
 		update();
-
-		// Broadcast wipe on page change
-		const playWipe = () => {
-			const wipe = document.getElementById('tfrPageWipe');
-			if (!wipe) return;
-			wipe.classList.remove('is-playing');
-			// force reflow so animation restarts
-			void wipe.offsetWidth;
-			wipe.classList.add('is-playing');
-		};
-		document.addEventListener('astro:before-preparation', playWipe);
 	})();
 </script>
