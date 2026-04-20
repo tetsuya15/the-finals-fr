@@ -580,75 +580,31 @@ a {
 	justify-content: center;
 }
 
-/* REC badge — standalone red tag with arrow, aggressive jitter + breathing glow + shine sweep */
+/* REC — no badge background, just red dot with rings + red "REC" text, breathing glow */
 .rec-badge {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
-	gap: 0.55rem;
-	padding: 0.38rem 1.1rem 0.38rem 0.65rem;
-	background: var(--color-rouge);
-	color: var(--color-blanc);
+	gap: 0.6rem;
+	padding: 0.25rem 0.1rem;
+	color: var(--color-rouge);
 	font-family: var(--font-mono);
-	font-size: 0.7rem;
-	font-weight: 700;
-	letter-spacing: 0.24em;
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.28em;
 	text-transform: uppercase;
 	flex-shrink: 0;
-	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
-	animation:
-		tfr-rec-jitter 0.18s steps(1) infinite,
-		tfr-rec-breathe 2s ease-in-out infinite;
-	overflow: hidden;
-	isolation: isolate;
-}
-
-@keyframes tfr-rec-jitter {
-	0%   { transform: translate(0, 0) rotate(0); }
-	16%  { transform: translate(1.1px, -0.7px) rotate(0.4deg); }
-	33%  { transform: translate(-0.8px, 1px) rotate(-0.3deg); }
-	50%  { transform: translate(0.6px, 0.9px) rotate(0.3deg); }
-	66%  { transform: translate(-1.1px, -0.5px) rotate(-0.4deg); }
-	83%  { transform: translate(0.8px, 0.4px) rotate(0.2deg); }
-	100% { transform: translate(-0.4px, -0.8px) rotate(0); }
+	animation: tfr-rec-breathe 2s ease-in-out infinite;
 }
 
 @keyframes tfr-rec-breathe {
-	0%, 100% { filter: drop-shadow(0 0 6px rgba(228, 0, 43, 0.5)) drop-shadow(0 0 2px rgba(228, 0, 43, 0.6)); }
-	50%      { filter: drop-shadow(0 0 22px rgba(228, 0, 43, 0.9)) drop-shadow(0 0 8px rgba(228, 0, 43, 0.7)); }
+	0%, 100% { filter: drop-shadow(0 0 4px rgba(228, 0, 43, 0.4)); }
+	50%      { filter: drop-shadow(0 0 16px rgba(228, 0, 43, 0.8)) drop-shadow(0 0 4px rgba(228, 0, 43, 0.5)); }
 }
 
-/* Diagonal light sweeping across the REC badge */
-.rec-badge::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 130%;
-	height: 100%;
-	background: linear-gradient(
-		105deg,
-		transparent 35%,
-		rgba(255, 255, 255, 0.55) 50%,
-		transparent 65%
-	);
-	transform: translateX(-120%);
-	animation: tfr-rec-shine 3.2s ease-in-out infinite;
-	pointer-events: none;
-	z-index: 0;
-}
-
-@keyframes tfr-rec-shine {
-	0%, 35%   { transform: translateX(-120%); }
-	65%, 100% { transform: translateX(100%); }
-}
-
-/* Ensure content sits above the shine */
-.rec-dot,
-.rec-text { position: relative; z-index: 1; }
-
-/* Dot + expanding rings (like a live stream ping) */
+/* Dot + expanding red rings (live stream ping) */
 .rec-dot {
+	position: relative;
 	width: 9px;
 	height: 9px;
 	flex-shrink: 0;
@@ -659,21 +615,21 @@ a {
 	position: absolute;
 	inset: 0;
 	border-radius: 50%;
-	background: var(--color-blanc);
-	box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+	background: var(--color-rouge);
+	box-shadow: 0 0 8px rgba(228, 0, 43, 0.85);
 	animation: tfr-rec-dot-pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes tfr-rec-dot-pulse {
 	0%, 100% { transform: scale(1); opacity: 1; }
-	50%      { transform: scale(0.55); opacity: 0.65; }
+	50%      { transform: scale(0.55); opacity: 0.6; }
 }
 
 .rec-ring {
 	position: absolute;
 	inset: 0;
 	border-radius: 50%;
-	border: 1.5px solid var(--color-blanc);
+	border: 1.5px solid var(--color-rouge);
 	opacity: 0;
 	animation: tfr-rec-ring 1.6s cubic-bezier(0.2, 0.55, 0.3, 1) infinite;
 	pointer-events: none;
@@ -683,20 +639,20 @@ a {
 .rec-ring:nth-child(4) { animation-delay: 1.1s; }
 
 @keyframes tfr-rec-ring {
-	0%   { opacity: 1;   transform: scale(1); }
-	100% { opacity: 0;   transform: scale(4); }
+	0%   { opacity: 1; transform: scale(1); }
+	100% { opacity: 0; transform: scale(4); }
 }
 
-/* Text blink every cycle */
+/* Text subtle blink every cycle */
 .rec-text {
 	animation: tfr-rec-text-blink 2.6s step-end infinite;
 }
 
 @keyframes tfr-rec-text-blink {
 	0%, 86%, 100% { opacity: 1; }
-	88%           { opacity: 0.2; }
+	88%           { opacity: 0.25; }
 	90%           { opacity: 1; }
-	94%           { opacity: 0.3; }
+	94%           { opacity: 0.35; }
 }
 
 /* Marquee — transparent, red text, mask fade on edges */
