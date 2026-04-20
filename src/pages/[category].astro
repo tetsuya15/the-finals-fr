@@ -140,27 +140,26 @@ const posts = (await getCollection('blog'))
 			/* ============ CSS-only reveal animation (no JS dependency) ============ */
 			.reveal {
 				opacity: 0;
-				transform: translateY(40px);
-				clip-path: inset(0 100% 0 0);
-				animation: tfr-reveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-				animation-delay: calc(0.25s + var(--rev, 0) * 220ms);
+				transform: translateY(60px);
+				will-change: transform, opacity;
+				animation: tfr-reveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+				animation-delay: calc(0.3s + var(--rev, 0) * 220ms);
 			}
 
 			@keyframes tfr-reveal {
-				0%   { opacity: 0; transform: translateY(40px); clip-path: inset(0 100% 0 0); }
-				60%  { opacity: 1; }
-				100% { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+				0%   { opacity: 0; transform: translateY(60px); }
+				100% { opacity: 1; transform: translateY(0); }
 			}
 
-			/* Cat title — bigger travel, longer duration, stronger wipe feel */
+			/* Cat title — bigger travel, longer duration, with scale */
 			.cat-title.reveal {
 				animation-name: tfr-reveal-title;
 				animation-duration: 1.6s;
+				transform: translateY(70px) scale(0.92);
 			}
 			@keyframes tfr-reveal-title {
-				0%   { opacity: 0; transform: translateY(70px) scale(0.92); clip-path: inset(0 100% 0 0); }
-				40%  { opacity: 1; }
-				100% { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0 0 0 0); }
+				0%   { opacity: 0; transform: translateY(70px) scale(0.92); }
+				100% { opacity: 1; transform: translateY(0) scale(1); }
 			}
 
 			@media (prefers-reduced-motion: reduce) {
