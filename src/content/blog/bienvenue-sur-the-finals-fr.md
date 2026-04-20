@@ -4,7 +4,7 @@ description: "On lance le premier site francophone 100% dédié au compétitif s
 pubDate: "2026-04-19"
 category: Actus
 author: Benjamin
-heroImage: "../../assets/hero-bienvenue.jpg"
+heroImage: "../../assets/hero-bienvenue.png"
 ---
 
 The Finals a une scène compétitive qui explose — **Grand Major**, équipes pro, circuit mondial, saisons qui se suivent sans répit — et pourtant, en français, **personne ne la couvre sérieusement**. Les sites FR existants traitent le jeu à la volée, au milieu de cinquante autres titres. Pas de suivi ranked digne de ce nom, pas d'analyse meta à chaque patch, pas de couverture esport. Ce site est là pour combler ce trou.
@@ -20,12 +20,9 @@ The Finals a une scène compétitive qui explose — **Grand Major**, équipes p
 
 ## Comment on travaille
 
-Ce site est **construit en public** dans le cadre d'une reconversion vers l'IA. Concrètement : les articles sont produits via un **workflow IA** (draft automatique + recherche web + mise en forme), puis **validés à la main** avant publication. Rien ne part en ligne sans relecture humaine. L'idée est double :
+Chaque article est **rédigé, recherché et relu à la main** avant publication. Tier list sourcées sur les notes officielles, guides testés en ranked, couverture esport suivie match par match. Pas d'info balancée à la va-vite, pas de recyclage d'article anglais bâclé. L'objectif : que tu repartes d'ici avec quelque chose d'**actionnable** — un build qui marche, un pick qui claque, une info à jour.
 
-1. Produire du contenu FR de qualité à un rythme soutenu.
-2. Documenter publiquement comment on construit ça — parce que ce workflow IA est, en soi, un projet intéressant.
-
-Le code du site est [open-source sur GitHub](https://github.com/tetsuya15). Les articles sont sous licence CC BY-NC-SA.
+Le site est construit en public. Le code est [open-source sur GitHub](https://github.com/tetsuya15). Les articles sont sous licence CC BY-NC-SA.
 
 ## Premier objectif
 

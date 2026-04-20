@@ -7,7 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { NAV_SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-import heroBg from '../assets/hero-bienvenue.jpg';
+import heroBg from '../assets/hero-bienvenue.png';
 import catRanked from '../assets/cat-ranked.jpg';
 import catMeta from '../assets/cat-meta.jpg';
 import catEsport from '../assets/cat-esport.jpg';
@@ -122,10 +122,10 @@ const latest = allPosts.slice(1, 5);
 								<strong>un seul jeu</strong>, à fond, en français.
 							</p>
 							<p class="p">
-								Articles produits via un <strong>workflow IA</strong> (draft
-								automatique + recherche web + mise en forme), puis
-								<strong>validés à la main</strong> avant publication. Rien ne part en
-								ligne sans relecture humaine.
+								Chaque article est <strong>rédigé, recherché et relu à la main</strong>
+								avant publication. Pas d'info balancée à la va-vite : tier list
+								sourcées, guides testés en ranked, couverture esport suivie match par
+								match.
 							</p>
 							<div class="intro-tags">
 								<span class="tag tag-cat" data-cat="Ranked">Ranked</span>
@@ -323,10 +323,11 @@ const latest = allPosts.slice(1, 5);
 						<div class="card r-card fade-up">
 							<div class="r-num">03</div>
 							<div class="r-body">
-								<h3>Workflow IA transparent</h3>
+								<h3>À jour à chaque patch</h3>
 								<p>
-									Articles produits par IA, validés à la main. Code open-source sur
-									GitHub. Le process est public — parce que c'est aussi ça le produit.
+									Tier list révisée à chaque mise à jour, guides ranked actualisés à
+									chaque saison, couverture esport suivie tournoi par tournoi. Pas
+									d'article qui traîne six mois après un rework.
 								</p>
 							</div>
 						</div>
@@ -336,8 +337,8 @@ const latest = allPosts.slice(1, 5);
 							<div class="r-body">
 								<h3>Rythme soutenu</h3>
 								<p>
-									Le workflow IA permet de publier plusieurs articles par semaine sans
-									sacrifier la qualité. Tier list à chaque patch, couverture chaque tournoi.
+									Plusieurs articles par semaine sans sacrifier la qualité. Tier list
+									à chaque patch, couverture chaque tournoi, guides approfondis.
 								</p>
 							</div>
 						</div>
@@ -388,7 +389,7 @@ const latest = allPosts.slice(1, 5);
 				height: 100%;
 				object-fit: cover;
 				object-position: center;
-				opacity: 0.18;
+				opacity: 0.1;
 			}
 
 			/* Very soft tint — image is already at 18% opacity on its own */
@@ -576,16 +577,9 @@ const latest = allPosts.slice(1, 5);
 				position: absolute;
 				top: 0;
 				right: 0;
-				width: 90px;
+				width: 4px;
 				height: 100%;
-				background: repeating-linear-gradient(
-					-45deg,
-					var(--color-rouge) 0,
-					var(--color-rouge) 12px,
-					var(--color-blanc) 12px,
-					var(--color-blanc) 24px
-				);
-				opacity: 0.85;
+				background: var(--color-rouge);
 			}
 
 			.v-eyebrow {
@@ -607,7 +601,6 @@ const latest = allPosts.slice(1, 5);
 				color: var(--color-noir);
 				position: relative;
 				margin-bottom: 1.5rem;
-				max-width: calc(100% - 90px);
 			}
 
 			.v-big em {
@@ -620,7 +613,6 @@ const latest = allPosts.slice(1, 5);
 				flex-wrap: wrap;
 				gap: 0.5rem;
 				position: relative;
-				max-width: calc(100% - 90px);
 			}
 
 			/* ============ SECTIONS GRID ============ */
