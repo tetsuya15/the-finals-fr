@@ -580,7 +580,7 @@ a {
 	justify-content: center;
 }
 
-/* REC badge — standalone red tag with arrow point, micro-jitter + glow */
+/* REC badge — standalone red tag with arrow, aggressive jitter + breathing glow + shine sweep */
 .rec-badge {
 	position: relative;
 	display: inline-flex;
@@ -596,22 +596,59 @@ a {
 	text-transform: uppercase;
 	flex-shrink: 0;
 	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
-	filter: drop-shadow(0 0 10px rgba(228, 0, 43, 0.55));
-	animation: tfr-rec-jitter 0.35s steps(1) infinite;
+	animation:
+		tfr-rec-jitter 0.18s steps(1) infinite,
+		tfr-rec-breathe 2s ease-in-out infinite;
+	overflow: hidden;
+	isolation: isolate;
 }
 
 @keyframes tfr-rec-jitter {
-	0%   { transform: translate(0, 0); }
-	20%  { transform: translate(0.4px, -0.3px); }
-	40%  { transform: translate(-0.3px, 0.4px); }
-	60%  { transform: translate(0.2px, 0.3px); }
-	80%  { transform: translate(-0.4px, -0.2px); }
-	100% { transform: translate(0.3px, 0.2px); }
+	0%   { transform: translate(0, 0) rotate(0); }
+	16%  { transform: translate(1.1px, -0.7px) rotate(0.4deg); }
+	33%  { transform: translate(-0.8px, 1px) rotate(-0.3deg); }
+	50%  { transform: translate(0.6px, 0.9px) rotate(0.3deg); }
+	66%  { transform: translate(-1.1px, -0.5px) rotate(-0.4deg); }
+	83%  { transform: translate(0.8px, 0.4px) rotate(0.2deg); }
+	100% { transform: translate(-0.4px, -0.8px) rotate(0); }
 }
 
-/* Dot + expanding rings (like a live stream / airdrop ping) */
+@keyframes tfr-rec-breathe {
+	0%, 100% { filter: drop-shadow(0 0 6px rgba(228, 0, 43, 0.5)) drop-shadow(0 0 2px rgba(228, 0, 43, 0.6)); }
+	50%      { filter: drop-shadow(0 0 22px rgba(228, 0, 43, 0.9)) drop-shadow(0 0 8px rgba(228, 0, 43, 0.7)); }
+}
+
+/* Diagonal light sweeping across the REC badge */
+.rec-badge::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 130%;
+	height: 100%;
+	background: linear-gradient(
+		105deg,
+		transparent 35%,
+		rgba(255, 255, 255, 0.55) 50%,
+		transparent 65%
+	);
+	transform: translateX(-120%);
+	animation: tfr-rec-shine 3.2s ease-in-out infinite;
+	pointer-events: none;
+	z-index: 0;
+}
+
+@keyframes tfr-rec-shine {
+	0%, 35%   { transform: translateX(-120%); }
+	65%, 100% { transform: translateX(100%); }
+}
+
+/* Ensure content sits above the shine */
+.rec-dot,
+.rec-text { position: relative; z-index: 1; }
+
+/* Dot + expanding rings (like a live stream ping) */
 .rec-dot {
-	position: relative;
 	width: 9px;
 	height: 9px;
 	flex-shrink: 0;
@@ -623,13 +660,13 @@ a {
 	inset: 0;
 	border-radius: 50%;
 	background: var(--color-blanc);
-	box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
-	animation: tfr-rec-dot-pulse 1.4s ease-in-out infinite;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+	animation: tfr-rec-dot-pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes tfr-rec-dot-pulse {
 	0%, 100% { transform: scale(1); opacity: 1; }
-	50%      { transform: scale(0.7); opacity: 0.7; }
+	50%      { transform: scale(0.55); opacity: 0.65; }
 }
 
 .rec-ring {
@@ -638,28 +675,28 @@ a {
 	border-radius: 50%;
 	border: 1.5px solid var(--color-blanc);
 	opacity: 0;
-	animation: tfr-rec-ring 1.8s cubic-bezier(0.2, 0.55, 0.3, 1) infinite;
+	animation: tfr-rec-ring 1.6s cubic-bezier(0.2, 0.55, 0.3, 1) infinite;
 	pointer-events: none;
 }
 
-.rec-ring:nth-child(3) { animation-delay: 0.6s; }
-.rec-ring:nth-child(4) { animation-delay: 1.2s; }
+.rec-ring:nth-child(3) { animation-delay: 0.55s; }
+.rec-ring:nth-child(4) { animation-delay: 1.1s; }
 
 @keyframes tfr-rec-ring {
-	0%   { opacity: 0.9; transform: scale(1); }
-	100% { opacity: 0;   transform: scale(3.6); }
+	0%   { opacity: 1;   transform: scale(1); }
+	100% { opacity: 0;   transform: scale(4); }
 }
 
-/* Subtle text blink every cycle */
+/* Text blink every cycle */
 .rec-text {
 	animation: tfr-rec-text-blink 2.6s step-end infinite;
 }
 
 @keyframes tfr-rec-text-blink {
-	0%, 91%, 100% { opacity: 1; }
-	93%           { opacity: 0.25; }
-	95%           { opacity: 1; }
-	97%           { opacity: 0.4; }
+	0%, 86%, 100% { opacity: 1; }
+	88%           { opacity: 0.2; }
+	90%           { opacity: 1; }
+	94%           { opacity: 0.3; }
 }
 
 /* Marquee — transparent, red text, mask fade on edges */
@@ -710,82 +747,118 @@ a {
 	to   { transform: translateX(-50%); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.marquee-track,
-	.rec-badge,
-	.rec-dot::before,
-	.rec-ring,
-	.rec-text { animation: none; }
-	.rec-ring { display: none; }
-}
+/* Broadcast identity (REC badge + marquee) always animates — intentional,
+   it's the signature live-stream feel of the site. */
 
 /* -------------------------------------------------------------------------- */
-/*  Hero background — Ken Burns + broadcast glitch + scan line                */
+/*  Hero background — aggressive Ken Burns + continuous scan lines + glitch   */
 /* -------------------------------------------------------------------------- */
 
 .hero-media-zoom {
 	position: absolute;
-	inset: -6%;
-	animation: tfr-kenburns 36s ease-in-out infinite alternate;
-	will-change: transform, filter;
+	inset: -12%;
+	animation: tfr-kenburns 22s ease-in-out infinite alternate;
+	will-change: transform;
 }
 
 @keyframes tfr-kenburns {
-	0%   { transform: scale(1.06) translate(-1%, -1.2%); }
-	50%  { transform: scale(1.14) translate(2%, 0.8%); }
-	100% { transform: scale(1.07) translate(-0.6%, 1.5%); }
+	0%   { transform: scale(1.00) translate(0%, 0%); }
+	25%  { transform: scale(1.12) translate(-3%, -2%); }
+	50%  { transform: scale(1.25) translate(3%, 2.5%); }
+	75%  { transform: scale(1.15) translate(2%, -2.5%); }
+	100% { transform: scale(1.08) translate(-2.5%, 2%); }
 }
 
+/* Continuous horizontal scan line sweeping top to bottom */
+.hero-scanline {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 40%;
+	top: -45%;
+	pointer-events: none;
+	z-index: 1;
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgba(255, 255, 255, 0.08) 35%,
+		rgba(228, 0, 43, 0.18) 50%,
+		rgba(255, 255, 255, 0.08) 65%,
+		transparent 100%
+	);
+	animation: tfr-scanline-sweep 5.5s linear infinite;
+	mix-blend-mode: overlay;
+	will-change: transform;
+}
+
+/* Second scanline offset for perpetual motion */
+.hero-scanline::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 220%;
+	height: 100%;
+	background: inherit;
+}
+
+@keyframes tfr-scanline-sweep {
+	0%   { transform: translateY(0); }
+	100% { transform: translateY(450%); }
+}
+
+/* Glitch bands — more frequent and visible (~12% of each cycle) */
 .hero-glitch {
 	position: absolute;
 	inset: 0;
 	pointer-events: none;
 	z-index: 1;
 	mix-blend-mode: screen;
-	background:
-		linear-gradient(90deg, transparent 48%, rgba(228, 0, 43, 0.25) 50%, transparent 52%);
-	opacity: 0;
-	animation: tfr-broadcast-glitch 8.3s linear infinite;
+	animation: tfr-broadcast-glitch 5s linear infinite;
+	will-change: transform, background;
 }
 
 @keyframes tfr-broadcast-glitch {
-	0%, 92%, 100% { opacity: 0; transform: translate(0, 0) scaleX(1); }
-	93%           { opacity: 0.6; transform: translate(3px, 0) scaleX(1.02); }
-	94%           { opacity: 0; transform: translate(-2px, 0) scaleX(0.98); }
-	95%           { opacity: 0.45; transform: translate(1px, 0) scaleX(1); }
-	96%           { opacity: 0; transform: translate(0, 0) scaleX(1); }
+	0%, 10% {
+		background: linear-gradient(90deg, transparent 0%, transparent 50%, transparent 100%);
+		transform: translateX(0);
+	}
+	11% {
+		background: linear-gradient(90deg, transparent 40%, rgba(228, 0, 43, 0.35) 50%, transparent 60%);
+		transform: translateX(-6px);
+	}
+	12% { transform: translateX(8px); }
+	13% { transform: translateX(-3px); }
+	14% {
+		background: linear-gradient(90deg, transparent 0%, transparent 50%, transparent 100%);
+		transform: translateX(0);
+	}
+	45% {
+		background: linear-gradient(90deg, transparent 30%, rgba(0, 190, 215, 0.25) 48%, rgba(228, 0, 43, 0.3) 52%, transparent 70%);
+		transform: translateX(5px);
+	}
+	46% { transform: translateX(-7px); }
+	47% {
+		background: linear-gradient(90deg, transparent 0%, transparent 50%, transparent 100%);
+		transform: translateX(0);
+	}
+	78% {
+		background: linear-gradient(90deg, transparent 60%, rgba(228, 0, 43, 0.25) 70%, transparent 80%);
+		transform: translateX(-4px);
+	}
+	79% {
+		background: linear-gradient(90deg, transparent 0%, transparent 50%, transparent 100%);
+		transform: translateX(0);
+	}
+	100% {
+		background: linear-gradient(90deg, transparent 0%, transparent 50%, transparent 100%);
+		transform: translateX(0);
+	}
 }
 
-.hero-scanline {
-	position: absolute;
-	left: 0;
-	right: 0;
-	height: 18%;
-	top: -20%;
-	pointer-events: none;
-	z-index: 1;
-	background: linear-gradient(
-		180deg,
-		transparent 0%,
-		rgba(255, 255, 255, 0.05) 40%,
-		rgba(228, 0, 43, 0.09) 50%,
-		rgba(255, 255, 255, 0.05) 60%,
-		transparent 100%
-	);
-	animation: tfr-scanline-sweep 7.5s cubic-bezier(0.6, 0, 0.4, 1) infinite;
-	mix-blend-mode: overlay;
-}
-
-@keyframes tfr-scanline-sweep {
-	0%, 70%  { transform: translateY(0); opacity: 0; }
-	72%      { opacity: 1; }
-	100%     { transform: translateY(640%); opacity: 0; }
-}
-
+/* Keep only the rapid glitch under motion-reduce — Ken Burns + scanline always run (no seizure risk) */
 @media (prefers-reduced-motion: reduce) {
-	.hero-media-zoom { animation: none; }
 	.hero-glitch { display: none; }
-	.hero-scanline { display: none; }
 }
 
 /* -------------------------------------------------------------------------- */
