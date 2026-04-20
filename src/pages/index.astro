@@ -42,23 +42,32 @@ const latest = allPosts.slice(1, 5);
 		<main>
 			<!-- ============ HERO ============ -->
 			<section class="hero">
-				<div class="hero-media" id="heroMedia" aria-hidden="true">
-					<Image
-						src={heroBg}
-						alt=""
-						width={1920}
-						height={1080}
-						loading="eager"
-						quality={85}
-					/>
+				<div class="hero-media" aria-hidden="true">
+					<div class="hero-media-parallax" id="heroMedia">
+						<div class="hero-media-zoom">
+							<Image
+								src={heroBg}
+								alt=""
+								width={1920}
+								height={1080}
+								loading="eager"
+								quality={85}
+							/>
+						</div>
+					</div>
+					<div class="hero-glitch"></div>
+					<div class="hero-scanline"></div>
 					<div class="hero-wash"></div>
 				</div>
 
 				<div class="hero-content">
 					<div class="broadcast-bar" aria-label="Bandeau d'informations The Finals FR">
 						<span class="rec-badge" aria-hidden="true">
-							<span class="rec-dot"></span>
-							<span>REC</span>
+							<span class="rec-dot">
+								<span class="rec-ring"></span>
+								<span class="rec-ring"></span>
+							</span>
+							<span class="rec-text">REC</span>
 						</span>
 						<div class="marquee">
 							<div class="marquee-track">
@@ -466,22 +475,20 @@ const latest = allPosts.slice(1, 5);
 				document.querySelectorAll('.section-title').forEach((el) => titleObserver.observe(el));
 			}
 
-			// Parallax on hero background image
+			// Parallax on hero background (outer wrapper; Ken Burns animates the inner)
 			if (!reduced) {
 				const media = document.getElementById('heroMedia');
-				const img = media?.querySelector('img');
-				if (media && img) {
+				if (media) {
 					let raf = 0;
 					const apply = () => {
 						const y = Math.min(window.scrollY, 800);
-						img.style.transform = `translate3d(0, ${y * 0.25}px, 0) scale(1.08)`;
+						media.style.transform = `translate3d(0, ${(y * 0.25).toFixed(2)}px, 0)`;
 						raf = 0;
 					};
 					const onScroll = () => {
 						if (raf) return;
 						raf = requestAnimationFrame(apply);
 					};
-					img.style.willChange = 'transform';
 					window.addEventListener('scroll', onScroll, { passive: true });
 					apply();
 				}
@@ -559,12 +566,20 @@ const latest = allPosts.slice(1, 5);
 				background: var(--color-cream);
 			}
 
-			.hero-media :global(img) {
+			.hero-media-parallax {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				overflow: hidden;
+				will-change: transform;
+			}
+
+			.hero-media-zoom :global(img) {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
 				object-position: center;
-				opacity: 0.2;
+				opacity: 0.22;
 			}
 
 			/* Very soft tint — image is already at 18% opacity on its own */
@@ -583,20 +598,23 @@ const latest = allPosts.slice(1, 5);
 				width: 100%;
 			}
 
-			.broadcast {
-				display: block;
+			.broadcast-bar {
+				margin: 0 auto 1.7rem;
+			}
+
+			.marquee {
 				font-family: var(--font-mono);
 				font-size: 0.72rem;
 				color: var(--color-rouge);
-				padding: 0.2rem 0;
 				letter-spacing: 0.22em;
 				text-transform: uppercase;
-				margin: 0 auto 1.6rem;
-				text-shadow: 0 1px 2px rgba(245, 241, 232, 0.7);
+				text-shadow: 0 1px 2px rgba(245, 241, 232, 0.85);
 			}
 
-			.broadcast .dot { color: var(--color-rouge); font-size: 0.55rem; }
-			.broadcast .sep { color: var(--color-gris); opacity: 0.6; }
+			.marquee .sep {
+				color: var(--color-gris);
+				opacity: 0.55;
+			}
 
 			.hero-title {
 				font-family: var(--font-display);
