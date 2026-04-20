@@ -7,6 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { NAV_SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
+import heroBg from '../assets/hero-bienvenue.jpg';
 import catRanked from '../assets/cat-ranked.jpg';
 import catMeta from '../assets/cat-meta.jpg';
 import catEsport from '../assets/cat-esport.jpg';
@@ -41,9 +42,17 @@ const latest = allPosts.slice(1, 5);
 		<main>
 			<!-- ============ HERO ============ -->
 			<section class="hero">
-				<canvas id="hero-canvas" aria-hidden="true"></canvas>
-				<div class="hero-bg" aria-hidden="true"></div>
-				<div class="scanlines" aria-hidden="true"></div>
+				<div class="hero-media" aria-hidden="true">
+					<Image
+						src={heroBg}
+						alt=""
+						width={1920}
+						height={1080}
+						loading="eager"
+						quality={85}
+					/>
+					<div class="hero-wash"></div>
+				</div>
 
 				<div class="hero-content">
 					<div class="broadcast">
@@ -62,8 +71,8 @@ const latest = allPosts.slice(1, 5);
 
 					<p class="hero-sub">
 						Le site communautaire francophone <strong>100% dédié au compétitif</strong> sur
-						<strong>THE FINALS</strong>. Guides ranked, tier lists meta, couverture esport du
-						Grand Major, et un wiki en français.
+						<strong>THE FINALS</strong>. Guides ranked, tier lists meta, couverture esport
+						du Grand Major, et un wiki en français.
 					</p>
 
 					<div class="hero-cta">
@@ -97,6 +106,8 @@ const latest = allPosts.slice(1, 5);
 				</div>
 			</section>
 
+			<div class="tfr-stripes" aria-hidden="true"></div>
+
 			<!-- ============ POSITIONNEMENT ============ -->
 			<section class="intro">
 				<div class="container">
@@ -105,37 +116,39 @@ const latest = allPosts.slice(1, 5);
 							<div class="section-label">À propos du site</div>
 							<h2 class="section-title">Un seul jeu. <em>Un seul angle.</em> À fond.</h2>
 							<p class="p">
-								<strong>The Finals FR</strong> est le site communautaire francophone dédié au
-								<strong>compétitif</strong> sur THE FINALS. Pas de dilution généraliste, pas de
-								"10 jeux à la fois". On couvre <strong>un seul jeu</strong>, à fond, en français.
+								<strong>The Finals FR</strong> est le site communautaire francophone
+								dédié au <strong>compétitif</strong> sur THE FINALS. Pas de dilution
+								généraliste, pas de "10 jeux à la fois". On couvre
+								<strong>un seul jeu</strong>, à fond, en français.
 							</p>
 							<p class="p">
-								Articles produits via un <strong>workflow IA</strong> (draft automatique +
-								recherche web + mise en forme), puis <strong>validés à la main</strong> avant
-								publication. Rien ne part en ligne sans relecture humaine.
+								Articles produits via un <strong>workflow IA</strong> (draft
+								automatique + recherche web + mise en forme), puis
+								<strong>validés à la main</strong> avant publication. Rien ne part en
+								ligne sans relecture humaine.
 							</p>
 							<div class="intro-tags">
-								<span class="tag tag-red">Ranked</span>
-								<span class="tag tag-gold">Meta</span>
-								<span class="tag tag-blue">Esport</span>
-								<span class="tag tag-white">Wiki</span>
-								<span class="tag tag-green">Actus</span>
-								<span class="tag tag-purple">Lore</span>
-								<span class="tag tag-gold">FR</span>
+								<span class="tag tag-cat" data-cat="Ranked">Ranked</span>
+								<span class="tag tag-cat" data-cat="Meta">Meta</span>
+								<span class="tag tag-cat" data-cat="Esport">Esport</span>
+								<span class="tag tag-cat" data-cat="Wiki">Wiki</span>
+								<span class="tag tag-cat" data-cat="Actus">Actus</span>
+								<span class="tag tag-cat" data-cat="Lore">Lore</span>
 								<span class="tag tag-red">Build in public</span>
 							</div>
 						</div>
 
 						<div class="visual">
 							<div class="visual-inner">
+								<div class="v-stripes" aria-hidden="true"></div>
 								<div class="v-eyebrow">The Finals FR · Manifeste</div>
 								<p class="v-big">
 									"On ne <em>couvre</em> pas dix jeux.<br />
-									On fait <em class="gold">un</em> jeu, à fond, en <em class="gold">FR</em>."
+									On fait <em>un</em> jeu, à fond, en <em>FR</em>."
 								</p>
 								<div class="v-tags">
 									<span class="tag tag-red">Spécialiste</span>
-									<span class="tag tag-gold">Compétitif</span>
+									<span class="tag tag-dark">Compétitif</span>
 									<span class="tag tag-white">Francophone</span>
 								</div>
 							</div>
@@ -144,16 +157,14 @@ const latest = allPosts.slice(1, 5);
 				</div>
 			</section>
 
-			<div class="divider"></div>
-
 			<!-- ============ SECTIONS / CATÉGORIES ============ -->
 			<section class="sections">
 				<div class="container">
 					<div class="section-label">Catégories</div>
 					<h2 class="section-title">Explore <em>le site</em></h2>
 					<p class="section-desc">
-						Six verticales éditoriales, chacune focalisée. Clique sur une catégorie pour
-						lister tous ses articles.
+						Six verticales éditoriales, chacune focalisée. Clique sur une catégorie
+						pour lister tous ses articles.
 					</p>
 
 					<div class="sections-grid">
@@ -167,7 +178,6 @@ const latest = allPosts.slice(1, 5);
 										height={360}
 										loading={i < 3 ? 'eager' : 'lazy'}
 									/>
-									<div class="sec-img-overlay"></div>
 								</div>
 								<div class="sec-body">
 									<div class="sec-top">
@@ -184,7 +194,7 @@ const latest = allPosts.slice(1, 5);
 				</div>
 			</section>
 
-			<div class="divider"></div>
+			<div class="tfr-stripes -thin" aria-hidden="true"></div>
 
 			<!-- ============ LATEST / DIRECT ============ -->
 			<section class="latest">
@@ -204,7 +214,6 @@ const latest = allPosts.slice(1, 5);
 											height={540}
 											loading="eager"
 										/>
-										<div class="feat-img-overlay"></div>
 									</div>
 								)}
 								<div class="feat-body">
@@ -214,7 +223,7 @@ const latest = allPosts.slice(1, 5);
 												{featured.data.category}
 											</span>
 										)}
-										<span class="tag tag-gold">À la une</span>
+										<span class="tag tag-red">À la une</span>
 									</div>
 									<h3 class="feat-title">{featured.data.title}</h3>
 									<p class="feat-desc">{featured.data.description}</p>
@@ -282,8 +291,6 @@ const latest = allPosts.slice(1, 5);
 				</div>
 			</section>
 
-			<div class="divider"></div>
-
 			<!-- ============ POURQUOI ============ -->
 			<section class="reasons">
 				<div class="container">
@@ -296,8 +303,8 @@ const latest = allPosts.slice(1, 5);
 							<div class="r-body">
 								<h3>Compétitif uniquement</h3>
 								<p>
-									Pas de guide "comment installer le jeu". Ici c'est ranked, meta, esport.
-									L'angle est verrouillé. Si tu veux grimper, t'es au bon endroit.
+									Pas de guide "comment installer le jeu". Ici c'est ranked, meta,
+									esport. L'angle est verrouillé. Si tu veux grimper, t'es au bon endroit.
 								</p>
 							</div>
 						</div>
@@ -307,8 +314,8 @@ const latest = allPosts.slice(1, 5);
 							<div class="r-body">
 								<h3>100% français</h3>
 								<p>
-									Le seul site FR focus compétitif. Les sites généralistes FR traitent The
-									Finals au milieu de 50 autres jeux. Nous, c'est uniquement ce jeu-là.
+									Le seul site FR focus compétitif. Les sites généralistes FR traitent
+									The Finals au milieu de 50 autres jeux. Nous, c'est uniquement ce jeu-là.
 								</p>
 							</div>
 						</div>
@@ -318,8 +325,8 @@ const latest = allPosts.slice(1, 5);
 							<div class="r-body">
 								<h3>Workflow IA transparent</h3>
 								<p>
-									Articles produits par IA, validés à la main. Code open-source sur GitHub.
-									Le process est public — parce que c'est aussi ça le produit.
+									Articles produits par IA, validés à la main. Code open-source sur
+									GitHub. Le process est public — parce que c'est aussi ça le produit.
 								</p>
 							</div>
 						</div>
@@ -341,61 +348,6 @@ const latest = allPosts.slice(1, 5);
 		<Footer />
 
 		<script>
-			// Hero particles canvas
-			const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement | null;
-			if (canvas) {
-				const ctx = canvas.getContext('2d')!;
-				let W = 0, H = 0;
-				type Particle = {
-					x: number; y: number; vx: number; vy: number;
-					alpha: number; size: number; color: string;
-				};
-				let particles: Particle[] = [];
-
-				function resize() {
-					W = canvas!.width = canvas!.offsetWidth;
-					H = canvas!.height = canvas!.offsetHeight;
-				}
-
-				function reset(p: Particle) {
-					p.x = Math.random() * W;
-					p.y = Math.random() * H + H * 0.2;
-					p.vx = (Math.random() - 0.5) * 0.3;
-					p.vy = -(Math.random() * 0.5 + 0.15);
-					p.alpha = Math.random() * 0.6 + 0.1;
-					p.size = Math.random() * 2.2 + 0.4;
-					p.color = Math.random() > 0.72 ? '#F4A811' : '#C8102E';
-				}
-
-				function make(): Particle {
-					const p = { x: 0, y: 0, vx: 0, vy: 0, alpha: 0, size: 0, color: '' };
-					reset(p);
-					return p;
-				}
-
-				resize();
-				particles = Array.from({ length: 90 }, () => make());
-				window.addEventListener('resize', resize);
-
-				function loop() {
-					ctx.clearRect(0, 0, W, H);
-					for (const p of particles) {
-						p.x += p.vx; p.y += p.vy; p.alpha -= 0.003;
-						if (p.alpha <= 0 || p.y < -10) reset(p);
-						ctx.save();
-						ctx.globalAlpha = p.alpha;
-						ctx.fillStyle = p.color;
-						ctx.beginPath();
-						ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-						ctx.fill();
-						ctx.restore();
-					}
-					requestAnimationFrame(loop);
-				}
-				loop();
-			}
-
-			// Fade-up observer
 			const observer = new IntersectionObserver((entries) => {
 				entries.forEach((e) => {
 					if (e.isIntersecting) {
@@ -408,55 +360,47 @@ const latest = allPosts.slice(1, 5);
 		</script>
 
 		<style>
-			main { padding-bottom: 2rem; }
+			main { padding-bottom: 0; }
 
 			/* ============ HERO ============ */
 			.hero {
 				position: relative;
-				min-height: 92vh;
+				min-height: 88vh;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 				text-align: center;
 				overflow: hidden;
-				padding: 5rem 1.5rem;
+				padding: 5rem 1.5rem 6rem;
+				background: var(--color-cream);
 			}
 
-			#hero-canvas {
+			.hero-media {
 				position: absolute;
 				inset: 0;
 				z-index: 0;
 			}
 
-			.hero-bg {
+			.hero-media :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+			}
+
+			/* Bright wash: lift the image, push cream + slight red vignette */
+			.hero-wash {
 				position: absolute;
 				inset: 0;
 				background:
-					radial-gradient(ellipse 80% 60% at 50% 60%, rgba(200,16,46,0.14) 0%, transparent 70%),
-					radial-gradient(ellipse 40% 30% at 20% 80%, rgba(244,168,17,0.08) 0%, transparent 50%),
-					radial-gradient(ellipse 40% 30% at 80% 20%, rgba(244,168,17,0.05) 0%, transparent 60%),
-					linear-gradient(180deg, #080808 0%, #0f0505 50%, #080808 100%);
-				z-index: 1;
-			}
-
-			.scanlines {
-				position: absolute;
-				inset: 0;
-				background: repeating-linear-gradient(
-					0deg,
-					transparent 0,
-					transparent 2px,
-					rgba(0, 0, 0, 0.08) 2px,
-					rgba(0, 0, 0, 0.08) 4px
-				);
-				z-index: 2;
-				pointer-events: none;
+					linear-gradient(180deg, rgba(245, 241, 232, 0.35) 0%, rgba(245, 241, 232, 0.1) 35%, rgba(245, 241, 232, 0.85) 100%),
+					radial-gradient(ellipse 55% 40% at 50% 35%, rgba(228, 0, 43, 0.1) 0%, transparent 70%);
 			}
 
 			.hero-content {
 				position: relative;
-				z-index: 3;
+				z-index: 2;
 				max-width: 960px;
 				width: 100%;
 			}
@@ -468,38 +412,26 @@ const latest = allPosts.slice(1, 5);
 				font-family: var(--font-mono);
 				font-size: 0.72rem;
 				color: var(--color-rouge);
+				background: var(--color-blanc);
+				padding: 0.55rem 1rem;
+				border: 1px solid rgba(228, 0, 43, 0.35);
+				border-radius: 2px;
 				letter-spacing: 0.22em;
 				text-transform: uppercase;
-				margin-bottom: 1.3rem;
+				margin-bottom: 1.6rem;
 				flex-wrap: wrap;
 				justify-content: center;
-				padding: 0 0.5rem;
+				box-shadow: 0 4px 14px -6px rgba(228, 0, 43, 0.25);
 			}
 
-			.broadcast::before,
-			.broadcast::after {
-				content: '';
-				height: 1px;
-				width: 48px;
-				background: var(--color-rouge);
-				opacity: 0.55;
-			}
-
-			.broadcast .dot {
-				color: var(--color-rouge-2);
-				font-size: 0.55rem;
-			}
-
-			.broadcast .sep {
-				color: var(--color-gris);
-				opacity: 0.6;
-			}
+			.broadcast .dot { color: var(--color-rouge); font-size: 0.55rem; }
+			.broadcast .sep { color: var(--color-gris); opacity: 0.6; }
 
 			.hero-title {
 				font-family: var(--font-display);
 				font-size: clamp(3.5rem, 11vw, 9rem);
 				font-weight: 900;
-				line-height: 0.88;
+				line-height: 0.9;
 				text-transform: uppercase;
 				letter-spacing: -0.02em;
 				margin-bottom: 0.5rem;
@@ -507,38 +439,38 @@ const latest = allPosts.slice(1, 5);
 			}
 
 			@keyframes heroIn {
-				from { opacity: 0; transform: translateY(40px) skewY(1.5deg); }
-				to { opacity: 1; transform: translateY(0) skewY(0); }
+				from { opacity: 0; transform: translateY(32px); }
+				to { opacity: 1; transform: translateY(0); }
 			}
 
 			.hero-title .line1 {
 				display: block;
-				color: var(--color-blanc);
+				color: var(--color-noir);
+				text-shadow: 0 2px 24px rgba(255, 255, 255, 0.5);
 			}
 
 			.hero-title .line2 {
 				display: block;
 				color: var(--color-rouge);
-				text-shadow:
-					0 0 60px rgba(200, 16, 46, 0.8),
-					0 0 120px rgba(200, 16, 46, 0.3);
+				text-shadow: 0 2px 30px rgba(255, 255, 255, 0.6);
 			}
 
 			.hero-sub {
 				font-family: var(--font-sans);
 				font-size: 1.05rem;
 				font-weight: 400;
-				color: rgba(240, 234, 214, 0.7);
-				max-width: 600px;
+				color: var(--color-noir-2);
+				max-width: 620px;
 				margin: 1.5rem auto 2.3rem;
 				line-height: 1.65;
 				animation: heroIn 0.9s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+				background: rgba(255, 255, 255, 0.7);
+				padding: 0.8rem 1.2rem;
+				border-radius: 2px;
+				backdrop-filter: blur(4px);
 			}
 
-			.hero-sub strong {
-				color: var(--color-blanc);
-				font-weight: 600;
-			}
+			.hero-sub strong { color: var(--color-rouge); font-weight: 700; }
 
 			.hero-cta {
 				display: flex;
@@ -549,7 +481,7 @@ const latest = allPosts.slice(1, 5);
 			}
 
 			.hero-meta {
-				margin-top: 3.5rem;
+				margin-top: 3rem;
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 				gap: 0.75rem;
@@ -573,7 +505,6 @@ const latest = allPosts.slice(1, 5);
 				flex-direction: column;
 				align-items: center;
 				gap: 0.4rem;
-				opacity: 0.55;
 				animation: float 2s ease-in-out infinite;
 			}
 
@@ -586,7 +517,7 @@ const latest = allPosts.slice(1, 5);
 				font-family: var(--font-mono);
 				font-size: 0.65rem;
 				letter-spacing: 0.22em;
-				color: var(--color-gris);
+				color: var(--color-noir);
 				text-transform: uppercase;
 			}
 
@@ -599,9 +530,8 @@ const latest = allPosts.slice(1, 5);
 			/* ============ INTRO ============ */
 			.intro {
 				padding: 5rem 0 4rem;
-				background: var(--color-gris-3);
-				border-top: 1px solid rgba(200, 16, 46, 0.18);
-				border-bottom: 1px solid rgba(200, 16, 46, 0.18);
+				background: var(--color-blanc);
+				border-bottom: 1px solid var(--color-border);
 			}
 
 			.intro-grid {
@@ -616,12 +546,13 @@ const latest = allPosts.slice(1, 5);
 			}
 
 			.p {
-				color: rgba(240, 234, 214, 0.7);
+				color: var(--color-noir-2);
 				line-height: 1.75;
 				margin-bottom: 1em;
+				font-size: 1rem;
 			}
 
-			.p strong { color: var(--color-blanc); font-weight: 600; }
+			.p strong { color: var(--color-rouge); font-weight: 600; }
 
 			.intro-tags {
 				display: flex;
@@ -630,32 +561,29 @@ const latest = allPosts.slice(1, 5);
 				margin-top: 1.5rem;
 			}
 
-			.visual {
-				padding: 0;
-			}
-
 			.visual-inner {
-				background: linear-gradient(135deg, rgba(200,16,46,0.1), rgba(244,168,17,0.05));
-				border: 1px solid rgba(200, 16, 46, 0.2);
+				background: var(--color-cream-2);
+				border: 1px solid var(--color-border);
 				border-radius: 3px;
 				padding: 2.5rem 2rem;
 				position: relative;
 				overflow: hidden;
 			}
 
-			.visual-inner::before {
-				content: 'THE FINALS';
+			.v-stripes {
 				position: absolute;
-				font-family: var(--font-display);
-				font-size: 6rem;
-				font-weight: 900;
-				color: rgba(200, 16, 46, 0.05);
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				white-space: nowrap;
-				letter-spacing: 0.1em;
-				pointer-events: none;
+				top: 0;
+				right: 0;
+				width: 90px;
+				height: 100%;
+				background: repeating-linear-gradient(
+					-45deg,
+					var(--color-rouge) 0,
+					var(--color-rouge) 12px,
+					var(--color-blanc) 12px,
+					var(--color-blanc) 24px
+				);
+				opacity: 0.85;
 			}
 
 			.v-eyebrow {
@@ -670,22 +598,19 @@ const latest = allPosts.slice(1, 5);
 
 			.v-big {
 				font-family: var(--font-display);
-				font-size: clamp(1.4rem, 2.5vw, 2rem);
+				font-size: clamp(1.3rem, 2.2vw, 1.8rem);
 				font-weight: 800;
 				text-transform: uppercase;
-				line-height: 1.15;
-				color: var(--color-blanc);
+				line-height: 1.2;
+				color: var(--color-noir);
 				position: relative;
 				margin-bottom: 1.5rem;
+				max-width: calc(100% - 90px);
 			}
 
 			.v-big em {
 				font-style: normal;
-				color: var(--color-rouge-2);
-			}
-
-			.v-big em.gold {
-				color: var(--color-or);
+				color: var(--color-rouge);
 			}
 
 			.v-tags {
@@ -693,6 +618,7 @@ const latest = allPosts.slice(1, 5);
 				flex-wrap: wrap;
 				gap: 0.5rem;
 				position: relative;
+				max-width: calc(100% - 90px);
 			}
 
 			/* ============ SECTIONS GRID ============ */
@@ -721,27 +647,18 @@ const latest = allPosts.slice(1, 5);
 				position: relative;
 				aspect-ratio: 16 / 9;
 				overflow: hidden;
-				background: var(--color-noir);
+				background: var(--color-cream-2);
 			}
 
-			.sec-img img {
+			.sec-img :global(img) {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
-				filter: grayscale(0.15) contrast(1.05);
-				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.sec-card:hover .sec-img img {
+			.sec-card:hover .sec-img :global(img) {
 				transform: scale(1.05);
-				filter: grayscale(0) contrast(1.1);
-			}
-
-			.sec-img-overlay {
-				position: absolute;
-				inset: 0;
-				background: linear-gradient(180deg, transparent 40%, rgba(8, 8, 8, 0.85) 100%);
-				pointer-events: none;
 			}
 
 			.sec-body {
@@ -750,6 +667,7 @@ const latest = allPosts.slice(1, 5);
 				flex-direction: column;
 				flex-grow: 1;
 				position: relative;
+				background: var(--color-blanc);
 			}
 
 			.sec-top {
@@ -772,18 +690,16 @@ const latest = allPosts.slice(1, 5);
 				font-weight: 900;
 				text-transform: uppercase;
 				letter-spacing: 0.04em;
-				color: var(--color-blanc);
+				color: var(--color-noir);
 				margin-bottom: 0.5rem;
 				transition: color 0.2s ease;
 			}
 
-			.sec-card:hover .sec-title {
-				color: var(--color-rouge-2);
-			}
+			.sec-card:hover .sec-title { color: var(--color-rouge); }
 
 			.sec-desc {
 				font-size: 0.92rem;
-				color: rgba(240, 234, 214, 0.55);
+				color: var(--color-gris);
 				line-height: 1.55;
 				flex-grow: 1;
 			}
@@ -797,13 +713,14 @@ const latest = allPosts.slice(1, 5);
 			}
 
 			.sec-card:hover .sec-arrow {
-				color: var(--color-rouge-2);
+				color: var(--color-rouge);
 				transform: translateX(6px);
 			}
 
 			/* ============ LATEST / DIRECT ============ */
 			.latest {
 				padding: 5rem 0 4rem;
+				background: var(--color-blanc);
 			}
 
 			.news-grid {
@@ -830,26 +747,21 @@ const latest = allPosts.slice(1, 5);
 				overflow: hidden;
 			}
 
-			.feat-img img {
+			.feat-img :global(img) {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
 				transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.feat:hover .feat-img img { transform: scale(1.04); }
-
-			.feat-img-overlay {
-				position: absolute;
-				inset: 0;
-				background: linear-gradient(180deg, transparent 50%, rgba(8,8,8,0.7) 100%);
-			}
+			.feat:hover .feat-img :global(img) { transform: scale(1.04); }
 
 			.feat-body {
 				padding: 1.75rem;
 				flex-grow: 1;
 				display: flex;
 				flex-direction: column;
+				background: var(--color-blanc);
 			}
 
 			.feat-tags {
@@ -866,15 +778,15 @@ const latest = allPosts.slice(1, 5);
 				text-transform: uppercase;
 				letter-spacing: -0.005em;
 				line-height: 1.1;
-				color: var(--color-blanc);
+				color: var(--color-noir);
 				margin-bottom: 0.8rem;
 				transition: color 0.2s ease;
 			}
 
-			.feat:hover .feat-title { color: var(--color-rouge-2); }
+			.feat:hover .feat-title { color: var(--color-rouge); }
 
 			.feat-desc {
-				color: rgba(240, 234, 214, 0.6);
+				color: var(--color-noir-2);
 				font-size: 0.95rem;
 				line-height: 1.6;
 				margin-bottom: 1.25rem;
@@ -905,7 +817,7 @@ const latest = allPosts.slice(1, 5);
 				text-transform: uppercase;
 				color: var(--color-rouge);
 				padding-bottom: 0.5rem;
-				border-bottom: 1px solid rgba(200, 16, 46, 0.3);
+				border-bottom: 1px solid rgba(228, 0, 43, 0.25);
 			}
 
 			.news-list {
@@ -923,11 +835,8 @@ const latest = allPosts.slice(1, 5);
 				gap: 0.5rem;
 				padding: 1.1rem 1.2rem;
 				text-decoration: none;
-				border-left: 3px solid rgba(200, 16, 46, 0.4);
-			}
-
-			.mini:hover {
-				border-left-color: var(--color-rouge);
+				border-left: 3px solid var(--color-rouge);
+				background: var(--color-cream-2);
 			}
 
 			.mini h4 {
@@ -937,10 +846,10 @@ const latest = allPosts.slice(1, 5);
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
 				line-height: 1.2;
-				color: var(--color-blanc);
+				color: var(--color-noir);
 			}
 
-			.mini:hover h4 { color: var(--color-rouge-2); }
+			.mini:hover h4 { color: var(--color-rouge); }
 
 			.mini-date {
 				font-family: var(--font-mono);
@@ -953,12 +862,13 @@ const latest = allPosts.slice(1, 5);
 			.empty-full {
 				padding: 2.5rem;
 				text-align: center;
-				color: rgba(240, 234, 214, 0.6);
+				color: var(--color-noir-2);
 				font-size: 0.95rem;
 				line-height: 1.7;
+				background: var(--color-cream-2);
 			}
 
-			.empty-full strong { color: var(--color-blanc); }
+			.empty-full strong { color: var(--color-rouge); }
 
 			/* ============ REASONS ============ */
 			.reasons {
@@ -981,13 +891,15 @@ const latest = allPosts.slice(1, 5);
 				display: flex;
 				gap: 1.5rem;
 				align-items: flex-start;
+				background: var(--color-blanc);
 			}
 
 			.r-num {
 				font-family: var(--font-display);
 				font-size: 3rem;
 				font-weight: 900;
-				color: rgba(200, 16, 46, 0.2);
+				color: var(--color-rouge);
+				opacity: 0.2;
 				line-height: 1;
 				flex-shrink: 0;
 			}
@@ -999,12 +911,12 @@ const latest = allPosts.slice(1, 5);
 				text-transform: uppercase;
 				letter-spacing: 0.04em;
 				margin-bottom: 0.5rem;
-				color: var(--color-blanc);
+				color: var(--color-noir);
 			}
 
 			.r-body p {
 				font-size: 0.92rem;
-				color: rgba(240, 234, 214, 0.55);
+				color: var(--color-gris);
 				line-height: 1.65;
 			}
 		</style>

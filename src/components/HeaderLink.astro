@@ -14,25 +14,42 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 </a>
 <style>
 	.nav-link {
+		position: relative;
 		font-family: var(--font-display);
 		font-size: 0.9rem;
 		font-weight: 700;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: var(--color-gris);
-		padding: 0.45rem 0.9rem;
+		color: var(--color-noir);
+		padding: 0.5rem 0.9rem;
 		border-radius: 2px;
 		transition: color 0.2s ease, background 0.2s ease;
 		cursor: pointer;
 	}
 
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		left: 0.9rem;
+		right: 0.9rem;
+		bottom: 0.3rem;
+		height: 2px;
+		background: var(--color-rouge);
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 0.2s ease;
+	}
+
 	.nav-link:hover {
-		color: var(--color-blanc);
-		background: rgba(200, 16, 46, 0.15);
+		color: var(--color-rouge);
+	}
+
+	.nav-link:hover::after,
+	.nav-link.active::after {
+		transform: scaleX(1);
 	}
 
 	.nav-link.active {
-		color: var(--color-rouge-2);
-		background: rgba(200, 16, 46, 0.08);
+		color: var(--color-rouge);
 	}
 </style>

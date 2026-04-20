@@ -31,14 +31,14 @@ import { SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
-			<div class="divider"></div>
+			<div class="tfr-stripes" aria-hidden="true"></div>
 
 			<section class="block">
 				<div class="container">
 					<div class="block-grid">
 						<div>
 							<div class="section-label">01 — Pourquoi</div>
-							<h2 class="h">Parce que personne ne le fait, <em class="gold">en français.</em></h2>
+							<h2 class="h">Parce que personne ne le fait, <em>en français.</em></h2>
 						</div>
 						<div class="block-body">
 							<p>
@@ -57,7 +57,7 @@ import { SITE_TITLE } from '../consts';
 					<div class="block-grid">
 						<div>
 							<div class="section-label">02 — Ce qu'on publie</div>
-							<h2 class="h">Six verticales, <em class="gold">zéro dilution.</em></h2>
+							<h2 class="h">Six verticales, <em>zéro dilution.</em></h2>
 						</div>
 						<ul class="verticals">
 							<li class="card v-item"><span class="tag tag-cat" data-cat="Ranked">Ranked</span> Guides pour grimper — par classe, par mode, par saison.</li>
@@ -76,7 +76,7 @@ import { SITE_TITLE } from '../consts';
 					<div class="block-grid">
 						<div>
 							<div class="section-label">03 — Comment</div>
-							<h2 class="h">Construit en public, <em class="gold">workflow IA.</em></h2>
+							<h2 class="h">Construit en public, <em>workflow IA.</em></h2>
 						</div>
 						<div class="block-body">
 							<p>
@@ -91,7 +91,7 @@ import { SITE_TITLE } from '../consts';
 							</p>
 							<div class="stack-tags">
 								<span class="tag tag-red">Astro</span>
-								<span class="tag tag-gold">Vercel</span>
+								<span class="tag tag-dark">Vercel</span>
 								<span class="tag tag-white">GitHub</span>
 								<span class="tag tag-blue">MDX</span>
 								<span class="tag tag-green">Free & open</span>
@@ -101,7 +101,7 @@ import { SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
-			<div class="divider"></div>
+			<div class="tfr-stripes -thin" aria-hidden="true"></div>
 
 			<section class="cta">
 				<div class="container cta-inner">
@@ -125,8 +125,7 @@ import { SITE_TITLE } from '../consts';
 
 			.hero {
 				padding: 5rem 0 3.5rem;
-				background:
-					radial-gradient(ellipse 60% 50% at 100% 0%, rgba(200, 16, 46, 0.12), transparent 60%);
+				background: var(--color-blanc);
 			}
 
 			.title {
@@ -135,32 +134,33 @@ import { SITE_TITLE } from '../consts';
 				letter-spacing: -0.025em;
 				line-height: 0.98;
 				margin-top: 1rem;
+				color: var(--color-noir);
 			}
 
 			.title em {
 				font-style: normal;
-				color: var(--color-rouge-2);
+				color: var(--color-rouge);
 			}
 
 			.lead {
 				margin-top: 1.5rem;
 				max-width: 60ch;
 				font-size: 1.15rem;
-				color: rgba(240, 234, 214, 0.7);
+				color: var(--color-noir-2);
 				line-height: 1.65;
 			}
 
-			.lead strong { color: var(--color-blanc); }
-			.lead em { font-style: normal; color: var(--color-or); }
+			.lead strong { color: var(--color-rouge); }
+			.lead em { font-style: normal; color: var(--color-noir); font-weight: 500; }
 
 			.block {
 				padding: 4rem 0;
 			}
 
 			.block.-alt {
-				background: var(--color-gris-3);
-				border-top: 1px solid rgba(200, 16, 46, 0.15);
-				border-bottom: 1px solid rgba(200, 16, 46, 0.15);
+				background: var(--color-cream-2);
+				border-top: 1px solid var(--color-border);
+				border-bottom: 1px solid var(--color-border);
 			}
 
 			.block-grid {
@@ -183,29 +183,29 @@ import { SITE_TITLE } from '../consts';
 				letter-spacing: -0.01em;
 				line-height: 1.05;
 				margin-top: 0.8rem;
+				color: var(--color-noir);
 			}
 
-			.h em { font-style: normal; color: var(--color-rouge-2); }
-			.h em.gold { color: var(--color-or); }
+			.h em { font-style: normal; color: var(--color-rouge); }
 
 			.block-body p {
-				color: rgba(240, 234, 214, 0.72);
+				color: var(--color-noir-2);
 				font-size: 1rem;
 				line-height: 1.75;
 			}
 
 			.block-body p + p { margin-top: 1em; }
 
-			.block-body p strong { color: var(--color-blanc); }
+			.block-body p strong { color: var(--color-rouge); }
 
 			.block-body p a {
-				color: var(--color-or);
-				border-bottom: 1px solid rgba(244, 168, 17, 0.4);
+				color: var(--color-rouge);
+				border-bottom: 1px solid rgba(228, 0, 43, 0.35);
 			}
 
 			.block-body p a:hover {
-				color: var(--color-or-2);
-				border-bottom-color: var(--color-or-2);
+				color: var(--color-rouge-deep);
+				border-bottom-color: var(--color-rouge-deep);
 			}
 
 			.stack-tags {
@@ -230,15 +230,15 @@ import { SITE_TITLE } from '../consts';
 				flex-wrap: wrap;
 				gap: 0.8rem;
 				padding: 1rem 1.25rem;
-				color: rgba(240, 234, 214, 0.8);
+				color: var(--color-noir-2);
 				font-size: 0.95rem;
 				line-height: 1.5;
+				background: var(--color-blanc);
 			}
 
 			.cta {
 				padding: 5rem 0;
-				background:
-					radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200, 16, 46, 0.08), transparent 70%);
+				background: var(--color-blanc);
 			}
 
 			.cta-inner {
@@ -250,16 +250,16 @@ import { SITE_TITLE } from '../consts';
 				margin: 1.5rem 0 2.2rem;
 				font-family: var(--font-display);
 				font-size: clamp(1.2rem, 2.2vw, 1.75rem);
-				font-weight: 700;
+				font-weight: 800;
 				text-transform: uppercase;
 				letter-spacing: 0.01em;
-				line-height: 1.2;
-				color: var(--color-blanc);
+				line-height: 1.25;
+				color: var(--color-noir);
 			}
 
 			.cta-text em {
 				font-style: normal;
-				color: var(--color-rouge-2);
+				color: var(--color-rouge);
 			}
 
 			.cta-ctas {

@@ -29,10 +29,12 @@ const posts = (await getCollection('blog')).sort(
 					</p>
 					<div class="blog-meta">
 						<span class="tag tag-red">{posts.length} article{posts.length > 1 ? 's' : ''}</span>
-						<span class="tag tag-gold">Mis à jour en continu</span>
+						<span class="tag tag-dark">Mis à jour en continu</span>
 					</div>
 				</div>
 			</section>
+
+			<div class="tfr-stripes -thin" aria-hidden="true"></div>
 
 			<section class="blog-list">
 				<div class="container">
@@ -89,10 +91,9 @@ const posts = (await getCollection('blog')).sort(
 			main { padding-bottom: 2rem; }
 
 			.blog-hero {
-				padding: 5rem 0 3rem;
-				border-bottom: 1px solid rgba(200, 16, 46, 0.2);
-				background:
-					radial-gradient(ellipse 60% 50% at 0% 0%, rgba(200,16,46,0.1), transparent 60%);
+				padding: 5rem 0 3.5rem;
+				background: var(--color-blanc);
+				border-bottom: 1px solid var(--color-border);
 			}
 
 			.blog-title {
@@ -101,17 +102,18 @@ const posts = (await getCollection('blog')).sort(
 				letter-spacing: -0.02em;
 				line-height: 0.95;
 				margin-top: 1.2rem;
+				color: var(--color-noir);
 			}
 
 			.blog-title em {
 				font-style: normal;
-				color: var(--color-rouge-2);
+				color: var(--color-rouge);
 			}
 
 			.blog-desc {
 				margin-top: 1.2rem;
 				max-width: 60ch;
-				color: rgba(240, 234, 214, 0.65);
+				color: var(--color-noir-2);
 				font-size: 1rem;
 				line-height: 1.65;
 			}
@@ -128,12 +130,13 @@ const posts = (await getCollection('blog')).sort(
 			.empty {
 				padding: 3rem;
 				text-align: center;
-				color: rgba(240, 234, 214, 0.65);
+				color: var(--color-noir-2);
 				font-size: 1rem;
 				line-height: 1.7;
+				background: var(--color-blanc);
 			}
 
-			.empty strong { color: var(--color-blanc); }
+			.empty strong { color: var(--color-rouge); }
 
 			.posts {
 				list-style: none;
@@ -157,22 +160,23 @@ const posts = (await getCollection('blog')).sort(
 				flex-direction: column;
 				text-decoration: none;
 				overflow: hidden;
+				background: var(--color-blanc);
 			}
 
 			.post-img {
 				aspect-ratio: 16 / 9;
 				overflow: hidden;
-				background: var(--color-noir);
+				background: var(--color-cream-2);
 			}
 
-			.post-img img {
+			.post-img :global(img) {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
 				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
-			.post:hover .post-img img { transform: scale(1.05); }
+			.post:hover .post-img :global(img) { transform: scale(1.05); }
 
 			.post-body {
 				padding: 1.5rem;
@@ -195,15 +199,15 @@ const posts = (await getCollection('blog')).sort(
 				text-transform: uppercase;
 				letter-spacing: 0.02em;
 				line-height: 1.15;
-				color: var(--color-blanc);
+				color: var(--color-noir);
 				margin-bottom: 0.7rem;
 				transition: color 0.2s ease;
 			}
 
-			.post:hover .post-body h3 { color: var(--color-rouge-2); }
+			.post:hover .post-body h3 { color: var(--color-rouge); }
 
 			.post-body p {
-				color: rgba(240, 234, 214, 0.6);
+				color: var(--color-noir-2);
 				font-size: 0.92rem;
 				line-height: 1.55;
 				margin-bottom: 1rem;

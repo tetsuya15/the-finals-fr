@@ -3,10 +3,17 @@ import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
+<div class="tfr-stripes -thin" aria-hidden="true"></div>
+
 <header class="tfr-nav">
 	<div class="inner">
 		<a class="logo" href="/" aria-label={`${SITE_TITLE} — accueil`}>
-			<span class="red">The</span>&nbsp;Finals <em>FR</em>
+			<span class="mark" aria-hidden="true">
+				<span class="mark-letter">M</span>
+			</span>
+			<span class="name">
+				<span class="red">The</span>&nbsp;Finals <em>FR</em>
+			</span>
 		</a>
 
 		<nav class="links" aria-label="Navigation principale">
@@ -23,10 +30,10 @@ import HeaderLink from './HeaderLink.astro';
 		position: sticky;
 		top: 0;
 		z-index: 1000;
-		background: rgba(8, 8, 8, 0.92);
+		background: rgba(250, 246, 236, 0.92);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid rgba(200, 16, 46, 0.3);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.inner {
@@ -45,29 +52,57 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	.logo {
-		font-family: var(--font-display);
-		font-size: 1.35rem;
-		font-weight: 900;
-		letter-spacing: 0.14em;
-		color: var(--color-blanc);
-		text-transform: uppercase;
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.65rem;
 		flex-shrink: 0;
 	}
 
-	.logo .red { color: var(--color-rouge); }
+	/* Signature M-in-circle mark (inspired by The Finals in-game branding) */
+	.mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 34px;
+		height: 34px;
+		background: var(--color-rouge);
+		border-radius: 50%;
+		color: var(--color-blanc);
+		box-shadow: 0 4px 12px -3px rgba(228, 0, 43, 0.4);
+	}
 
-	.logo em {
+	.mark-letter {
+		font-family: var(--font-display);
+		font-weight: 900;
+		font-size: 1.1rem;
+		letter-spacing: -0.03em;
+		line-height: 1;
+		margin-top: -1px;
+	}
+
+	.name {
+		font-family: var(--font-display);
+		font-size: 1.25rem;
+		font-weight: 900;
+		letter-spacing: 0.08em;
+		color: var(--color-noir);
+		text-transform: uppercase;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		line-height: 1;
+	}
+
+	.name .red { color: var(--color-rouge); }
+
+	.name em {
 		font-style: normal;
-		color: var(--color-or);
-		font-size: 0.65rem;
+		color: var(--color-rouge);
+		font-size: 0.62rem;
 		font-family: var(--font-mono);
-		letter-spacing: 0.12em;
-		background: rgba(244, 168, 17, 0.12);
-		border: 1px solid rgba(244, 168, 17, 0.35);
-		padding: 2px 7px;
+		letter-spacing: 0.14em;
+		border: 1.5px solid var(--color-rouge);
+		padding: 3px 6px;
 		border-radius: 2px;
 		line-height: 1;
 	}
@@ -79,26 +114,25 @@ import HeaderLink from './HeaderLink.astro';
 	@media (min-width: 1024px) {
 		.links {
 			display: flex;
-			gap: 0.2rem;
+			gap: 0.1rem;
 			align-items: center;
 		}
 	}
 
-	/* Mobile: scroll-wrap nav below logo */
 	@media (max-width: 1023px) {
 		.inner {
 			flex-wrap: wrap;
-			padding-top: 0.8rem;
-			padding-bottom: 0.8rem;
+			padding-top: 0.7rem;
+			padding-bottom: 0.5rem;
 		}
 
 		.links {
 			display: flex;
 			order: 3;
 			width: 100%;
-			gap: 0.15rem;
+			gap: 0.1rem;
 			overflow-x: auto;
-			padding-bottom: 0.15rem;
+			padding-bottom: 0.2rem;
 			scrollbar-width: none;
 		}
 
