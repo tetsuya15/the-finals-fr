@@ -5,24 +5,9 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-import { NAV_SECTIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 import heroBg from '../assets/hero-bienvenue.png';
-import catRanked from '../assets/cat-ranked.jpg';
-import catMeta from '../assets/cat-meta.jpg';
-import catEsport from '../assets/cat-esport.jpg';
-import catWiki from '../assets/cat-wiki.jpg';
-import catActus from '../assets/cat-actus.jpg';
-import catLore from '../assets/cat-lore.jpg';
-
-const CAT_IMG = {
-	ranked: catRanked,
-	meta: catMeta,
-	esport: catEsport,
-	wiki: catWiki,
-	actus: catActus,
-	lore: catLore,
-};
 
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -147,88 +132,60 @@ const latest = allPosts.slice(1, 5);
 
 			<div class="tfr-stripes" aria-hidden="true"></div>
 
-			<!-- ============ POSITIONNEMENT ============ -->
+			<!-- ============ À PROPOS DU JEU ============ -->
 			<section class="intro">
 				<div class="container">
 					<div class="intro-grid">
 						<div>
-							<div class="section-label">À propos du site</div>
-							<h2 class="section-title">Un seul jeu. <em>Un seul angle.</em> À fond.</h2>
+							<div class="section-label">À propos du jeu</div>
+							<h2 class="section-title">Un <em>game show</em> où tout s'écroule.</h2>
 							<p class="p">
-								<strong>The Finals FR</strong> est le site communautaire francophone
-								dédié au <strong>compétitif</strong> sur THE FINALS. Pas de dilution
-								généraliste, pas de "10 jeux à la fois". On couvre
-								<strong>un seul jeu</strong>, à fond, en français.
+								<strong>THE FINALS</strong> est un FPS free-to-play signé
+								<strong>Embark Studios</strong> (studio suédois fondé par d'anciens
+								de DICE), sorti en <strong>décembre 2023</strong>. Le pitch :
+								un jeu télévisé futuriste où des équipes de concurrents s'affrontent
+								devant un public virtuel pour voler, transporter et déposer des
+								coffres-forts remplis de cash.
 							</p>
 							<p class="p">
-								Chaque article est <strong>rédigé, recherché et relu à la main</strong>
-								avant publication. Pas d'info balancée à la va-vite : tier list
-								sourcées, guides testés en ranked, couverture esport suivie match par
-								match.
+								Le mode roi, c'est le <strong>Cashout en 3v3v3v3</strong> — quatre
+								équipes de trois sur la même carte, un seul objectif. Trois classes
+								à choisir (<strong>Light</strong>, <strong>Medium</strong>,
+								<strong>Heavy</strong>), chacune avec ses armes et ses gadgets. Et
+								surtout : des <strong>arènes entièrement destructibles</strong>. Les
+								murs tombent, les plafonds s'effondrent, chaque match est unique.
+							</p>
+							<p class="p">
+								Entre le <strong>Ranked Tournament</strong>, les
+								<strong>World Tour</strong> officiels, <strong>Terminal Attack</strong>
+								et <strong>Power Shift</strong>, il y a de quoi jouer chill ou viser
+								le top mondial. C'est ce jeu-là qu'on couvre ici, en français.
 							</p>
 							<div class="intro-tags">
-								<span class="tag tag-cat" data-cat="Ranked">Ranked</span>
-								<span class="tag tag-cat" data-cat="Meta">Meta</span>
-								<span class="tag tag-cat" data-cat="Esport">Esport</span>
-								<span class="tag tag-cat" data-cat="Wiki">Wiki</span>
-								<span class="tag tag-cat" data-cat="Actus">Actus</span>
-								<span class="tag tag-cat" data-cat="Lore">Lore</span>
-								<span class="tag tag-red">Build in public</span>
+								<span class="tag tag-red">Free-to-play</span>
+								<span class="tag tag-dark">3v3v3v3</span>
+								<span class="tag tag-dark">Embark Studios</span>
+								<span class="tag tag-dark">PC · PS5 · Xbox</span>
+								<span class="tag tag-white">Déc. 2023</span>
 							</div>
 						</div>
 
 						<div class="visual">
 							<div class="visual-inner">
 								<div class="v-stripes" aria-hidden="true"></div>
-								<div class="v-eyebrow">The Finals FR · Manifeste</div>
+								<div class="v-eyebrow">THE FINALS · Fiche express</div>
 								<p class="v-big">
-									"On ne <em>couvre</em> pas dix jeux.<br />
-									On fait <em>un</em> jeu, à fond, en <em>FR</em>."
+									"Des <em>coffres</em>.<br />
+									Du <em>cash</em>.<br />
+									Des <em>murs</em> qui tombent."
 								</p>
 								<div class="v-tags">
-									<span class="tag tag-red">Spécialiste</span>
-									<span class="tag tag-dark">Compétitif</span>
-									<span class="tag tag-white">Francophone</span>
+									<span class="tag tag-red">3 classes</span>
+									<span class="tag tag-dark">5 modes</span>
+									<span class="tag tag-white">100% destructible</span>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-
-			<!-- ============ SECTIONS / CATÉGORIES ============ -->
-			<section class="sections">
-				<div class="container">
-					<div class="section-label">Catégories</div>
-					<h2 class="section-title">Explore <em>le site</em></h2>
-					<p class="section-desc">
-						Six verticales éditoriales, chacune focalisée. Clique sur une catégorie
-						pour lister tous ses articles.
-					</p>
-
-					<div class="sections-grid">
-						{NAV_SECTIONS.map((s, i) => (
-							<a class="sec-card card fade-up tilt-target" href={`/${s.slug}/`} data-cat={s.label} data-tilt style={`--fade-delay:${i * 0.05}s`}>
-								<div class="sec-img">
-									<Image
-										src={CAT_IMG[s.slug as keyof typeof CAT_IMG]}
-										alt=""
-										width={720}
-										height={360}
-										loading={i < 3 ? 'eager' : 'lazy'}
-									/>
-								</div>
-								<div class="sec-body">
-									<div class="sec-top">
-										<span class="sec-num">0{i + 1}</span>
-										<span class="tag tag-cat" data-cat={s.label}>{s.label}</span>
-									</div>
-									<h3 class="sec-title">{s.label}</h3>
-									<p class="sec-desc">{s.description}</p>
-									<span class="sec-arrow" aria-hidden="true">→</span>
-								</div>
-							</a>
-						))}
 					</div>
 				</div>
 			</section>
@@ -796,102 +753,6 @@ const latest = allPosts.slice(1, 5);
 				flex-wrap: wrap;
 				gap: 0.5rem;
 				position: relative;
-			}
-
-			/* ============ SECTIONS GRID ============ */
-			.sections {
-				padding: 5rem 0 4rem;
-			}
-
-			.sections-grid {
-				display: grid;
-				grid-template-columns: 1fr;
-				gap: 1.2rem;
-				margin-top: 1rem;
-			}
-
-			@media (min-width: 640px) { .sections-grid { grid-template-columns: repeat(2, 1fr); } }
-			@media (min-width: 1024px) { .sections-grid { grid-template-columns: repeat(3, 1fr); } }
-
-			.sec-card {
-				display: flex;
-				flex-direction: column;
-				text-decoration: none;
-				cursor: pointer;
-			}
-
-			.sec-img {
-				position: relative;
-				aspect-ratio: 16 / 9;
-				overflow: hidden;
-				background: var(--color-cream-2);
-			}
-
-			.sec-img :global(img) {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-			}
-
-			.sec-card:hover .sec-img :global(img) {
-				transform: scale(1.05);
-			}
-
-			.sec-body {
-				padding: 1.5rem;
-				display: flex;
-				flex-direction: column;
-				flex-grow: 1;
-				position: relative;
-				background: var(--color-blanc);
-			}
-
-			.sec-top {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 1rem;
-			}
-
-			.sec-num {
-				font-family: var(--font-mono);
-				font-size: 0.72rem;
-				color: var(--color-gris);
-				letter-spacing: 0.2em;
-			}
-
-			.sec-title {
-				font-family: var(--font-display);
-				font-size: 1.8rem;
-				font-weight: 900;
-				text-transform: uppercase;
-				letter-spacing: 0.04em;
-				color: var(--color-noir);
-				margin-bottom: 0.5rem;
-				transition: color 0.2s ease;
-			}
-
-			.sec-card:hover .sec-title { color: var(--color-rouge); }
-
-			.sec-desc {
-				font-size: 0.92rem;
-				color: var(--color-gris);
-				line-height: 1.55;
-				flex-grow: 1;
-			}
-
-			.sec-arrow {
-				margin-top: 1rem;
-				font-family: var(--font-display);
-				font-size: 1.4rem;
-				color: var(--color-gris);
-				transition: color 0.2s ease, transform 0.2s ease;
-			}
-
-			.sec-card:hover .sec-arrow {
-				color: var(--color-rouge);
-				transform: translateX(6px);
 			}
 
 			/* ============ LATEST / DIRECT ============ */
