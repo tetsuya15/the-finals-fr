@@ -1000,3 +1000,72 @@ a {
 .btn.is-magnetic:hover {
 	transform: translate(var(--mx, 0), calc(var(--my, 0) - 2px));
 }
+
+/* -------------------------------------------------------------------------- */
+/*  View Transitions — broadcast-style page changes                           */
+/* -------------------------------------------------------------------------- */
+
+/* Speed up and smooth the default cross-fade */
+::view-transition-old(root) {
+	animation: tfr-page-out 0.32s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+
+::view-transition-new(root) {
+	animation: tfr-page-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+	animation-delay: 0.12s;
+}
+
+@keyframes tfr-page-out {
+	0%   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+	100% { opacity: 0; transform: translateY(-12px) scale(0.985); filter: blur(2px); }
+}
+
+@keyframes tfr-page-in {
+	0%   { opacity: 0; transform: translateY(18px) scale(0.995); clip-path: inset(0 100% 0 0); }
+	60%  { opacity: 1; transform: translateY(0) scale(1); }
+	100% { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0 0 0 0); }
+}
+
+/* Red broadcast wipe overlay that sweeps across during the transition */
+.tfr-page-wipe {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+	opacity: 0;
+	transform: translateX(-100%);
+	background:
+		linear-gradient(
+			90deg,
+			transparent 0%,
+			transparent 38%,
+			rgba(228, 0, 43, 0.55) 46%,
+			rgba(228, 0, 43, 0.95) 49%,
+			#fff 50%,
+			rgba(228, 0, 43, 0.95) 51%,
+			rgba(228, 0, 43, 0.55) 54%,
+			transparent 62%,
+			transparent 100%
+		);
+	mix-blend-mode: normal;
+	will-change: transform, opacity;
+}
+
+.tfr-page-wipe.is-playing {
+	animation: tfr-wipe-sweep 0.6s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+
+@keyframes tfr-wipe-sweep {
+	0%   { transform: translateX(-100%); opacity: 0; }
+	15%  { opacity: 1; }
+	85%  { opacity: 1; }
+	100% { transform: translateX(110%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+		opacity: 1;
+	}
+}
