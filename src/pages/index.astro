@@ -42,7 +42,7 @@ const latest = allPosts.slice(1, 5);
 		<main>
 			<!-- ============ HERO ============ -->
 			<section class="hero">
-				<div class="hero-media" aria-hidden="true">
+				<div class="hero-media" id="heroMedia" aria-hidden="true">
 					<Image
 						src={heroBg}
 						alt=""
@@ -55,18 +55,38 @@ const latest = allPosts.slice(1, 5);
 				</div>
 
 				<div class="hero-content">
-					<div class="broadcast">
-						<span class="dot blink">●</span>
-						<span>En direct</span>
-						<span class="sep">·</span>
-						<span>Saison 10 · Fantasy League</span>
-						<span class="sep">·</span>
-						<span>Site communautaire FR</span>
+					<div class="broadcast marquee" aria-label="Bandeau d'informations The Finals FR">
+						<div class="marquee-track">
+							<div class="marquee-group" aria-hidden="false">
+								<span class="dot blink">●</span>
+								<span>En direct</span>
+								<span class="sep">·</span>
+								<span>Saison 10 · Fantasy League</span>
+								<span class="sep">·</span>
+								<span>Site communautaire FR</span>
+								<span class="sep">·</span>
+								<span>Grand Major en couverture</span>
+								<span class="sep">·</span>
+								<span>Tier list meta mise à jour chaque patch</span>
+							</div>
+							<div class="marquee-group" aria-hidden="true">
+								<span class="dot blink">●</span>
+								<span>En direct</span>
+								<span class="sep">·</span>
+								<span>Saison 10 · Fantasy League</span>
+								<span class="sep">·</span>
+								<span>Site communautaire FR</span>
+								<span class="sep">·</span>
+								<span>Grand Major en couverture</span>
+								<span class="sep">·</span>
+								<span>Tier list meta mise à jour chaque patch</span>
+							</div>
+						</div>
 					</div>
 
 					<h1 class="hero-title">
 						<span class="line1">Bienvenue dans</span>
-						<span class="line2">L'Arène</span>
+						<span class="line2 glitch-once">L'Arène</span>
 					</h1>
 
 					<p class="hero-sub">
@@ -76,7 +96,7 @@ const latest = allPosts.slice(1, 5);
 					</p>
 
 					<div class="hero-cta">
-						<a class="btn btn-primary" href="/ranked/">Voir les guides Ranked</a>
+						<a class="btn btn-primary is-magnetic" href="/ranked/">Voir les guides Ranked</a>
 						<a class="btn btn-outline" href="/blog/">Tous les articles</a>
 					</div>
 
@@ -349,6 +369,9 @@ const latest = allPosts.slice(1, 5);
 		<Footer />
 
 		<script>
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// Reveal on scroll (wipe + fade)
 			const observer = new IntersectionObserver((entries) => {
 				entries.forEach((e) => {
 					if (e.isIntersecting) {
@@ -358,6 +381,46 @@ const latest = allPosts.slice(1, 5);
 				});
 			}, { threshold: 0.12 });
 			document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+			// Parallax on hero background image
+			if (!reduced) {
+				const media = document.getElementById('heroMedia');
+				const img = media?.querySelector('img');
+				if (media && img) {
+					let raf = 0;
+					const apply = () => {
+						const y = Math.min(window.scrollY, 800);
+						img.style.transform = `translate3d(0, ${y * 0.25}px, 0) scale(1.08)`;
+						raf = 0;
+					};
+					const onScroll = () => {
+						if (raf) return;
+						raf = requestAnimationFrame(apply);
+					};
+					img.style.willChange = 'transform';
+					window.addEventListener('scroll', onScroll, { passive: true });
+					apply();
+				}
+			}
+
+			// Magnetic primary buttons
+			if (!reduced && window.matchMedia('(hover: hover)').matches) {
+				document.querySelectorAll('.btn.is-magnetic').forEach((btn) => {
+					const el = /** @type {HTMLElement} */ (btn);
+					const strength = 14;
+					el.addEventListener('mousemove', (e) => {
+						const r = el.getBoundingClientRect();
+						const mx = ((e.clientX - r.left) / r.width - 0.5) * strength;
+						const my = ((e.clientY - r.top) / r.height - 0.5) * strength;
+						el.style.setProperty('--mx', mx.toFixed(2) + 'px');
+						el.style.setProperty('--my', my.toFixed(2) + 'px');
+					});
+					el.addEventListener('mouseleave', () => {
+						el.style.setProperty('--mx', '0px');
+						el.style.setProperty('--my', '0px');
+					});
+				});
+			}
 		</script>
 
 		<style>
@@ -409,18 +472,14 @@ const latest = allPosts.slice(1, 5);
 			}
 
 			.broadcast {
-				display: inline-flex;
-				align-items: center;
-				gap: 0.7rem;
+				display: block;
 				font-family: var(--font-mono);
 				font-size: 0.72rem;
 				color: var(--color-rouge);
 				padding: 0.2rem 0;
 				letter-spacing: 0.22em;
 				text-transform: uppercase;
-				margin-bottom: 1.6rem;
-				flex-wrap: wrap;
-				justify-content: center;
+				margin: 0 auto 1.6rem;
 				text-shadow: 0 1px 2px rgba(245, 241, 232, 0.7);
 			}
 
