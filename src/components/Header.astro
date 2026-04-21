@@ -3,6 +3,9 @@ import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
+<div class="tfr-curtain" id="tfrCurtain" aria-hidden="true">
+	<span class="tfr-curtain-label">Chargement</span>
+</div>
 <div class="scroll-progress" id="tfrScrollProgress" aria-hidden="true"></div>
 <div class="tfr-stripes -thin" aria-hidden="true"></div>
 
@@ -163,5 +166,110 @@ import HeaderLink from './HeaderLink.astro';
 		window.addEventListener('scroll', onScroll, { passive: true });
 		window.addEventListener('resize', onScroll, { passive: true });
 		update();
+	})();
+</script>
+
+<script is:inline>
+	/* ================================================================= */
+	/*  Page transition — "Broadcast curtain"                            */
+	/*  Inspired by Tilda cover-block transitions (swag-cstore).         */
+	/* ================================================================= */
+	(function () {
+		if (window.__tfrCurtainInit) return;
+		window.__tfrCurtainInit = true;
+
+		const curtain = document.getElementById('tfrCurtain');
+		if (!curtain) return;
+
+		const FLAG = 'tfr-curtain-intro';
+		const reduced =
+			window.matchMedia &&
+			window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		/* ---------- Intro (reveal after a navigation) ---------- */
+		const playIntro = () => {
+			if (reduced) return;
+			curtain.classList.remove('is-exit');
+			void curtain.offsetWidth;
+			curtain.classList.add('is-intro');
+			const end = () => {
+				curtain.classList.remove('is-intro');
+				document.body.classList.remove('is-navigating');
+				curtain.removeEventListener('animationend', end);
+			};
+			curtain.addEventListener('animationend', end);
+		};
+
+		try {
+			if (sessionStorage.getItem(FLAG) === '1') {
+				sessionStorage.removeItem(FLAG);
+				playIntro();
+			}
+		} catch (e) {}
+
+		/* Back/forward cache restore */
+		window.addEventListener('pageshow', (e) => {
+			if (e.persisted) {
+				curtain.classList.remove('is-exit', 'is-intro');
+				document.body.classList.remove('is-navigating');
+			}
+		});
+
+		/* ---------- Exit (cover + navigate) ---------- */
+		const shouldIntercept = (a, event) => {
+			if (!a || !a.href) return false;
+			if (a.target && a.target !== '' && a.target !== '_self') return false;
+			if (a.hasAttribute('download')) return false;
+			if (a.getAttribute('data-no-transition') !== null) return false;
+			if (event.button !== 0) return false;
+			if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
+			let url;
+			try {
+				url = new URL(a.href, location.href);
+			} catch (err) {
+				return false;
+			}
+			if (url.origin !== location.origin) return false;
+			/* Same URL with only hash change → let browser scroll */
+			if (
+				url.pathname === location.pathname &&
+				url.search === location.search &&
+				url.hash
+			) {
+				return false;
+			}
+			/* Same exact URL → ignore */
+			if (url.href === location.href) return false;
+			return url.href;
+		};
+
+		document.addEventListener(
+			'click',
+			(event) => {
+				if (reduced) return;
+				const a = event.target.closest && event.target.closest('a[href]');
+				const target = shouldIntercept(a, event);
+				if (!target) return;
+
+				event.preventDefault();
+				try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
+
+				document.body.classList.add('is-navigating');
+				curtain.classList.remove('is-intro');
+				void curtain.offsetWidth;
+				curtain.classList.add('is-exit');
+
+				let navigated = false;
+				const go = () => {
+					if (navigated) return;
+					navigated = true;
+					window.location.href = target;
+				};
+				curtain.addEventListener('animationend', go, { once: true });
+				/* Fallback in case animationend never fires */
+				setTimeout(go, 700);
+			},
+			true
+		);
 	})();
 </script>
