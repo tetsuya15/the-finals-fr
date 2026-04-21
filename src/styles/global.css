@@ -551,111 +551,33 @@ a {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Page transition — "Broadcast curtain" (inspired by Tilda cover blocks)    */
-/*  Red signature curtain sweeps up from the bottom to cover, navigation      */
-/*  happens, then the curtain continues up and out on the new page — giving   */
-/*  the impression of a seamless, continuous reveal between pages.            */
-/*                                                                            */
-/*  Driven by JS-controlled transforms (not CSS keyframes) for reliability.   */
+/*  Page transition — subtle lift + blur                                      */
+/*  Clicked link: current content recedes (small lift + soft blur + fade).    */
+/*  New page: starts receded, settles forward. No curtain, no overlay.        */
 /* -------------------------------------------------------------------------- */
 
-.tfr-curtain {
-	position: fixed;
-	inset: 0;
-	z-index: 99999;
-	pointer-events: none;
-	transform: translate3d(0, 100%, 0);
-	transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
-	will-change: transform;
-	overflow: hidden;
-	background: #e4002b;
-	background-image:
-		repeating-linear-gradient(
-			0deg,
-			rgba(255, 255, 255, 0.06) 0px,
-			rgba(255, 255, 255, 0.06) 1px,
-			transparent 1px,
-			transparent 3px
-		),
-		linear-gradient(180deg, #ff1a3a 0%, #e4002b 45%, #a30020 100%);
-	display: block;
-	visibility: visible;
+main,
+body > header {
+	transition:
+		transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+		filter 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+		opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* White lightning band racing across the curtain top edge */
-.tfr-curtain::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: -3px;
-	height: 6px;
-	background: linear-gradient(
-		90deg,
-		transparent 0%,
-		rgba(255, 255, 255, 0.95) 50%,
-		transparent 100%
-	);
-	box-shadow: 0 0 22px rgba(255, 255, 255, 0.8);
-	opacity: 1;
-}
-
-.tfr-curtain-label {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	color: #fff;
-	font-family: var(--font-mono), monospace;
-	font-size: 1rem;
-	letter-spacing: 0.48em;
-	text-transform: uppercase;
-	white-space: nowrap;
-	opacity: 0;
-	transition: opacity 0.25s ease;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.7rem;
-	text-shadow: 0 0 22px rgba(255, 255, 255, 0.45);
-}
-
-.tfr-curtain-label::before {
-	content: '';
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: #fff;
-	box-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
-	animation: tfr-blink 0.6s step-end infinite;
-}
-
-/* Covering: curtain pulled up to fill the viewport */
-.tfr-curtain.is-cover {
-	transform: translate3d(0, 0, 0);
-}
-
-.tfr-curtain.is-cover .tfr-curtain-label {
-	opacity: 1;
-	transition: opacity 0.25s 0.2s ease;
-}
-
-/* Uncovering: curtain continues upward off-screen */
-.tfr-curtain.is-uncover {
-	transform: translate3d(0, -100%, 0);
-}
-
-.tfr-curtain.is-uncover .tfr-curtain-label {
-	opacity: 0;
-}
-
-/* Depth: main content slightly lifted + blurred while curtain covers */
+/* Exit: page recedes just before navigation (blur + lift + fade) */
 body.is-navigating main,
 body.is-navigating > header {
-	transform: translate3d(0, -16px, 0);
-	filter: blur(2px);
-	transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1),
-		filter 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-	will-change: transform, filter;
+	transform: translate3d(0, -14px, 0);
+	filter: blur(3px);
+	opacity: 0.55;
+	will-change: transform, filter, opacity;
+}
+
+/* Intro: new page arrives already receded, then settles forward */
+body.is-arriving main {
+	transform: translate3d(0, 10px, 0);
+	filter: blur(3px);
+	opacity: 0;
 }
 
 /* -------------------------------------------------------------------------- */

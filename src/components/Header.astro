@@ -3,9 +3,6 @@ import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
-<div class="tfr-curtain" id="tfrCurtain" aria-hidden="true">
-	<span class="tfr-curtain-label">Chargement</span>
-</div>
 <div class="scroll-progress" id="tfrScrollProgress" aria-hidden="true"></div>
 <div class="tfr-stripes -thin" aria-hidden="true"></div>
 
@@ -171,59 +168,47 @@ import HeaderLink from './HeaderLink.astro';
 
 <script is:inline>
 	/* ================================================================= */
-	/*  Page transition — "Broadcast curtain"                            */
-	/*  JS-driven transform (no CSS keyframes) for rock-solid timing.    */
-	/*  Intentionally ignores prefers-reduced-motion — user requested.   */
+	/*  Page transition — lift + blur + fade                             */
+	/*  On click: content recedes (up + blur + fade) then navigation.    */
+	/*  On arrival: new content lands from a receded state forward.      */
 	/* ================================================================= */
 	(function () {
-		if (window.__tfrCurtainInit) return;
-		window.__tfrCurtainInit = true;
+		if (window.__tfrPageTrans) return;
+		window.__tfrPageTrans = true;
 
-		const curtain = document.getElementById('tfrCurtain');
-		if (!curtain) return;
-
-		const FLAG = 'tfr-curtain-navigated';
-		const COVER_MS = 700;
-		const UNCOVER_MS = 700;
+		const FLAG = 'tfr-nav-arriving';
+		const EXIT_MS = 380;
+		const INTRO_MS = 420;
 
 		/* -------------------- Intro on arrival -------------------- */
-		const playUncover = () => {
-			/* Curtain starts fully covering the viewport. */
-			curtain.classList.remove('is-uncover');
-			curtain.classList.add('is-cover');
-			/* Force reflow so the browser registers the "covered" state. */
-			void curtain.offsetHeight;
-			/* Next frame: trigger the uncover. */
+		const playIntro = () => {
+			document.body.classList.add('is-arriving');
+			/* Double rAF → ensure browser paints the receded state first. */
 			requestAnimationFrame(() => {
 				requestAnimationFrame(() => {
-					curtain.classList.remove('is-cover');
-					curtain.classList.add('is-uncover');
+					document.body.classList.remove('is-arriving');
 				});
 			});
-			/* Cleanup after the transition completes. */
 			window.setTimeout(() => {
-				curtain.classList.remove('is-cover', 'is-uncover');
-				document.body.classList.remove('is-navigating');
-			}, UNCOVER_MS + 80);
+				document.body.classList.remove('is-arriving');
+			}, INTRO_MS + 100);
 		};
 
 		try {
 			if (sessionStorage.getItem(FLAG) === '1') {
 				sessionStorage.removeItem(FLAG);
-				document.body.classList.add('is-navigating');
 				if (document.readyState === 'loading') {
-					document.addEventListener('DOMContentLoaded', playUncover, { once: true });
+					document.addEventListener('DOMContentLoaded', playIntro, { once: true });
 				} else {
-					playUncover();
+					playIntro();
 				}
 			}
 		} catch (e) {}
 
-		/* Back/forward cache restore — skip animation, reset state. */
+		/* Back/forward cache restore — reset cleanly. */
 		window.addEventListener('pageshow', (e) => {
 			if (e.persisted) {
-				curtain.classList.remove('is-cover', 'is-uncover');
-				document.body.classList.remove('is-navigating');
+				document.body.classList.remove('is-navigating', 'is-arriving');
 			}
 		});
 
@@ -273,11 +258,8 @@ import HeaderLink from './HeaderLink.astro';
 				event.preventDefault();
 				try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
 
-				document.body.classList.add('is-navigating');
-				curtain.classList.remove('is-uncover');
-				void curtain.offsetHeight;
 				requestAnimationFrame(() => {
-					curtain.classList.add('is-cover');
+					document.body.classList.add('is-navigating');
 				});
 
 				let navigated = false;
@@ -286,9 +268,7 @@ import HeaderLink from './HeaderLink.astro';
 					navigated = true;
 					window.location.href = target;
 				};
-
-				/* Navigate once the cover transition completes. */
-				window.setTimeout(go, COVER_MS + 60);
+				window.setTimeout(go, EXIT_MS);
 			},
 			true
 		);
