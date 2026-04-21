@@ -551,36 +551,6 @@ a {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Page transition — subtle lift + blur                                      */
-/*  Clicked link: current content recedes (small lift + soft blur + fade).    */
-/*  New page: starts receded, settles forward. No curtain, no overlay.        */
-/* -------------------------------------------------------------------------- */
-
-main,
-body > header {
-	transition:
-		transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-		filter 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-		opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Exit: page recedes just before navigation (blur + lift + fade) */
-body.is-navigating main,
-body.is-navigating > header {
-	transform: translate3d(0, -14px, 0);
-	filter: blur(3px);
-	opacity: 0.55;
-	will-change: transform, filter, opacity;
-}
-
-/* Intro: new page arrives already receded, then settles forward */
-body.is-arriving main {
-	transform: translate3d(0, 10px, 0);
-	filter: blur(3px);
-	opacity: 0;
-}
-
-/* -------------------------------------------------------------------------- */
 /*  Scroll progress bar                                                       */
 /* -------------------------------------------------------------------------- */
 
