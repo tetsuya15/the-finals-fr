@@ -20,7 +20,6 @@ import HeaderLink from './HeaderLink.astro';
 		<nav class="links" aria-label="Navigation principale">
 			<HeaderLink href="/">Accueil</HeaderLink>
 			{NAV_SECTIONS.map((s) => <HeaderLink href={`/${s.slug}/`}>{s.label}</HeaderLink>)}
-			<HeaderLink href="/blog/">Tout</HeaderLink>
 			<HeaderLink href="/a-propos/">À propos</HeaderLink>
 		</nav>
 	</div>
