@@ -5,13 +5,6 @@ export const SITE_DESCRIPTION =
 
 export const NAV_SECTIONS = [
 	{
-		slug: 'ranked',
-		label: 'Ranked',
-		short: 'Grimper',
-		description: "Guides pour grimper en classé — par classe, par mode, par saison.",
-		tagline: 'Gagner, encore, encore.',
-	},
-	{
 		slug: 'meta',
 		label: 'Meta',
 		short: 'Tier lists',

@@ -7,7 +7,6 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 
-import catRanked from '../assets/cat-ranked.jpg';
 import catMeta from '../assets/cat-meta.jpg';
 import catEsport from '../assets/cat-esport.jpg';
 import catWiki from '../assets/cat-wiki.jpg';
@@ -15,7 +14,6 @@ import catActus from '../assets/cat-actus.jpg';
 import catLore from '../assets/cat-lore.jpg';
 
 const CAT_IMG = {
-	ranked: catRanked,
 	meta: catMeta,
 	esport: catEsport,
 	wiki: catWiki,
@@ -59,10 +57,10 @@ const taglineText = section.tagline;
 					<Image
 						src={headerImage}
 						alt=""
-						width={3840}
-						height={2160}
-						densities={[1]}
-						quality={95}
+						width={1920}
+						height={1080}
+						densities={[1, 2]}
+						quality={92}
 						loading="eager"
 						sizes="100vw"
 					/>
