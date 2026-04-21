@@ -172,7 +172,8 @@ import HeaderLink from './HeaderLink.astro';
 <script is:inline>
 	/* ================================================================= */
 	/*  Page transition — "Broadcast curtain"                            */
-	/*  Inspired by Tilda cover-block transitions (swag-cstore).         */
+	/*  JS-driven transform (no CSS keyframes) for rock-solid timing.    */
+	/*  Intentionally ignores prefers-reduced-motion — user requested.   */
 	/* ================================================================= */
 	(function () {
 		if (window.__tfrCurtainInit) return;
@@ -181,48 +182,66 @@ import HeaderLink from './HeaderLink.astro';
 		const curtain = document.getElementById('tfrCurtain');
 		if (!curtain) return;
 
-		const FLAG = 'tfr-curtain-intro';
-		const reduced =
-			window.matchMedia &&
-			window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const FLAG = 'tfr-curtain-navigated';
+		const COVER_MS = 700;
+		const UNCOVER_MS = 700;
 
-		/* ---------- Intro (reveal after a navigation) ---------- */
-		const playIntro = () => {
-			if (reduced) return;
-			curtain.classList.remove('is-exit');
-			void curtain.offsetWidth;
-			curtain.classList.add('is-intro');
-			const end = () => {
-				curtain.classList.remove('is-intro');
+		/* -------------------- Intro on arrival -------------------- */
+		const playUncover = () => {
+			/* Curtain starts fully covering the viewport. */
+			curtain.classList.remove('is-uncover');
+			curtain.classList.add('is-cover');
+			/* Force reflow so the browser registers the "covered" state. */
+			void curtain.offsetHeight;
+			/* Next frame: trigger the uncover. */
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					curtain.classList.remove('is-cover');
+					curtain.classList.add('is-uncover');
+				});
+			});
+			/* Cleanup after the transition completes. */
+			window.setTimeout(() => {
+				curtain.classList.remove('is-cover', 'is-uncover');
 				document.body.classList.remove('is-navigating');
-				curtain.removeEventListener('animationend', end);
-			};
-			curtain.addEventListener('animationend', end);
+			}, UNCOVER_MS + 80);
 		};
 
 		try {
 			if (sessionStorage.getItem(FLAG) === '1') {
 				sessionStorage.removeItem(FLAG);
-				playIntro();
+				document.body.classList.add('is-navigating');
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', playUncover, { once: true });
+				} else {
+					playUncover();
+				}
 			}
 		} catch (e) {}
 
-		/* Back/forward cache restore */
+		/* Back/forward cache restore — skip animation, reset state. */
 		window.addEventListener('pageshow', (e) => {
 			if (e.persisted) {
-				curtain.classList.remove('is-exit', 'is-intro');
+				curtain.classList.remove('is-cover', 'is-uncover');
 				document.body.classList.remove('is-navigating');
 			}
 		});
 
-		/* ---------- Exit (cover + navigate) ---------- */
+		/* -------------------- Click interception -------------------- */
 		const shouldIntercept = (a, event) => {
-			if (!a || !a.href) return false;
+			if (!a || !a.getAttribute('href')) return false;
 			if (a.target && a.target !== '' && a.target !== '_self') return false;
 			if (a.hasAttribute('download')) return false;
 			if (a.getAttribute('data-no-transition') !== null) return false;
-			if (event.button !== 0) return false;
+			if (event.defaultPrevented) return false;
+			if (event.button !== undefined && event.button !== 0) return false;
 			if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
+
+			const raw = a.getAttribute('href');
+			if (!raw || raw.startsWith('javascript:') || raw.startsWith('mailto:') || raw.startsWith('tel:')) {
+				return false;
+			}
+
 			let url;
 			try {
 				url = new URL(a.href, location.href);
@@ -230,15 +249,16 @@ import HeaderLink from './HeaderLink.astro';
 				return false;
 			}
 			if (url.origin !== location.origin) return false;
-			/* Same URL with only hash change → let browser scroll */
+			/* Pure anchor link — let browser scroll smoothly. */
 			if (
 				url.pathname === location.pathname &&
 				url.search === location.search &&
-				url.hash
+				url.hash &&
+				url.hash !== location.hash
 			) {
 				return false;
 			}
-			/* Same exact URL → ignore */
+			/* Exact same URL — no-op. */
 			if (url.href === location.href) return false;
 			return url.href;
 		};
@@ -246,8 +266,7 @@ import HeaderLink from './HeaderLink.astro';
 		document.addEventListener(
 			'click',
 			(event) => {
-				if (reduced) return;
-				const a = event.target.closest && event.target.closest('a[href]');
+				const a = event.target && event.target.closest && event.target.closest('a[href]');
 				const target = shouldIntercept(a, event);
 				if (!target) return;
 
@@ -255,9 +274,11 @@ import HeaderLink from './HeaderLink.astro';
 				try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
 
 				document.body.classList.add('is-navigating');
-				curtain.classList.remove('is-intro');
-				void curtain.offsetWidth;
-				curtain.classList.add('is-exit');
+				curtain.classList.remove('is-uncover');
+				void curtain.offsetHeight;
+				requestAnimationFrame(() => {
+					curtain.classList.add('is-cover');
+				});
 
 				let navigated = false;
 				const go = () => {
@@ -265,9 +286,9 @@ import HeaderLink from './HeaderLink.astro';
 					navigated = true;
 					window.location.href = target;
 				};
-				curtain.addEventListener('animationend', go, { once: true });
-				/* Fallback in case animationend never fires */
-				setTimeout(go, 700);
+
+				/* Navigate once the cover transition completes. */
+				window.setTimeout(go, COVER_MS + 60);
 			},
 			true
 		);
