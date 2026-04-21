@@ -16,8 +16,8 @@ const today = new Date();
 				</a>
 				<p class="desc">
 					Site communautaire francophone 100% dédié au compétitif sur The Finals —
-					ranked, meta, esport, wiki. Construit en public, propulsé par un workflow
-					IA avec validation humaine.
+					meta, esport, wiki, actus et lore. Construit en public, relu à la main
+					avant chaque publication.
 				</p>
 				<div class="social">
 					<a class="chip" href="https://github.com/tetsuya15" target="_blank" rel="noopener">GitHub</a>
@@ -51,6 +51,26 @@ const today = new Date();
 					<li><a href="https://www.reddit.com/r/thefinals/" target="_blank" rel="noopener">Reddit</a></li>
 				</ul>
 			</div>
+		</div>
+
+		<div class="tfr-signature" aria-hidden="true">
+			<div class="tfr-tower">
+				<svg class="tower-svg" viewBox="0 0 60 140" preserveAspectRatio="xMidYMid meet">
+					<g class="tower-waves">
+						<circle class="wave wave-1" cx="30" cy="18" r="5" />
+						<circle class="wave wave-2" cx="30" cy="18" r="5" />
+						<circle class="wave wave-3" cx="30" cy="18" r="5" />
+					</g>
+					<circle class="tower-dot" cx="30" cy="18" r="3.5" />
+					<line class="tower-line" x1="30" y1="22" x2="30" y2="132" />
+					<circle class="tower-signal" cx="30" cy="132" r="1.8" />
+					<line class="tower-base" x1="18" y1="132" x2="42" y2="132" />
+				</svg>
+			</div>
+			<p class="tfr-signature-text">
+				<span class="sig-kicker">EN DIRECT —</span>
+				<span class="sig-main">L'Arène est <em>à toi</em>.</span>
+			</p>
 		</div>
 
 		<div class="bottom">
@@ -239,4 +259,147 @@ const today = new Date();
 	}
 
 	@media (max-width: 768px) { .disclaimer { text-align: left; } }
+
+	/* -------------------------------------------------------------------------- */
+	/*  Broadcast signature — inspired by magnitude.be candle/tagline             */
+	/* -------------------------------------------------------------------------- */
+
+	.tfr-signature {
+		max-width: 1200px;
+		margin: 0 auto 2rem;
+		padding: 3.5rem 1.5rem 3rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+		border-top: 1px solid var(--color-border);
+		position: relative;
+	}
+
+	.tfr-tower {
+		width: 60px;
+		height: 140px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.tower-svg {
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+
+	.tower-line {
+		stroke: var(--color-noir);
+		stroke-width: 1;
+		opacity: 0.35;
+	}
+
+	.tower-base {
+		stroke: var(--color-noir);
+		stroke-width: 1.5;
+		opacity: 0.35;
+	}
+
+	.tower-dot {
+		fill: var(--color-rouge);
+		transform-origin: 30px 18px;
+		filter: drop-shadow(0 0 3px rgba(228, 0, 43, 0.55));
+		animation: tfr-dot-breath 2s ease-in-out infinite;
+	}
+
+	.wave {
+		fill: none;
+		stroke: var(--color-rouge);
+		stroke-width: 1.2;
+		transform-origin: 30px 18px;
+		transform-box: fill-box;
+		opacity: 0;
+		animation: tfr-wave 3s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+	}
+
+	.wave-1 { animation-delay: 0s; }
+	.wave-2 { animation-delay: 1s; }
+	.wave-3 { animation-delay: 2s; }
+
+	.tower-signal {
+		fill: var(--color-rouge);
+		filter: drop-shadow(0 0 2px rgba(228, 0, 43, 0.6));
+		animation: tfr-signal-rise 2.6s ease-in infinite;
+	}
+
+	@keyframes tfr-dot-breath {
+		0%, 100% { transform: scale(1); opacity: 1; }
+		50% { transform: scale(1.45); opacity: 0.65; }
+	}
+
+	@keyframes tfr-wave {
+		0% { transform: scale(0.2); opacity: 0.8; }
+		70% { opacity: 0.2; }
+		100% { transform: scale(3.6); opacity: 0; }
+	}
+
+	@keyframes tfr-signal-rise {
+		0% { transform: translateY(0); opacity: 0; }
+		15% { opacity: 1; }
+		85% { opacity: 1; }
+		100% { transform: translateY(-110px); opacity: 0; }
+	}
+
+	.tfr-signature-text {
+		text-align: center;
+		line-height: 1.2;
+		margin: 0;
+	}
+
+	.sig-kicker {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--color-rouge);
+		margin-bottom: 0.55rem;
+		position: relative;
+	}
+
+	.sig-kicker::before {
+		content: '';
+		display: inline-block;
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--color-rouge);
+		margin-right: 0.5em;
+		vertical-align: middle;
+		box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.6);
+		animation: tfr-pin-pulse 1.8s ease-in-out infinite;
+	}
+
+	@keyframes tfr-pin-pulse {
+		0%, 100% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.6); opacity: 1; }
+		50% { box-shadow: 0 0 0 6px rgba(228, 0, 43, 0); opacity: 0.55; }
+	}
+
+	.sig-main {
+		font-family: var(--font-display);
+		font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+		font-weight: 900;
+		letter-spacing: 0.01em;
+		text-transform: uppercase;
+		color: var(--color-noir);
+		display: block;
+	}
+
+	.sig-main em {
+		font-style: italic;
+		color: var(--color-rouge);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tower-dot, .wave, .tower-signal, .sig-kicker::before {
+			animation: none;
+		}
+	}
 </style>
