@@ -59,9 +59,9 @@ const taglineText = section.tagline;
 					<Image
 						src={headerImage}
 						alt=""
-						width={1920}
-						height={1080}
-						densities={[1, 2]}
+						width={3840}
+						height={2160}
+						densities={[1]}
 						quality={95}
 						loading="eager"
 						sizes="100vw"
@@ -216,7 +216,7 @@ const taglineText = section.tagline;
 
 			/* Wiki uniquement: ancre le cadrage sur les visages (haut de l'image) */
 			.cat-hero-img[data-slug='wiki'] :global(img) {
-				object-position: center top;
+				object-position: center 10%;
 			}
 
 			.cat-hero-wash {
