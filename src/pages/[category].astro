@@ -55,7 +55,7 @@ const taglineText = section.tagline;
 		<Header />
 		<main>
 			<section class="cat-hero">
-				<div class="cat-hero-img" aria-hidden="true">
+				<div class="cat-hero-img" data-slug={category} aria-hidden="true">
 					<Image
 						src={headerImage}
 						alt=""
@@ -212,7 +212,11 @@ const taglineText = section.tagline;
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
-				object-position: center 25%;
+			}
+
+			/* Wiki uniquement: ancre le cadrage sur les visages (haut de l'image) */
+			.cat-hero-img[data-slug='wiki'] :global(img) {
+				object-position: center 8%;
 			}
 
 			.cat-hero-wash {
