@@ -56,7 +56,16 @@ const taglineText = section.tagline;
 		<main>
 			<section class="cat-hero">
 				<div class="cat-hero-img" aria-hidden="true">
-					<Image src={headerImage} alt="" width={1920} height={800} loading="eager" />
+					<Image
+						src={headerImage}
+						alt=""
+						width={1920}
+						height={800}
+						densities={[1, 2]}
+						quality={92}
+						loading="eager"
+						sizes="100vw"
+					/>
 					<div class="cat-hero-wash"></div>
 				</div>
 
