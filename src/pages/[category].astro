@@ -52,7 +52,7 @@ const taglineText = section.tagline;
 	<body>
 		<Header />
 		<main>
-			<section class="cat-hero" data-slug={category}>
+			<section class="cat-hero">
 				<div class="cat-hero-img" data-slug={category} aria-hidden="true">
 					<Image
 						src={headerImage}
@@ -198,12 +198,6 @@ const taglineText = section.tagline;
 				padding: 5rem 0 3.5rem;
 				overflow: hidden;
 				background: var(--color-cream);
-			}
-
-			/* Wiki only: make the hero a bit taller so the image looks less zoomed */
-			.cat-hero[data-slug='wiki'] {
-				min-height: 58vh;
-				padding: 5.6rem 0 3.8rem;
 			}
 
 			.cat-hero-img {
