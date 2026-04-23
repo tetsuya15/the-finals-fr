@@ -11,14 +11,12 @@ import catMeta from '../assets/cat-meta-v3.jpg';
 import catEsport from '../assets/cat-esport-v2.jpg';
 import catWiki from '../assets/cat-wiki-v3.jpg';
 import catActus from '../assets/cat-actus-v2.jpg';
-import catLore from '../assets/cat-lore-v2.jpg';
 
 const CAT_IMG = {
-	meta: catMeta,
+	communaute: catMeta,
 	esport: catEsport,
 	wiki: catWiki,
 	actus: catActus,
-	lore: catLore,
 };
 
 export async function getStaticPaths() {
@@ -28,10 +26,11 @@ export async function getStaticPaths() {
 const { category } = Astro.params;
 const section = NAV_SECTIONS.find((s) => s.slug === category)!;
 const label = section.label;
+const schemaCategory = category === 'communaute' ? 'Meta' : label;
 const headerImage = CAT_IMG[category as keyof typeof CAT_IMG];
 
 const posts = (await getCollection('blog'))
-	.filter((p) => p.data.category === label)
+	.filter((p) => p.data.category === schemaCategory)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const splitChars = (text: string) => Array.from(text);
@@ -217,14 +216,9 @@ const taglineText = section.tagline;
 				object-position: center center;
 			}
 
-			/* Meta uniquement: descend le cadrage pour voir le visage masqué entier */
-			.cat-hero-img[data-slug='meta'] :global(img) {
+			/* Communaute uniquement: descend le cadrage pour voir le visage masque entier */
+			.cat-hero-img[data-slug='communaute'] :global(img) {
 				object-position: center 24%;
-			}
-
-			/* Lore uniquement: centre sur le groupe de visages */
-			.cat-hero-img[data-slug='lore'] :global(img) {
-				object-position: center 28%;
 			}
 
 			.cat-hero-wash {

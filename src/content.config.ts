@@ -12,7 +12,7 @@ const blog = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
 			category: z
-				.enum(['Meta', 'Esport', 'Wiki', 'Actus', 'Lore'])
+				.enum(['Meta', 'Esport', 'Wiki', 'Actus'])
 				.optional(),
 			author: z.string().optional(),
 		}),
