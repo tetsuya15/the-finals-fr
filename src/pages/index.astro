@@ -173,18 +173,18 @@ const latest = allPosts.slice(1, 5);
 						</div>
 
 						<div class="visual">
-							<div class="visual-inner">
+							<div class="visual-inner visual-video">
 								<div class="v-stripes" aria-hidden="true"></div>
-								<div class="v-eyebrow">THE FINALS · Fiche express</div>
-								<p class="v-big">
-									"Des <em>coffres</em>.<br />
-									Du <em>cash</em>.<br />
-									Des <em>murs</em> qui tombent."
-								</p>
-								<div class="v-tags">
-									<span class="tag tag-red">3 classes</span>
-									<span class="tag tag-dark">5 modes</span>
-									<span class="tag tag-white">100% destructible</span>
+								<div class="v-eyebrow">THE FINALS · Vidéo officielle</div>
+								<div class="video-wrap">
+									<iframe
+										src="https://www.youtube.com/embed/7cHfBALIP9Y?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&loop=1&playlist=7cHfBALIP9Y"
+										title="THE FINALS - vidéo de présentation"
+										loading="lazy"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+										referrerpolicy="strict-origin-when-cross-origin"
+										allowfullscreen
+									></iframe>
 								</div>
 							</div>
 						</div>
@@ -755,6 +755,29 @@ const latest = allPosts.slice(1, 5);
 				flex-wrap: wrap;
 				gap: 0.5rem;
 				position: relative;
+			}
+
+			.visual-video {
+				padding: 0;
+				background: transparent;
+				border: 0;
+			}
+
+			.video-wrap {
+				position: relative;
+				width: 100%;
+				aspect-ratio: 16 / 9;
+				border: 0;
+				background: #000;
+				overflow: hidden;
+			}
+
+			.video-wrap iframe {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				border: 0;
 			}
 
 			/* ============ LATEST / DIRECT ============ */
