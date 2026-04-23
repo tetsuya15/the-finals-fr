@@ -11,7 +11,7 @@ import catMeta from '../assets/cat-meta-v2.jpg';
 import catEsport from '../assets/cat-esport.jpg';
 import catWiki from '../assets/cat-wiki-v3.jpg';
 import catActus from '../assets/cat-actus.jpg';
-import catLore from '../assets/cat-lore.jpg';
+import catLore from '../assets/cat-lore-v2.jpg';
 
 const CAT_IMG = {
 	meta: catMeta,
@@ -219,7 +219,12 @@ const taglineText = section.tagline;
 
 			/* Meta uniquement: descend le cadrage pour voir le visage masqué entier */
 			.cat-hero-img[data-slug='meta'] :global(img) {
-				object-position: center 20%;
+				object-position: center 16%;
+			}
+
+			/* Lore uniquement: centre sur le groupe de visages */
+			.cat-hero-img[data-slug='lore'] :global(img) {
+				object-position: center 28%;
 			}
 
 			.cat-hero-wash {
