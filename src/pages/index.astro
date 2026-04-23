@@ -175,7 +175,6 @@ const latest = allPosts.slice(1, 5);
 						<div class="visual">
 							<div class="visual-inner visual-video">
 								<div class="v-stripes" aria-hidden="true"></div>
-								<div class="v-eyebrow">THE FINALS · Vidéo officielle</div>
 								<div class="video-wrap">
 									<iframe
 										src="https://www.youtube.com/embed/7cHfBALIP9Y?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&loop=1&playlist=7cHfBALIP9Y"
@@ -683,11 +682,15 @@ const latest = allPosts.slice(1, 5);
 				display: grid;
 				grid-template-columns: 1fr;
 				gap: 3rem;
-				align-items: center;
+				align-items: start;
 			}
 
 			@media (min-width: 900px) {
-				.intro-grid { grid-template-columns: 1.2fr 1fr; gap: 4rem; }
+				.intro-grid {
+					grid-template-columns: 1fr 1.35fr;
+					gap: 3rem;
+					align-items: stretch;
+				}
 			}
 
 			.p {
@@ -761,15 +764,25 @@ const latest = allPosts.slice(1, 5);
 				padding: 0;
 				background: transparent;
 				border: 0;
+				height: 100%;
+				display: flex;
 			}
 
 			.video-wrap {
 				position: relative;
 				width: 100%;
-				aspect-ratio: 16 / 9;
+				aspect-ratio: 16 / 10;
 				border: 0;
 				background: #000;
 				overflow: hidden;
+			}
+
+			@media (min-width: 900px) {
+				.video-wrap {
+					aspect-ratio: auto;
+					height: 100%;
+					min-height: 100%;
+				}
 			}
 
 			.video-wrap iframe {
