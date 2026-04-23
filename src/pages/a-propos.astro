@@ -71,52 +71,6 @@ import { SITE_TITLE } from '../consts';
 				</div>
 			</section>
 
-			<section class="block">
-				<div class="container">
-					<div class="block-grid">
-						<div>
-							<div class="section-label">03 — Comment</div>
-							<h2 class="h">Relu à la main, <em>publié quand c'est prêt.</em></h2>
-						</div>
-						<div class="block-body">
-							<p>
-								Chaque article est <strong>rédigé, recherché et relu à la main</strong>
-								avant publication. Tier list sourcées, guides testés en ranked,
-								couverture esport suivie match par match. Pas d'info balancée à la va-vite.
-							</p>
-							<p>
-								Le site est construit en public et son code est
-								<a href="https://github.com/tetsuya15" target="_blank" rel="noopener">open-source sur GitHub</a>.
-								Les articles sont sous licence CC BY-NC-SA 4.0.
-							</p>
-							<div class="stack-tags">
-								<span class="tag tag-red">100% FR</span>
-								<span class="tag tag-dark">Compétitif</span>
-								<span class="tag tag-white">Build in public</span>
-								<span class="tag tag-blue">Open-source</span>
-								<span class="tag tag-green">Gratuit, sans pub</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<div class="tfr-stripes -thin" aria-hidden="true"></div>
-
-			<section class="cta">
-				<div class="container cta-inner">
-					<div class="section-label -center">{SITE_TITLE} — Premier objectif</div>
-					<p class="cta-text">
-						Boucler les <em>fondations</em> dans les semaines qui viennent : premier guide
-						Medium ranked, tier list d'armes à jour, fiches classes, couverture de la
-						prochaine étape du Grand Major.
-					</p>
-					<div class="cta-ctas">
-						<a class="btn btn-primary" href="/blog/">Lire les articles</a>
-						<a class="btn btn-outline" href="/">Retour à l'accueil</a>
-					</div>
-				</div>
-			</section>
 		</main>
 		<Footer />
 
@@ -198,23 +152,6 @@ import { SITE_TITLE } from '../consts';
 
 			.block-body p strong { color: var(--color-rouge); }
 
-			.block-body p a {
-				color: var(--color-rouge);
-				border-bottom: 1px solid rgba(228, 0, 43, 0.35);
-			}
-
-			.block-body p a:hover {
-				color: var(--color-rouge-deep);
-				border-bottom-color: var(--color-rouge-deep);
-			}
-
-			.stack-tags {
-				margin-top: 1.5rem;
-				display: flex;
-				gap: 0.5rem;
-				flex-wrap: wrap;
-			}
-
 			.verticals {
 				list-style: none;
 				padding: 0;
@@ -236,38 +173,6 @@ import { SITE_TITLE } from '../consts';
 				background: var(--color-blanc);
 			}
 
-			.cta {
-				padding: 5rem 0;
-				background: var(--color-blanc);
-			}
-
-			.cta-inner {
-				max-width: 52rem;
-				text-align: center;
-			}
-
-			.cta-text {
-				margin: 1.5rem 0 2.2rem;
-				font-family: var(--font-display);
-				font-size: clamp(1.2rem, 2.2vw, 1.75rem);
-				font-weight: 800;
-				text-transform: uppercase;
-				letter-spacing: 0.01em;
-				line-height: 1.25;
-				color: var(--color-noir);
-			}
-
-			.cta-text em {
-				font-style: normal;
-				color: var(--color-rouge);
-			}
-
-			.cta-ctas {
-				display: flex;
-				gap: 1rem;
-				justify-content: center;
-				flex-wrap: wrap;
-			}
 		</style>
 	</body>
 </html>
