@@ -9,7 +9,7 @@ import { NAV_SECTIONS, SITE_TITLE } from '../consts';
 
 import catMeta from '../assets/cat-meta.jpg';
 import catEsport from '../assets/cat-esport.jpg';
-import catWiki from '../assets/cat-wiki-v2.jpg';
+import catWiki from '../assets/cat-wiki-v3.jpg';
 import catActus from '../assets/cat-actus.jpg';
 import catLore from '../assets/cat-lore.jpg';
 
@@ -215,21 +215,6 @@ const taglineText = section.tagline;
 			/* Wiki uniquement: cadrage centré pour équilibrer perso à gauche + pièces à droite */
 			.cat-hero-img[data-slug='wiki'] :global(img) {
 				object-position: center center;
-			}
-
-			/* Wiki uniquement: masque discret du watermark/credits en bas à droite */
-			.cat-hero-img[data-slug='wiki']::after {
-				content: '';
-				position: absolute;
-				right: 0;
-				bottom: 0;
-				width: clamp(180px, 18vw, 300px);
-				height: clamp(58px, 7.4vw, 118px);
-				background:
-					linear-gradient(180deg, rgba(173, 225, 240, 0.1) 0%, rgba(173, 225, 240, 0.55) 100%),
-					linear-gradient(90deg, rgba(173, 225, 240, 0.08) 0%, rgba(150, 210, 230, 0.48) 75%);
-				backdrop-filter: blur(1.8px);
-				pointer-events: none;
 			}
 
 			/* Meta uniquement: descend le cadrage pour voir le visage masqué entier */
