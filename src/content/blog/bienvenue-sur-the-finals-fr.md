@@ -1,32 +1,31 @@
 ---
 title: "Bienvenue sur The Finals FR"
-description: "On lance le premier site francophone 100% dédié au compétitif sur The Finals : ranked, meta, esport, wiki. Voilà pourquoi, pour qui, et ce qui arrive."
+description: "On lance un site francophone 100% dédié à The Finals, pensé par des joueurs pour les joueurs : actus, guides, wiki, meta et vie de la communauté. Voilà pourquoi, pour qui, et ce qui arrive."
 pubDate: "2026-04-19"
 category: Actus
 author: Benjamin
 heroImage: "../../assets/hero-bienvenue.png"
 ---
 
-The Finals a une scène compétitive qui explose — **Grand Major**, équipes pro, circuit mondial, saisons qui se suivent sans répit — et pourtant, en français, **personne ne la couvre sérieusement**. Les sites FR existants traitent le jeu à la volée, au milieu de cinquante autres titres. Pas de suivi ranked digne de ce nom, pas d'analyse meta à chaque patch, pas de couverture esport. Ce site est là pour combler ce trou.
+The Finals rassemble une vraie communauté de passionnés, mais en français il manque encore un lieu clair pour se retrouver, suivre le jeu et progresser ensemble. Entre les patchs, les nouvelles saisons, les guides, les builds, les tournois et les débats de la commu, l'info est souvent éparpillée. Ce site est là pour réunir tout ça au même endroit, simplement : **par des joueurs, pour les joueurs**.
 
 ## Ce qu'on fera ici
 
-- **Ranked** — des guides pour grimper, classe par classe, mode par mode. Medium, Heavy, Light : chacun son chemin, chacun ses pièges.
-- **Meta** — tier lists d'armes, builds S-tier, lecture des patchs. Mis à jour à chaque saison.
+- **Guides** — des conseils utiles pour progresser, classe par classe et mode par mode, sans blabla inutile.
+- **Communauté** — tier lists d'armes, builds qui marchent, lecture des patchs et retours terrain des joueurs.
 - **Esport** — suivi du Grand Major, équipes pro, analyses de matchs, résultats des tournois.
-- **Wiki** — fiches armes, classes, spécialisations, gadgets, cartes. La référence FR.
-- **Actus** — patch notes décryptés, events communautaires, news de la scène.
-- **Lore** — parce que l'univers de The Finals (gameshow dystopique signé Embark) mérite mieux qu'un paragraphe sur Wikipédia.
+- **Wiki** — fiches armes, classes, spécialisations, gadgets, cartes. Une base claire en français.
+- **Actus** — patch notes décryptés, events communautaires, news du jeu et de la scène.
 
 ## Comment on travaille
 
-Chaque article est **rédigé, recherché et relu à la main** avant publication. Tier list sourcées sur les notes officielles, guides testés en ranked, couverture esport suivie match par match. Pas d'info balancée à la va-vite, pas de recyclage d'article anglais bâclé. L'objectif : que tu repartes d'ici avec quelque chose d'**actionnable** — un build qui marche, un pick qui claque, une info à jour.
+Chaque article est **rédigé, recherché et relu à la main** avant publication. Guides testés en jeu, tier lists mises à jour avec les patchs, couverture esport suivie match par match. Pas d'info balancée à la va-vite, pas de copier-coller bancal. L'objectif : que tu repartes d'ici avec quelque chose d'**utile** — une info à jour, une idée de build, ou un conseil que tu peux appliquer tout de suite.
 
 Le site est construit en public. Le code est [open-source sur GitHub](https://github.com/tetsuya15). Les articles sont sous licence CC BY-NC-SA.
 
 ## Premier objectif
 
-Boucler les **fondations** dans les semaines qui viennent : un premier guide Medium ranked, la tier list d'armes à jour, les fiches classes, et une couverture de la prochaine étape majeure du Grand Major. Ensuite, rythme de croisière : plusieurs articles par semaine.
+Boucler les **fondations** dans les semaines qui viennent : premiers guides solides, tier list d'armes à jour, fiches classes utiles, et couverture de la prochaine étape majeure du Grand Major. Ensuite, rythme de croisière : plusieurs contenus par semaine.
 
 **Merci d'être là dès le jour 1.** Si un sujet te brûle la langue, ouvre une issue sur GitHub — on prend les idées.
 
