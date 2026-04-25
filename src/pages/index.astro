@@ -96,9 +96,8 @@ const latest = allPosts.slice(1, 5);
 					</h1>
 
 					<p class="hero-sub">
-						Le site communautaire francophone <strong>par des joueurs pour les joueurs</strong> sur
-						<strong>THE FINALS</strong>. Actus, guides, wiki, couverture esport et vie de la
-						communauté <strong>100% française</strong>.
+						Le site communautaire francophone <strong>100%</strong> dédié à <strong>THE FINALS</strong>.
+						Actualités, guides, couverture esport du Grand Major, et un wiki en français.
 					</p>
 
 					<div class="hero-cta">
@@ -1037,6 +1036,45 @@ const latest = allPosts.slice(1, 5);
 				gap: 1.5rem;
 				align-items: flex-start;
 				background: var(--color-blanc);
+			}
+
+			/* Dock-style hover animation for "Pourquoi ce site" cards */
+			.r-card {
+				transform-origin: center center;
+				will-change: transform, opacity, box-shadow, border-color;
+				transition:
+					transform 180ms cubic-bezier(0.25, 1, 0.5, 1),
+					opacity 180ms cubic-bezier(0.25, 1, 0.5, 1),
+					box-shadow 180ms cubic-bezier(0.25, 1, 0.5, 1),
+					border-color 180ms cubic-bezier(0.25, 1, 0.5, 1);
+			}
+
+			@media (hover: hover) and (pointer: fine) {
+				.reasons-grid:has(.r-card:hover) .r-card {
+					opacity: 0.76;
+					transform: scale(0.98);
+				}
+
+				.reasons-grid .r-card:hover {
+					opacity: 1;
+					transform: translateY(-4px) scale(1.02);
+					box-shadow: 0 16px 34px -20px rgba(0, 0, 0, 0.42);
+					border-color: color-mix(in oklab, var(--color-rouge) 50%, var(--color-border));
+				}
+
+				/* 1st neighbors */
+				.reasons-grid .r-card:hover + .r-card,
+				.reasons-grid .r-card:has(+ .r-card:hover) {
+					opacity: 0.94;
+					transform: translateY(-2px) scale(1.01);
+				}
+
+				/* 2nd neighbors */
+				.reasons-grid .r-card:hover + .r-card + .r-card,
+				.reasons-grid .r-card:has(+ .r-card + .r-card:hover) {
+					opacity: 0.87;
+					transform: scale(0.995);
+				}
 			}
 
 			.r-num {
