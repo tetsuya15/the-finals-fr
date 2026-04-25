@@ -135,10 +135,10 @@ const latest = allPosts.slice(1, 5);
 			<div class="tfr-stripes" aria-hidden="true"></div>
 
 			<!-- ============ À PROPOS DU JEU ============ -->
-			<section class="intro">
+			<section class="intro" id="introScrollExpand">
 				<div class="container">
 					<div class="intro-grid">
-						<div>
+						<div class="intro-copy">
 							<div class="section-label">À propos du jeu</div>
 							<h2 class="section-title">Un <em>game show</em> où tout s'écroule.</h2>
 							<p class="p">
@@ -172,10 +172,10 @@ const latest = allPosts.slice(1, 5);
 							</div>
 						</div>
 
-						<div class="visual">
+						<div class="visual intro-visual">
 							<div class="visual-inner visual-video">
 								<div class="v-stripes" aria-hidden="true"></div>
-								<div class="video-wrap">
+								<div class="video-wrap intro-video-wrap">
 									<iframe
 										src="https://www.youtube.com/embed/7cHfBALIP9Y?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&loop=1&playlist=7cHfBALIP9Y"
 										title="THE FINALS - vidéo de présentation"
@@ -498,6 +498,33 @@ const latest = allPosts.slice(1, 5);
 					});
 				});
 			}
+
+			// Scroll expansion effect on the "A propos du jeu" section
+			{
+				const intro = document.getElementById('introScrollExpand');
+				if (intro) {
+					let raf = 0;
+					const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+					const update = () => {
+						const rect = intro.getBoundingClientRect();
+						const vh = window.innerHeight || 1;
+						// 0 when section starts entering viewport, 1 near section center.
+						const start = vh * 0.98;
+						const end = vh * 0.2;
+						const raw = (start - rect.top) / (start - end);
+						const progress = clamp(raw, 0, 1);
+						intro.style.setProperty('--intro-progress', progress.toFixed(4));
+						raf = 0;
+					};
+					const onScroll = () => {
+						if (raf) return;
+						raf = requestAnimationFrame(update);
+					};
+					window.addEventListener('scroll', onScroll, { passive: true });
+					window.addEventListener('resize', onScroll, { passive: true });
+					update();
+				}
+			}
 		</script>
 
 		<style>
@@ -673,6 +700,7 @@ const latest = allPosts.slice(1, 5);
 
 			/* ============ INTRO ============ */
 			.intro {
+				--intro-progress: 0;
 				padding: 5rem 0 4rem;
 				background: var(--color-blanc);
 				border-bottom: 1px solid var(--color-border);
@@ -683,6 +711,15 @@ const latest = allPosts.slice(1, 5);
 				grid-template-columns: 1fr;
 				gap: 3rem;
 				align-items: start;
+			}
+
+			.intro-copy {
+				transform:
+					translate3d(0, calc((1 - var(--intro-progress)) * 64px), 0)
+					scale(calc(0.92 + var(--intro-progress) * 0.08));
+				filter: blur(calc((1 - var(--intro-progress)) * 2px));
+				opacity: calc(0.45 + var(--intro-progress) * 0.55);
+				transition: transform 0.08s linear, opacity 0.12s linear;
 			}
 
 			@media (min-width: 900px) {
@@ -775,6 +812,16 @@ const latest = allPosts.slice(1, 5);
 				border: 0;
 				background: #000;
 				overflow: hidden;
+				transform:
+					translate3d(0, calc((1 - var(--intro-progress)) * 92px), 0)
+					scale(calc(0.78 + var(--intro-progress) * 0.22));
+				transform-origin: center center;
+				opacity: calc(0.5 + var(--intro-progress) * 0.5);
+				border-radius: calc(20px - var(--intro-progress) * 16px);
+				box-shadow:
+					0 24px 56px rgba(0, 0, 0, calc(0.28 + (1 - var(--intro-progress)) * 0.14)),
+					0 0 0 1px rgba(255, 255, 255, calc(0.12 + (1 - var(--intro-progress)) * 0.12)) inset;
+				transition: transform 0.08s linear, border-radius 0.12s linear, box-shadow 0.12s linear, opacity 0.12s linear;
 			}
 
 			@media (min-width: 900px) {
@@ -791,6 +838,21 @@ const latest = allPosts.slice(1, 5);
 				width: 100%;
 				height: 100%;
 				border: 0;
+			}
+
+			@media (max-width: 899px) {
+				.intro-copy {
+					transform:
+						translate3d(0, calc((1 - var(--intro-progress)) * 26px), 0)
+						scale(calc(0.95 + var(--intro-progress) * 0.05));
+					filter: blur(calc((1 - var(--intro-progress)) * 1px));
+				}
+
+				.video-wrap {
+					transform: translate3d(0, calc((1 - var(--intro-progress)) * 34px), 0)
+						scale(calc(0.9 + var(--intro-progress) * 0.1));
+					border-radius: calc(12px - var(--intro-progress) * 8px);
+				}
 			}
 
 			/* ============ LATEST / DIRECT ============ */
