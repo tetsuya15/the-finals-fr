@@ -1,7 +1,7 @@
 export const SITE_TITLE = 'The Finals FR';
 export const SITE_TAGLINE = 'Ranked · Communauté · Esport';
 export const SITE_DESCRIPTION =
-	'Le site francophone dédié au compétitif sur The Finals : guides ranked, analyses communauté, couverture esport (The Grand Major & équipes pro), patchs et wiki.';
+	'Le site communautaire francophone 100% dédié à THE FINALS : actualités, guides, couverture esport du Grand Major et wiki en français.';
 
 export const NAV_SECTIONS = [
 	{

@@ -1,0 +1,149 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const pageTitle = `Blog THE FINALS FR — Actualites, guides et esport`;
+const pageDescription =
+	`Tous les articles The Finals FR : actualites, guides, couvertures esport et wiki en francais.`;
+const blogJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Blog',
+	name: `${SITE_TITLE} Blog`,
+	description: pageDescription,
+	url: new URL('/blog/', Astro.site).toString(),
+	inLanguage: 'fr-FR',
+	blogPost: posts.map((post) => ({
+		'@type': 'BlogPosting',
+		headline: post.data.title,
+		url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
+		datePublished: new Date(post.data.pubDate).toISOString(),
+		articleSection: post.data.category,
+	})),
+};
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={pageTitle} description={pageDescription} />
+		<script type="application/ld+json" set:html={JSON.stringify(blogJsonLd)}></script>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="blog-hero">
+				<div class="container">
+					<div class="section-label">The Finals FR - Blog</div>
+					<h1>Articles <em>communautaires</em></h1>
+					<p>
+						Retrouve toutes les actualites, guides, analyses communautaires et
+						couvertures esport de THE FINALS en francais.
+					</p>
+				</div>
+			</section>
+
+			<section class="blog-list">
+				<div class="container">
+					<ul class="posts">
+						{posts.map((post) => (
+							<li>
+								<a class="card post" href={`/blog/${post.id}/`}>
+									{post.data.heroImage && (
+										<div class="post-img">
+											<Image src={post.data.heroImage} alt="" width={800} height={450} loading="lazy" />
+										</div>
+									)}
+									<div class="post-body">
+										<div class="post-meta">
+											{post.data.category && (
+												<span class="tag tag-cat" data-cat={post.data.category}>{post.data.category}</span>
+											)}
+											<span class="date"><FormattedDate date={post.data.pubDate} /></span>
+										</div>
+										<h2>{post.data.title}</h2>
+										<p>{post.data.description}</p>
+									</div>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+		</main>
+		<Footer />
+		<style>
+			.blog-hero {
+				padding: 5rem 0 3rem;
+				background: var(--color-blanc);
+				border-bottom: 1px solid var(--color-border);
+			}
+			.blog-hero h1 {
+				margin-top: 0.8rem;
+				font-size: clamp(2rem, 6vw, 4.2rem);
+				line-height: 1;
+				text-transform: uppercase;
+			}
+			.blog-hero h1 em { color: var(--color-rouge); font-style: normal; }
+			.blog-hero p {
+				margin-top: 1rem;
+				max-width: 62ch;
+				color: var(--color-noir-2);
+				line-height: 1.65;
+			}
+			.blog-list { padding: 3rem 0 4rem; }
+			.posts {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1rem;
+			}
+			@media (min-width: 900px) {
+				.posts { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+			}
+			.post {
+				display: flex;
+				flex-direction: column;
+				text-decoration: none;
+				overflow: hidden;
+				background: var(--color-blanc);
+			}
+			.post-img { aspect-ratio: 16 / 9; overflow: hidden; }
+			.post-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+			.post-body { padding: 1.25rem; }
+			.post-meta { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+			.date {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-gris);
+			}
+			.post h2 {
+				margin-top: 0.8rem;
+				font-family: var(--font-display);
+				font-size: 1.5rem;
+				font-weight: 800;
+				line-height: 1.15;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+			.post p {
+				margin-top: 0.6rem;
+				color: var(--color-noir-2);
+				line-height: 1.6;
+				font-size: 0.95rem;
+			}
+		</style>
+	</body>
+</html>

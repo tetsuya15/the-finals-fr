@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://the-finals-fr.vercel.app/sitemap-index.xml
