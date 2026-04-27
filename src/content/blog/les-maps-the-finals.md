@@ -116,7 +116,9 @@ THE FINALS est un show. Et qui dit show, dit décors spectaculaires. Chaque arè
 	}
 	.map-pb-card {
 		position: relative;
-		aspect-ratio: 4 / 5;
+		/* Même hauteur que les cartes Wiki (desktop 38rem, mobile 28rem) */
+		height: 38rem;
+		min-height: 38rem;
 		overflow: hidden;
 		border-radius: 6px;
 		background: #0a0a0a;
@@ -224,6 +226,14 @@ THE FINALS est un show. Et qui dit show, dit décors spectaculaires. Chaque arè
 		line-height: 1.5;
 		color: rgba(255, 255, 255, 0.94);
 		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+	}
+
+	/* Même hauteur mobile que les cartes Wiki (28rem) */
+	@media (max-width: 1023px) {
+		.map-pb-card {
+			height: 28rem;
+			min-height: 28rem;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
