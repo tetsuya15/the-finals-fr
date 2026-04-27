@@ -4,7 +4,7 @@ description: "Guide wiki des classes Light, Medium et Heavy : rôles, forces, fa
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/cat-lore.jpg"
+heroImage: "../../assets/cat-wiki-v3.jpg"
 ---
 
 ## Comprendre les rôles

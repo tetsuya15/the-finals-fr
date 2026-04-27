@@ -4,7 +4,7 @@ description: "Guide wiki des armes de THE FINALS : portée utile, recoil, points
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/The-Finals-Season-8-header.jpg"
+heroImage: "../../assets/cat-wiki-v3.jpg"
 ---
 
 ## Les armes, sans blabla

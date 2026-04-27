@@ -4,7 +4,7 @@ description: "Guide wiki des maps de THE FINALS : callouts clés, rotations et z
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/the-finals-monaco-map.jpg"
+heroImage: "../../assets/cat-wiki-v3.jpg"
 ---
 
 ## Les maps, en version utile
