@@ -100,9 +100,19 @@ THE FINALS est un show. Et qui dit show, dit décors spectaculaires. Chaque arè
 <style>
 	.map-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
 		margin: 1.5rem 0 2rem;
+	}
+	@media (max-width: 1024px) {
+		.map-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 600px) {
+		.map-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 	.map-pb-card {
 		position: relative;
