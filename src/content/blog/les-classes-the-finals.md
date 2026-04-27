@@ -1,10 +1,10 @@
 ---
-title: "Les classes de THE FINALS"
+title: "Les Classes"
 description: "Guide wiki des classes Light, Medium et Heavy : rôles, forces, faiblesses et synergies."
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/cat-wiki-v3.jpg"
+heroImage: "../../assets/cat-lore.jpg"
 ---
 
 ## Comprendre les rôles

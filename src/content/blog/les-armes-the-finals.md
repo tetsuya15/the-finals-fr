@@ -1,10 +1,10 @@
 ---
-title: "Les armes de THE FINALS"
+title: "Les Armes"
 description: "Guide wiki des armes de THE FINALS : portée utile, recoil, points forts et builds recommandés."
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/cat-wiki-v3.jpg"
+heroImage: "../../assets/The-Finals-Season-8-header.jpg"
 ---
 
 ## Les armes, sans blabla

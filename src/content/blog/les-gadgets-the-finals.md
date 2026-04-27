@@ -1,10 +1,10 @@
 ---
-title: "Les gadgets de THE FINALS"
+title: "Les Gadgets"
 description: "Guide wiki des gadgets de THE FINALS : utilite, contre-jeu, timings et combos efficaces."
 pubDate: "2026-04-27"
 category: Wiki
 author: Benjamin
-heroImage: "../../assets/cat-wiki-v3.jpg"
+heroImage: "../../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp"
 ---
 
 ## Les gadgets qui font la diff
