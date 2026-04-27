@@ -11,6 +11,10 @@ import catMeta from '../assets/cat-meta-v3.jpg';
 import catEsport from '../assets/T_UI_S8_MainMenu_BKG.webp';
 import catWiki from '../assets/cat-wiki-v3.jpg';
 import catActus from '../assets/cat-actus-v2.jpg';
+import wikiClasses from '../assets/cat-lore.jpg';
+import wikiMaps from '../assets/the-finals-monaco-map.jpg';
+import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
+import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
 
 const CAT_IMG = {
 	communaute: catMeta,
@@ -37,6 +41,36 @@ const splitChars = (text: string) => Array.from(text);
 const sectionLabelText = `${SITE_TITLE} — Catégorie`;
 const titleText = label;
 const taglineText = section.tagline;
+const wikiCards = [
+	{
+		id: 'maps',
+		title: 'Les Maps',
+		description: 'Callouts, rotations, lignes de vue et points chauds des cartes.',
+		image: wikiMaps,
+		href: '/blog/les-maps-the-finals/',
+	},
+	{
+		id: 'classes',
+		title: 'Les classes',
+		description: 'Forces, faiblesses, gadgets et synergies Light, Medium, Heavy.',
+		image: wikiClasses,
+		href: '/blog/les-classes-the-finals/',
+	},
+	{
+		id: 'armes',
+		title: 'Les armes',
+		description: 'Stats, recoil, portee utile et builds armes selon ton style de jeu.',
+		image: wikiWeapons,
+		href: '/blog/les-armes-the-finals/',
+	},
+	{
+		id: 'gadgets',
+		title: 'Les gadgets',
+		description: 'Utilite, timings et combos de gadgets pour prendre l avantage en teamplay.',
+		image: wikiGadgets,
+		href: '/blog/les-gadgets-the-finals/',
+	},
+];
 ---
 
 <!doctype html>
@@ -117,9 +151,37 @@ const taglineText = section.tagline;
 
 			<div class="tfr-stripes" aria-hidden="true"></div>
 
-			<section class="cat-list">
-				<div class="container">
-					{posts.length === 0 ? (
+			{category === 'wiki' && (
+				<section class="wiki-sections">
+					<div class="container">
+						<div class="section-label">Wiki — Sections clés</div>
+						<h2 class="wiki-title">
+							Maps, classes et armes<br />
+							<em>en un coup d'oeil.</em>
+						</h2>
+
+						<div class="wiki-expand-track" role="region" aria-label="Sections Wiki">
+							{wikiCards.map((card) => (
+								<a class="wiki-expand-card card" data-slide={card.id} href={card.href}>
+									<div class="wiki-card-img">
+										<Image src={card.image} alt={card.title} width={1280} height={720} loading="lazy" />
+										<div class="wiki-card-wash"></div>
+									</div>
+									<div class="wiki-card-body">
+										<h3>{card.title}</h3>
+										<p>{card.description}</p>
+									</div>
+								</a>
+							))}
+						</div>
+					</div>
+				</section>
+			)}
+
+			{category !== 'wiki' && (
+				<section class="cat-list">
+					<div class="container">
+						{posts.length === 0 ? (
 						<div class="empty card">
 							<div class="section-label">Bientôt — En production</div>
 							<h2 class="empty-title">
@@ -139,7 +201,7 @@ const taglineText = section.tagline;
 								← Retour à l'accueil
 							</a>
 						</div>
-					) : (
+						) : (
 						<ul class="posts">
 							{posts.map((post) => (
 								<li>
@@ -172,12 +234,12 @@ const taglineText = section.tagline;
 								</li>
 							))}
 						</ul>
-					)}
-				</div>
-			</section>
+						)}
+					</div>
+				</section>
+			)}
 		</main>
 		<Footer />
-
 		<style>
 			main { padding-bottom: 2rem; }
 
@@ -286,6 +348,134 @@ const taglineText = section.tagline;
 			/* ============ LISTE ============ */
 			.cat-list {
 				padding: 4rem 0;
+			}
+
+			/* ============ WIKI SECTIONS (animated carousel) ============ */
+			.wiki-sections {
+				padding: 4rem 0 1rem;
+				background: var(--color-blanc);
+			}
+
+			.wiki-title {
+				margin-top: 0.8rem;
+				margin-bottom: 1.3rem;
+				font-size: clamp(1.8rem, 5vw, 3rem);
+				line-height: 1.02;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+
+			.wiki-title em {
+				font-style: normal;
+				color: var(--color-rouge);
+			}
+
+			.wiki-expand-track {
+				display: flex;
+				gap: 1rem;
+				align-items: stretch;
+			}
+
+			.wiki-expand-card {
+				flex: 0.55;
+				min-width: 0;
+				height: 38rem;
+				overflow: hidden;
+				text-decoration: none;
+				transition:
+					flex 0.48s cubic-bezier(0.25, 1, 0.5, 1),
+					transform 0.32s cubic-bezier(0.25, 1, 0.5, 1),
+					box-shadow 0.32s ease;
+			}
+
+			.wiki-expand-track:hover .wiki-expand-card {
+				flex: 0.4;
+			}
+
+			.wiki-expand-track .wiki-expand-card:hover {
+				flex: 2.1;
+				transform: translateY(-4px);
+				box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.45);
+			}
+
+			.wiki-card-img {
+				position: relative;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.wiki-card-img :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center;
+				transition: transform 0.38s ease, filter 0.32s ease;
+			}
+
+			.wiki-expand-track:hover .wiki-expand-card .wiki-card-img :global(img) {
+				filter: saturate(0.82) brightness(0.9);
+			}
+
+			.wiki-expand-track .wiki-expand-card:hover .wiki-card-img :global(img) {
+				transform: scale(1.04);
+				filter: saturate(1.05) brightness(1);
+			}
+
+			.wiki-card-wash {
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.35));
+			}
+
+			.wiki-card-body {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				padding: 1.1rem 1rem 1.2rem;
+				color: var(--color-blanc);
+				text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+				transition: transform 0.32s ease, opacity 0.24s ease;
+			}
+
+			.wiki-card-body h3 {
+				margin-top: 0.7rem;
+				font-family: var(--font-display);
+				font-size: 1.25rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				color: var(--color-blanc);
+				letter-spacing: 0.02em;
+				line-height: 1.15;
+			}
+
+			.wiki-card-body p {
+				margin-top: 0.6rem;
+				color: rgba(255, 255, 255, 0.9);
+				font-size: 0.93rem;
+				line-height: 1.6;
+			}
+
+			.wiki-expand-track:hover .wiki-expand-card .wiki-card-body {
+				opacity: 0.66;
+				transform: translateY(8px);
+			}
+
+			.wiki-expand-track:hover .wiki-expand-card:hover .wiki-card-body {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			@media (max-width: 1023px) {
+				.wiki-expand-track {
+					flex-direction: column;
+				}
+				.wiki-expand-card,
+				.wiki-expand-track:hover .wiki-expand-card,
+				.wiki-expand-track .wiki-expand-card:hover {
+					flex: 1;
+					height: 28rem;
+				}
 			}
 
 			.empty {
