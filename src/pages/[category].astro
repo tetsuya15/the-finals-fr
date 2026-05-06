@@ -15,6 +15,7 @@ import wikiClasses from '../assets/cat-lore.jpg';
 import wikiMaps from '../assets/the-finals-monaco-map.jpg';
 import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
 import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
+import { ESPORT_TEAMS } from '../data/esportTeams';
 
 const CAT_IMG = {
 	communaute: catMeta,
@@ -178,10 +179,140 @@ const wikiCards = [
 				</section>
 			)}
 
+			{category === 'esport' && (
+				<section class="esport-sections">
+					<div class="container">
+						<div class="section-label">Esport — Teams majeurs</div>
+						<h2 class="esport-title">
+							Les équipes du circuit<br />
+							<em>Grand Major & suites.</em>
+						</h2>
+						<p class="esport-intro">
+							THE FINALS se joue en <strong>trios</strong> : trois classes (Light, Medium, Heavy) sont disponibles,
+							mais les line-ups professionnels changent souvent de composition selon les cartes et les patchs.
+							Les tableaux ci-dessous reprennent les <strong>pseudonymes officiels</strong> et, lorsqu’elle est publique,
+							la <strong>composition au Grand Major 2025</strong> (Stockholm, 28–29 novembre 2025) ainsi que l’effectif
+							<strong>encore listé comme actif</strong> sur Liquipedia au moment de la rédaction.
+						</p>
+
+						<div class="esport-team-grid">
+							{ESPORT_TEAMS.map((team) => (
+								<article class="esport-team-card card">
+									<div class="esport-team-head">
+										<h3>{team.name}</h3>
+										<span class="esport-region">{team.region}</span>
+									</div>
+
+									<h4 class="esport-subhead">Palmarès (extraits)</h4>
+									<ul class="esport-palmares">
+										{team.palmares.map((line) => (
+											<li>{line}</li>
+										))}
+									</ul>
+
+									{team.rosterActive && team.rosterActive.length > 0 && (
+										<>
+											<h4 class="esport-subhead">Roster actuel (Liquipedia)</h4>
+											<ul class="esport-roster">
+												{team.rosterActive.map((p) => (
+													<li>
+														<strong>{p.nick}</strong>
+														{p.realName && <span class="esport-real"> — {p.realName}</span>}
+														{p.note && <span class="esport-note"> ({p.note})</span>}
+													</li>
+												))}
+											</ul>
+											{team.staff && team.staff.length > 0 && (
+												<ul class="esport-staff">
+													{team.staff.map((s) => (
+														<li>
+															<span class="esport-staff-role">{s.role}</span> · {s.nick}
+														</li>
+													))}
+												</ul>
+											)}
+										</>
+									)}
+
+									{team.gm2025Roster && team.gm2025Roster.length > 0 && (
+										<>
+											<h4 class="esport-subhead">Grand Major 2025 — roster LAN</h4>
+											<ul class="esport-roster esport-roster-muted">
+												{team.gm2025Roster.map((p) => (
+													<li>
+														<strong>{p.nick}</strong>
+														{p.realName && <span class="esport-real"> — {p.realName}</span>}
+													</li>
+												))}
+											</ul>
+											{team.gm2025Staff && team.gm2025Staff.length > 0 && (
+												<ul class="esport-staff esport-staff-muted">
+													{team.gm2025Staff.map((s) => (
+														<li>
+															<span class="esport-staff-role">{s.role}</span> · {s.nick}
+														</li>
+													))}
+												</ul>
+											)}
+										</>
+									)}
+
+									{team.footnote && <p class="esport-footnote">{team.footnote}</p>}
+
+									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
+										Fiche Liquipedia →
+									</a>
+								</article>
+							))}
+						</div>
+
+						<div class="esport-sources card">
+							<div class="section-label">Sources & fiabilité</div>
+							<p class="esport-sources-lead">
+								Classement général du LAN : wiki communautaire THE FINALS ; résultats détaillés, transferts et gains :
+								<strong>Liquipedia The Finals</strong> (communauté esport de référence, largement croisée avec les annonces
+								d’organisations et d’Embark/DreamHack).
+							</p>
+							<ul class="esport-sources-list">
+								<li>
+									<a href="https://www.thefinals.wiki/wiki/The_Grand_Major_2025" target="_blank" rel="noopener noreferrer">
+										THE FINALS Wiki — The Grand Major 2025
+									</a>{' '}
+									(classement places 1–16)
+								</li>
+								<li>
+									<a href="https://liquipedia.net/thefinals/Grand_Major/2025" target="_blank" rel="noopener noreferrer">
+										Liquipedia — Grand Major 2025
+									</a>{' '}
+									(brackets, dotations)
+								</li>
+								<li>
+									<a href="https://liquipedia.net/thefinals/Portal:Teams" target="_blank" rel="noopener noreferrer">
+										Liquipedia — Portail équipes
+									</a>
+								</li>
+								<li>
+									<a href="https://dreamhack.com/stockholm/the-finals/" target="_blank" rel="noopener noreferrer">
+										DreamHack Stockholm — page événement THE FINALS
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			)}
+
 			{category !== 'wiki' && (
 				<section class="cat-list">
 					<div class="container">
 						{posts.length === 0 ? (
+							category === 'esport' ? (
+								<p class="esport-articles-soon card">
+									<strong>Articles long-format</strong> (analyses de méta, récaps de LAN…) arrivent sur cette même page.
+									En attendant, les fiches équipes ci-dessus sont mises à jour à partir des bases de données publiques du
+									circuit.
+								</p>
+							) : (
 						<div class="empty card">
 							<div class="section-label">Bientôt — En production</div>
 							<h2 class="empty-title">
@@ -201,6 +332,7 @@ const wikiCards = [
 								← Retour à l'accueil
 							</a>
 						</div>
+							)
 						) : (
 						<ul class="posts">
 							{posts.map((post) => (
@@ -600,6 +732,228 @@ const wikiCards = [
 				display: flex;
 				gap: 0.4rem;
 				flex-wrap: wrap;
+			}
+
+			/* ============ ESPORT TEAMS (wiki-inspired layout) ============ */
+			.esport-sections {
+				padding: 4rem 0 2rem;
+				background: var(--color-blanc);
+			}
+
+			.esport-title {
+				margin-top: 0.8rem;
+				margin-bottom: 1rem;
+				font-size: clamp(1.8rem, 5vw, 3rem);
+				line-height: 1.02;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+
+			.esport-title em {
+				font-style: normal;
+				color: var(--color-rouge);
+			}
+
+			.esport-intro {
+				max-width: 72ch;
+				font-size: 1rem;
+				line-height: 1.65;
+				color: var(--color-noir-2);
+				margin-bottom: 2rem;
+			}
+
+			.esport-team-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.25rem;
+			}
+
+			@media (min-width: 768px) {
+				.esport-team-grid {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+
+			@media (min-width: 1200px) {
+				.esport-team-grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+
+			.esport-team-card {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				padding: 1.35rem 1.4rem 1.5rem;
+				background: var(--color-blanc);
+				min-height: 100%;
+			}
+
+			.esport-team-head h3 {
+				font-family: var(--font-display);
+				font-size: 1.35rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				letter-spacing: 0.02em;
+				line-height: 1.15;
+				margin: 0 0 0.35rem;
+				color: var(--color-noir);
+			}
+
+			.esport-region {
+				display: block;
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--color-gris);
+				line-height: 1.35;
+			}
+
+			.esport-subhead {
+				font-family: var(--font-mono);
+				font-size: 0.68rem;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--color-rouge);
+				margin: 1rem 0 0.45rem;
+				font-weight: 700;
+			}
+
+			.esport-palmares,
+			.esport-roster,
+			.esport-staff {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				font-size: 0.88rem;
+				line-height: 1.55;
+				color: var(--color-noir-2);
+			}
+
+			.esport-palmares li {
+				position: relative;
+				padding-left: 1rem;
+				margin-bottom: 0.35rem;
+			}
+
+			.esport-palmares li::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 0.55em;
+				width: 5px;
+				height: 5px;
+				border-radius: 1px;
+				background: var(--color-rouge);
+			}
+
+			.esport-roster li {
+				margin-bottom: 0.28rem;
+			}
+
+			.esport-roster-muted,
+			.esport-staff-muted {
+				opacity: 0.92;
+			}
+
+			.esport-real {
+				font-weight: 500;
+				color: var(--color-noir-2);
+			}
+
+			.esport-note {
+				font-size: 0.82rem;
+				color: var(--color-gris);
+			}
+
+			.esport-staff {
+				margin-top: 0.35rem;
+				font-family: var(--font-mono);
+				font-size: 0.72rem;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.esport-staff li {
+				margin-bottom: 0.2rem;
+			}
+
+			.esport-staff-role {
+				color: var(--color-noir);
+				font-weight: 700;
+			}
+
+			.esport-footnote {
+				margin-top: 0.85rem;
+				font-size: 0.82rem;
+				line-height: 1.5;
+				color: var(--color-gris);
+				flex-grow: 1;
+			}
+
+			.esport-liquipedia {
+				margin-top: 1rem;
+				font-family: var(--font-mono);
+				font-size: 0.72rem;
+				letter-spacing: 0.16em;
+				text-transform: uppercase;
+				color: var(--color-rouge);
+				text-decoration: none;
+				align-self: flex-start;
+				border-bottom: 1px solid transparent;
+				transition: border-color 0.2s ease, color 0.2s ease;
+			}
+
+			.esport-liquipedia:hover {
+				border-bottom-color: var(--color-rouge);
+				color: var(--color-noir);
+			}
+
+			.esport-sources {
+				margin-top: 2.75rem;
+				padding: 1.75rem 1.5rem 2rem;
+				background: var(--color-cream);
+			}
+
+			.esport-sources-lead {
+				margin: 0.75rem 0 1rem;
+				font-size: 0.92rem;
+				line-height: 1.6;
+				color: var(--color-noir-2);
+				max-width: 75ch;
+			}
+
+			.esport-sources-list {
+				margin: 0;
+				padding-left: 1.15rem;
+				font-size: 0.9rem;
+				line-height: 1.7;
+				color: var(--color-noir-2);
+			}
+
+			.esport-sources-list a {
+				color: var(--color-rouge);
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.esport-sources-list a:hover {
+				color: var(--color-noir);
+			}
+
+			.esport-articles-soon {
+				max-width: 52rem;
+				margin: 0 auto;
+				padding: 1.5rem 1.75rem;
+				font-size: 0.95rem;
+				line-height: 1.65;
+				color: var(--color-noir-2);
+				background: var(--color-blanc);
+			}
+
+			.esport-articles-soon strong {
+				color: var(--color-noir);
 			}
 		</style>
 	</body>
