@@ -1,0 +1,52 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import esportTeamsCover from '../../assets/esport-teams.avif';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Le Cast — ${SITE_TITLE}`}
+			description="Section dédiée au cast e-sport THE FINALS : commentateurs, hosts et analystes."
+			image={esportTeamsCover}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="cast-page">
+				<div class="container">
+					<div class="section-label">Esport — Le Cast</div>
+					<h1>Le cast compétitif</h1>
+					<p>
+						Cette page accueillera bientôt la présentation du talent broadcast de THE FINALS : hosts,
+						commentateurs, analystes et duos marquants des grands événements.
+					</p>
+				</div>
+			</section>
+		</main>
+		<Footer />
+		<style>
+			.cast-page {
+				padding: 4rem 0;
+				background: var(--color-blanc);
+			}
+			.cast-page h1 {
+				margin: 0.8rem 0 0.8rem;
+				font-size: clamp(1.8rem, 5vw, 3rem);
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+			.cast-page p {
+				max-width: 72ch;
+				font-size: 1rem;
+				line-height: 1.65;
+				color: var(--color-noir-2);
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,203 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+import catEsport from '../../assets/T_UI_S8_MainMenu_BKG.webp';
+import { ESPORT_TEAM_LOCAL_LOGOS } from '../../data/esportTeamLogoImports';
+import { ESPORT_TEAMS } from '../../data/esportTeams';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead
+			title={`Les Teams — ${SITE_TITLE}`}
+			description="Présentation des équipes e-sport THE FINALS, rosters et résultats marquants."
+			image={catEsport}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="esport-teams-page">
+				<div class="container">
+					<div class="section-label">Esport — Les Teams</div>
+					<h1 class="page-title">Équipes du circuit</h1>
+					<p class="page-intro">
+						Toutes les structures majeures de la scène THE FINALS, avec leur roster connu et leurs performances
+						récentes.
+					</p>
+
+					<div class="esport-team-grid">
+						{ESPORT_TEAMS.map((team) => (
+							<article class="esport-team-card card">
+								<div
+									class="esport-team-visual"
+									data-bundle={ESPORT_TEAM_LOCAL_LOGOS[team.id] ? 'true' : undefined}
+								>
+									{ESPORT_TEAM_LOCAL_LOGOS[team.id] ? (
+										<Image
+											src={ESPORT_TEAM_LOCAL_LOGOS[team.id]!}
+											alt={`Visuel ${team.name}`}
+											width={800}
+											height={450}
+											loading="lazy"
+											quality={85}
+										/>
+									) : (
+										<img
+											src={team.logoUrl}
+											alt={`Logo ${team.name}`}
+											loading="lazy"
+											decoding="async"
+											width={600}
+											height={300}
+										/>
+									)}
+									<div class="esport-pb" aria-hidden="true">
+										<div class="esport-pb-layer" data-i="0"></div>
+										<div class="esport-pb-layer" data-i="1"></div>
+										<div class="esport-pb-layer" data-i="2"></div>
+										<div class="esport-pb-layer" data-i="3"></div>
+									</div>
+									<div class="esport-pb-meta">
+										<span class="esport-pb-tag">{team.region}</span>
+										<p class="esport-pb-title">{team.name}</p>
+										<span class="esport-pb-desc">{team.palmares[0]}</span>
+									</div>
+								</div>
+
+								<div class="esport-team-body">
+									<div class="esport-team-head">
+										<h2>{team.name}</h2>
+										<span class="esport-region">{team.region}</span>
+									</div>
+
+									<h3 class="esport-subhead">Palmarès (extraits)</h3>
+									<ul class="esport-palmares">
+										{team.palmares.map((line) => (
+											<li>{line}</li>
+										))}
+									</ul>
+
+									{team.rosterActive && team.rosterActive.length > 0 && (
+										<>
+											<h3 class="esport-subhead">Roster actuel</h3>
+											<ul class="esport-roster">
+												{team.rosterActive.map((p) => (
+													<li>
+														<strong>{p.nick}</strong>
+														{p.realName && <span class="esport-real"> — {p.realName}</span>}
+														{p.note && <span class="esport-note"> ({p.note})</span>}
+													</li>
+												))}
+											</ul>
+											{team.staff && team.staff.length > 0 && (
+												<ul class="esport-staff">
+													{team.staff.map((s) => (
+														<li>
+															<span class="esport-staff-role">{s.role}</span> · {s.nick}
+														</li>
+													))}
+												</ul>
+											)}
+										</>
+									)}
+
+									{team.gm2025Roster && team.gm2025Roster.length > 0 && (
+										<>
+											<h3 class="esport-subhead">Grand Major 2025 — roster LAN</h3>
+											<ul class="esport-roster esport-roster-muted">
+												{team.gm2025Roster.map((p) => (
+													<li>
+														<strong>{p.nick}</strong>
+														{p.realName && <span class="esport-real"> — {p.realName}</span>}
+													</li>
+												))}
+											</ul>
+											{team.gm2025Staff && team.gm2025Staff.length > 0 && (
+												<ul class="esport-staff esport-staff-muted">
+													{team.gm2025Staff.map((s) => (
+														<li>
+															<span class="esport-staff-role">{s.role}</span> · {s.nick}
+														</li>
+													))}
+												</ul>
+											)}
+										</>
+									)}
+
+									{team.footnote && <p class="esport-footnote">{team.footnote}</p>}
+
+									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
+										Fiche Liquipedia ?
+									</a>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+		<style>
+			.esport-teams-page {
+				padding: 4rem 0 2rem;
+				background: var(--color-blanc);
+			}
+			.page-title {
+				margin: 0.8rem 0 0.85rem;
+				font-size: clamp(1.8rem, 5vw, 3rem);
+				line-height: 1.02;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+			.page-intro {
+				max-width: 72ch;
+				font-size: 1rem;
+				line-height: 1.65;
+				color: var(--color-noir-2);
+				margin-bottom: 1.5rem;
+			}
+			.esport-team-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.25rem;
+			}
+			@media (min-width: 768px) { .esport-team-grid { grid-template-columns: repeat(2, 1fr); } }
+			@media (min-width: 1200px) { .esport-team-grid { grid-template-columns: repeat(3, 1fr); } }
+			.esport-team-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; background: var(--color-blanc); min-height: 100%; isolation: isolate; }
+			.esport-team-body { display: flex; flex-direction: column; flex: 1; padding: 1.35rem 1.4rem 1.5rem; }
+			.esport-team-visual { position: relative; height: 11.5rem; min-height: 11.5rem; overflow: hidden; background: #0a0a0a; }
+			.esport-team-visual img, .esport-team-visual :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; padding: 0.85rem 1rem; box-sizing: border-box; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+			.esport-team-visual[data-bundle] img, .esport-team-visual[data-bundle] :global(img) { object-fit: cover; padding: 0; }
+			.esport-team-card:hover .esport-team-visual img, .esport-team-card:hover .esport-team-visual :global(img) { transform: scale(1.04); }
+			.esport-pb { position: absolute; left: 0; bottom: 0; width: 100%; height: 78%; pointer-events: none; opacity: 0; transition: opacity 0.25s ease-out; }
+			.esport-team-card:hover .esport-pb { opacity: 1; }
+			.esport-pb-layer { position: absolute; inset: 0; pointer-events: none; }
+			.esport-pb-layer[data-i='0'] { backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 40%, transparent 60%); mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 40%, transparent 60%); }
+			.esport-pb-layer[data-i='1'] { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); -webkit-mask-image: linear-gradient(180deg, transparent 20%, #000 40%, #000 60%, transparent 80%); mask-image: linear-gradient(180deg, transparent 20%, #000 40%, #000 60%, transparent 80%); }
+			.esport-pb-layer[data-i='2'] { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); -webkit-mask-image: linear-gradient(180deg, transparent 40%, #000 60%, #000 80%, transparent 100%); mask-image: linear-gradient(180deg, transparent 40%, #000 60%, #000 80%, transparent 100%); }
+			.esport-pb-layer[data-i='3'] { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); -webkit-mask-image: linear-gradient(180deg, transparent 60%, #000 80%, #000 100%); mask-image: linear-gradient(180deg, transparent 60%, #000 80%, #000 100%); }
+			.esport-pb-meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.75rem 1rem 0.95rem; color: #fff; opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease-out, transform 0.3s ease-out; pointer-events: none; }
+			.esport-team-card:hover .esport-pb-meta { opacity: 1; transform: translateY(0); }
+			.esport-pb-tag { display: inline-block; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; background: var(--color-rouge); padding: 0.2rem 0.45rem; border-radius: 0.2rem; }
+			.esport-pb-title { margin: 0.35rem 0 0.35rem; font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; line-height: 1.12; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75); }
+			.esport-pb-desc { margin: 0; font-size: 0.78rem; line-height: 1.45; color: rgba(255, 255, 255, 0.94); text-shadow: 0 2px 10px rgba(0, 0, 0, 0.72); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+			.esport-team-head h2 { margin: 0 0 0.35rem; font-family: var(--font-display); font-size: 1.35rem; font-weight: 800; text-transform: uppercase; color: var(--color-noir); }
+			.esport-region { display: block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-gris); }
+			.esport-subhead { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-rouge); margin: 1rem 0 0.45rem; font-weight: 700; }
+			.esport-palmares, .esport-roster, .esport-staff { list-style: none; padding: 0; margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--color-noir-2); }
+			.esport-palmares li { position: relative; padding-left: 1rem; margin-bottom: 0.35rem; }
+			.esport-palmares li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 5px; height: 5px; border-radius: 1px; background: var(--color-rouge); }
+			.esport-staff { margin-top: 0.35rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+			.esport-roster-muted, .esport-staff-muted { opacity: 0.92; }
+			.esport-note { font-size: 0.82rem; color: var(--color-gris); }
+			.esport-footnote { margin-top: 0.85rem; font-size: 0.82rem; line-height: 1.5; color: var(--color-gris); flex-grow: 1; }
+			.esport-liquipedia { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-rouge); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease, color 0.2s ease; }
+			.esport-liquipedia:hover { border-bottom-color: var(--color-rouge); color: var(--color-noir); }
+		</style>
+	</body>
+</html>

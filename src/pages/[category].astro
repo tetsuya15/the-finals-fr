@@ -17,8 +17,6 @@ import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
 import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
 import esportCover from '../assets/esport.jpg';
 import esportTeamsCover from '../assets/esport-teams.avif';
-import { ESPORT_TEAM_LOCAL_LOGOS } from '../data/esportTeamLogoImports';
-import { ESPORT_TEAMS } from '../data/esportTeams';
 
 const CAT_IMG = {
 	communaute: catMeta,
@@ -82,14 +80,14 @@ const esportCards = [
 		title: 'Les Teams',
 		description: 'Retrouve les équipes du circuit, leurs résultats et les rosters connus.',
 		image: esportCover,
-		href: '#les-teams',
+		href: '/esport/les-teams/',
 	},
 	{
 		id: 'cast',
 		title: 'Le Cast',
 		description: 'La section dédiée au talent broadcast, aux duos de commentateurs et aux hosts.',
 		image: esportTeamsCover,
-		href: '#le-cast',
+		href: '/esport/le-cast/',
 	},
 ];
 ---
@@ -229,123 +227,8 @@ const esportCards = [
 							))}
 						</div>
 
-						<div class="section-label" id="les-teams" style="margin-top: 2rem;">Esport — Les Teams</div>
-						<div class="esport-team-grid">
-							{ESPORT_TEAMS.map((team) => (
-								<article class="esport-team-card card">
-									<div
-										class="esport-team-visual"
-										data-bundle={ESPORT_TEAM_LOCAL_LOGOS[team.id] ? 'true' : undefined}
-									>
-										{ESPORT_TEAM_LOCAL_LOGOS[team.id] ? (
-											<Image
-												src={ESPORT_TEAM_LOCAL_LOGOS[team.id]!}
-												alt={`Visuel ${team.name}`}
-												width={800}
-												height={450}
-												loading="lazy"
-												quality={85}
-											/>
-										) : (
-											<img
-												src={team.logoUrl}
-												alt={`Logo ${team.name}`}
-												loading="lazy"
-												decoding="async"
-												width={600}
-												height={300}
-											/>
-										)}
-										<div class="esport-pb" aria-hidden="true">
-											<div class="esport-pb-layer" data-i="0"></div>
-											<div class="esport-pb-layer" data-i="1"></div>
-											<div class="esport-pb-layer" data-i="2"></div>
-											<div class="esport-pb-layer" data-i="3"></div>
-										</div>
-										<div class="esport-pb-meta">
-											<span class="esport-pb-tag">{team.region}</span>
-											<p class="esport-pb-title">{team.name}</p>
-											<span class="esport-pb-desc">{team.palmares[0]}</span>
-										</div>
-									</div>
-
-									<div class="esport-team-body">
-									<div class="esport-team-head">
-										<h3>{team.name}</h3>
-										<span class="esport-region">{team.region}</span>
-									</div>
-
-									<h4 class="esport-subhead">Palmarès (extraits)</h4>
-									<ul class="esport-palmares">
-										{team.palmares.map((line) => (
-											<li>{line}</li>
-										))}
-									</ul>
-
-									{team.rosterActive && team.rosterActive.length > 0 && (
-										<>
-											<h4 class="esport-subhead">Roster actuel</h4>
-											<ul class="esport-roster">
-												{team.rosterActive.map((p) => (
-													<li>
-														<strong>{p.nick}</strong>
-														{p.realName && <span class="esport-real"> — {p.realName}</span>}
-														{p.note && <span class="esport-note"> ({p.note})</span>}
-													</li>
-												))}
-											</ul>
-											{team.staff && team.staff.length > 0 && (
-												<ul class="esport-staff">
-													{team.staff.map((s) => (
-														<li>
-															<span class="esport-staff-role">{s.role}</span> · {s.nick}
-														</li>
-													))}
-												</ul>
-											)}
-										</>
-									)}
-
-									{team.gm2025Roster && team.gm2025Roster.length > 0 && (
-										<>
-											<h4 class="esport-subhead">Grand Major 2025 — roster LAN</h4>
-											<ul class="esport-roster esport-roster-muted">
-												{team.gm2025Roster.map((p) => (
-													<li>
-														<strong>{p.nick}</strong>
-														{p.realName && <span class="esport-real"> — {p.realName}</span>}
-													</li>
-												))}
-											</ul>
-											{team.gm2025Staff && team.gm2025Staff.length > 0 && (
-												<ul class="esport-staff esport-staff-muted">
-													{team.gm2025Staff.map((s) => (
-														<li>
-															<span class="esport-staff-role">{s.role}</span> · {s.nick}
-														</li>
-													))}
-												</ul>
-											)}
-										</>
-									)}
-
-									{team.footnote && <p class="esport-footnote">{team.footnote}</p>}
-
-									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
-										Fiche Liquipedia →
-									</a>
-									</div>
-								</article>
-							))}
-						</div>
-
-						<div class="esport-cast card" id="le-cast">
-							<div class="section-label">Esport — Le Cast</div>
-							<h3 class="esport-cast-title">Broadcast & analyst desk</h3>
-							<p>
-								Section en construction : cette zone regroupera les talents du cast (hosts, commentateurs, analystes)
-								et les duos marquants des événements majeurs.
-							</p>
+						<div class="esport-nav-help card">
+							Clique sur <strong>Les Teams</strong> ou <strong>Le Cast</strong> pour ouvrir chaque page dédiée.
 						</div>
 
 					</div>
