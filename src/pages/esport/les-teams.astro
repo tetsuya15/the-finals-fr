@@ -13,8 +13,8 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 <html lang="fr">
 	<head>
 		<BaseHead
-			title={`Les Teams ó ${SITE_TITLE}`}
-			description="PrÈsentation des Èquipes e-sport THE FINALS, rosters et rÈsultats marquants."
+			title={`Les Teams ù ${SITE_TITLE}`}
+			description="Prùsentation des ùquipes e-sport THE FINALS, rosters et rùsultats marquants."
 			image={catEsport}
 		/>
 	</head>
@@ -23,11 +23,11 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 		<main>
 			<section class="esport-teams-page">
 				<div class="container">
-					<div class="section-label">Esport ó Les Teams</div>
-					<h1 class="page-title">…quipes du circuit</h1>
+					<div class="section-label">Esport ù Les Teams</div>
+					<h1 class="page-title">&Eacute;quipes du circuit</h1>
 					<p class="page-intro">
-						Toutes les structures majeures de la scËne THE FINALS, avec leur roster connu et leurs performances
-						rÈcentes.
+						Toutes les structures majeures de la sc&egrave;ne THE FINALS, avec leur roster connu et leurs performances
+						r&eacute;centes.
 					</p>
 
 					<div class="esport-team-grid">
@@ -75,7 +75,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 										<span class="esport-region">{team.region}</span>
 									</div>
 
-									<h3 class="esport-subhead">PalmarËs (extraits)</h3>
+									<h3 class="esport-subhead">Palmarùs (extraits)</h3>
 									<ul class="esport-palmares">
 										{team.palmares.map((line) => (
 											<li>{line}</li>
@@ -89,7 +89,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 												{team.rosterActive.map((p) => (
 													<li>
 														<strong>{p.nick}</strong>
-														{p.realName && <span class="esport-real"> ó {p.realName}</span>}
+														{p.realName && <span class="esport-real"> - {p.realName}</span>}
 														{p.note && <span class="esport-note"> ({p.note})</span>}
 													</li>
 												))}
@@ -98,7 +98,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 												<ul class="esport-staff">
 													{team.staff.map((s) => (
 														<li>
-															<span class="esport-staff-role">{s.role}</span> ∑ {s.nick}
+															<span class="esport-staff-role">{s.role}</span> ù {s.nick}
 														</li>
 													))}
 												</ul>
@@ -108,12 +108,12 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 
 									{team.gm2025Roster && team.gm2025Roster.length > 0 && (
 										<>
-											<h3 class="esport-subhead">Grand Major 2025 ó roster LAN</h3>
+											<h3 class="esport-subhead">Grand Major 2025 - roster LAN</h3>
 											<ul class="esport-roster esport-roster-muted">
 												{team.gm2025Roster.map((p) => (
 													<li>
 														<strong>{p.nick}</strong>
-														{p.realName && <span class="esport-real"> ó {p.realName}</span>}
+														{p.realName && <span class="esport-real"> - {p.realName}</span>}
 													</li>
 												))}
 											</ul>
@@ -121,7 +121,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 												<ul class="esport-staff esport-staff-muted">
 													{team.gm2025Staff.map((s) => (
 														<li>
-															<span class="esport-staff-role">{s.role}</span> ∑ {s.nick}
+															<span class="esport-staff-role">{s.role}</span> ù {s.nick}
 														</li>
 													))}
 												</ul>
@@ -132,7 +132,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 									{team.footnote && <p class="esport-footnote">{team.footnote}</p>}
 
 									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
-										Fiche Liquipedia ?
+										Fiche Liquipedia ->
 									</a>
 								</div>
 							</article>
