@@ -7,7 +7,7 @@ import { SITE_TITLE } from '../../consts';
 import catEsport from '../../assets/T_UI_S8_MainMenu_BKG.webp';
 import { ESPORT_TEAM_LOCAL_LOGOS } from '../../data/esportTeamLogoImports';
 import { ESPORT_TEAMS } from '../../data/esportTeams';
-const cleanDisplay = (value: string) => value.replaceAll('ó', '-').replaceAll('∑', '-');
+const cleanDisplay = (value: string) => value.replaceAll('ù', '-').replaceAll('ù', '-');
 ---
 
 <!doctype html>
@@ -76,7 +76,7 @@ const cleanDisplay = (value: string) => value.replaceAll('ó', '-').replaceAll('∑
 										<span class="esport-region">{cleanDisplay(team.region)}</span>
 									</div>
 
-									<h3 class="esport-subhead">Palmarùs (extraits)</h3>
+									<h3 class="esport-subhead">Palmar&egrave;s (extraits)</h3>
 									<ul class="esport-palmares">
 										{team.palmares.map((line) => (
 											<li>{cleanDisplay(line)}</li>
