@@ -15,6 +15,8 @@ import wikiClasses from '../assets/cat-lore.jpg';
 import wikiMaps from '../assets/the-finals-monaco-map.jpg';
 import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
 import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
+import esportCover from '../assets/esport.jpg';
+import esportTeamsCover from '../assets/esport-teams.avif';
 import { ESPORT_TEAM_LOCAL_LOGOS } from '../data/esportTeamLogoImports';
 import { ESPORT_TEAMS } from '../data/esportTeams';
 
@@ -71,6 +73,23 @@ const wikiCards = [
 		description: 'Utilite, timings et combos de gadgets pour prendre l avantage en teamplay.',
 		image: wikiGadgets,
 		href: '/blog/les-gadgets-the-finals/',
+	},
+];
+
+const esportCards = [
+	{
+		id: 'teams',
+		title: 'Les Teams',
+		description: 'Retrouve les équipes du circuit, leurs résultats et les rosters connus.',
+		image: esportTeamsCover,
+		href: '#les-teams',
+	},
+	{
+		id: 'cast',
+		title: 'Le Cast',
+		description: 'La section dédiée au talent broadcast, aux duos de commentateurs et aux hosts.',
+		image: esportCover,
+		href: '#le-cast',
 	},
 ];
 ---
@@ -183,10 +202,10 @@ const wikiCards = [
 			{category === 'esport' && (
 				<section class="esport-sections">
 					<div class="container">
-						<div class="section-label">Esport — Teams majeurs</div>
+						<div class="section-label">Esport — Sections clés</div>
 						<h2 class="esport-title">
-							Les équipes du circuit<br />
-							<em>Grand Major & suites.</em>
+							Teams et cast<br />
+							<em>en un coup d'oeil.</em>
 						</h2>
 						<p class="esport-intro">
 							Cette page regroupe les principales <strong>équipes e-sport de THE FINALS</strong> dans un format
@@ -195,6 +214,22 @@ const wikiCards = [
 							centrée sur l’effectif et les performances récentes.
 						</p>
 
+						<div class="wiki-expand-track" role="region" aria-label="Sections Esport">
+							{esportCards.map((card) => (
+								<a class="wiki-expand-card card" data-slide={card.id} href={card.href}>
+									<div class="wiki-card-img">
+										<Image src={card.image} alt={card.title} width={1280} height={720} loading="lazy" />
+										<div class="wiki-card-wash"></div>
+									</div>
+									<div class="wiki-card-body">
+										<h3>{card.title}</h3>
+										<p>{card.description}</p>
+									</div>
+								</a>
+							))}
+						</div>
+
+						<div class="section-label" id="les-teams" style="margin-top: 2rem;">Esport — Les Teams</div>
 						<div class="esport-team-grid">
 							{ESPORT_TEAMS.map((team) => (
 								<article class="esport-team-card card">
@@ -302,6 +337,15 @@ const wikiCards = [
 									</div>
 								</article>
 							))}
+						</div>
+
+						<div class="esport-cast card" id="le-cast">
+							<div class="section-label">Esport — Le Cast</div>
+							<h3 class="esport-cast-title">Broadcast & analyst desk</h3>
+							<p>
+								Section en construction : cette zone regroupera les talents du cast (hosts, commentateurs, analystes)
+								et les duos marquants des événements majeurs.
+							</p>
 						</div>
 
 					</div>
@@ -766,6 +810,7 @@ const wikiCards = [
 				display: grid;
 				grid-template-columns: 1fr;
 				gap: 1.25rem;
+				margin-top: 1rem;
 			}
 
 			@media (min-width: 768px) {
@@ -1086,6 +1131,28 @@ const wikiCards = [
 			.esport-liquipedia:hover {
 				border-bottom-color: var(--color-rouge);
 				color: var(--color-noir);
+			}
+
+			.esport-cast {
+				margin-top: 2rem;
+				padding: 1.5rem 1.4rem;
+				background: var(--color-cream);
+			}
+
+			.esport-cast-title {
+				margin: 0.65rem 0 0.55rem;
+				font-family: var(--font-display);
+				font-size: 1.15rem;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+
+			.esport-cast p {
+				margin: 0;
+				font-size: 0.92rem;
+				line-height: 1.6;
+				color: var(--color-noir-2);
+				max-width: 62ch;
 			}
 
 		</style>
