@@ -17,6 +17,8 @@ import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
 import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
 import esportCover from '../assets/esport.jpg';
 import esportTeamsCover from '../assets/esport-teams.avif';
+import brawlrLogoNormal from '../assets/brawlr logo normal.jpg';
+import brawlrLogoText from '../assets/BRAWLR Logo Text White.webp';
 
 const CAT_IMG = {
 	communaute: catMeta,
@@ -89,6 +91,13 @@ const esportCards = [
 		image: esportTeamsCover,
 		href: '/esport/le-cast/',
 	},
+];
+
+const communityLogos = [
+	{ id: 'brawlr-mark', label: 'Brawlr Mark', image: brawlrLogoNormal },
+	{ id: 'brawlr-text', label: 'Brawlr Text', image: brawlrLogoText },
+	{ id: 'brawlr-mark-2', label: 'Brawlr Mark', image: brawlrLogoNormal },
+	{ id: 'brawlr-text-2', label: 'Brawlr Text', image: brawlrLogoText },
 ];
 ---
 
@@ -228,6 +237,44 @@ const esportCards = [
 						</div>
 
 
+					</div>
+				</section>
+			)}
+
+			{category === 'communaute' && (
+				<section class="community-sections">
+					<div class="container">
+						<div class="section-label">Communauté - Logos en avant</div>
+						<h2 class="community-title">
+							Identité visuelle<br />
+							<em>de la communauté.</em>
+						</h2>
+						<p class="community-intro">
+							Un slider continu des logos communautaires, avec un effet de flou progressif sur les bords.
+						</p>
+
+						<div class="community-slider card" aria-label="Logos communauté">
+							<div class="community-track">
+								{[...communityLogos, ...communityLogos].map((logo, i) => (
+									<div class="community-logo-item" key={`${logo.id}-${i}`}>
+										<Image src={logo.image} alt={logo.label} width={480} height={180} loading="lazy" />
+									</div>
+								))}
+							</div>
+
+							<div class="community-blur community-blur-left" aria-hidden="true">
+								<div class="community-blur-layer" data-i="0"></div>
+								<div class="community-blur-layer" data-i="1"></div>
+								<div class="community-blur-layer" data-i="2"></div>
+								<div class="community-blur-layer" data-i="3"></div>
+							</div>
+							<div class="community-blur community-blur-right" aria-hidden="true">
+								<div class="community-blur-layer" data-i="0"></div>
+								<div class="community-blur-layer" data-i="1"></div>
+								<div class="community-blur-layer" data-i="2"></div>
+								<div class="community-blur-layer" data-i="3"></div>
+							</div>
+						</div>
 					</div>
 				</section>
 			)}
@@ -684,6 +731,124 @@ const esportCards = [
 				line-height: 1.65;
 				color: var(--color-noir-2);
 				margin-bottom: 2rem;
+			}
+
+			/* ============ COMMUNAUTE LOGO SLIDER ============ */
+			.community-sections {
+				padding: 4rem 0 1.5rem;
+				background: var(--color-blanc);
+			}
+
+			.community-title {
+				margin-top: 0.8rem;
+				margin-bottom: 1rem;
+				font-size: clamp(1.8rem, 5vw, 3rem);
+				line-height: 1.02;
+				text-transform: uppercase;
+				color: var(--color-noir);
+			}
+
+			.community-title em {
+				font-style: normal;
+				color: var(--color-rouge);
+			}
+
+			.community-intro {
+				max-width: 72ch;
+				font-size: 1rem;
+				line-height: 1.65;
+				color: var(--color-noir-2);
+				margin-bottom: 1.2rem;
+			}
+
+			.community-slider {
+				position: relative;
+				overflow: hidden;
+				background: #111;
+				padding: 0.9rem 0;
+			}
+
+			.community-track {
+				display: flex;
+				align-items: center;
+				gap: 1.15rem;
+				width: max-content;
+				animation: community-marquee 26s linear infinite;
+			}
+
+			.community-slider:hover .community-track {
+				animation-play-state: paused;
+			}
+
+			.community-logo-item {
+				width: 15rem;
+				height: 5.5rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				border-radius: 3px;
+				overflow: hidden;
+				flex-shrink: 0;
+			}
+
+			.community-logo-item :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				padding: 0.55rem 0.7rem;
+				box-sizing: border-box;
+			}
+
+			.community-blur {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				width: 9.2rem;
+				pointer-events: none;
+				z-index: 2;
+			}
+
+			.community-blur-left { left: 0; }
+			.community-blur-right {
+				right: 0;
+				transform: scaleX(-1);
+			}
+
+			.community-blur-layer {
+				position: absolute;
+				inset: 0;
+			}
+
+			.community-blur-layer[data-i='0'] {
+				backdrop-filter: blur(2px);
+				-webkit-backdrop-filter: blur(2px);
+				-webkit-mask-image: linear-gradient(90deg, #000 0%, #000 20%, transparent 40%);
+				mask-image: linear-gradient(90deg, #000 0%, #000 20%, transparent 40%);
+			}
+			.community-blur-layer[data-i='1'] {
+				backdrop-filter: blur(4px);
+				-webkit-backdrop-filter: blur(4px);
+				-webkit-mask-image: linear-gradient(90deg, #000 12%, #000 32%, transparent 52%);
+				mask-image: linear-gradient(90deg, #000 12%, #000 32%, transparent 52%);
+			}
+			.community-blur-layer[data-i='2'] {
+				backdrop-filter: blur(8px);
+				-webkit-backdrop-filter: blur(8px);
+				-webkit-mask-image: linear-gradient(90deg, #000 24%, #000 44%, transparent 64%);
+				mask-image: linear-gradient(90deg, #000 24%, #000 44%, transparent 64%);
+			}
+			.community-blur-layer[data-i='3'] {
+				backdrop-filter: blur(12px);
+				-webkit-backdrop-filter: blur(12px);
+				-webkit-mask-image: linear-gradient(90deg, #000 36%, #000 56%, transparent 76%);
+				mask-image: linear-gradient(90deg, #000 36%, #000 56%, transparent 76%);
+			}
+
+			@keyframes community-marquee {
+				from { transform: translateX(0); }
+				to { transform: translateX(-50%); }
 			}
 
 			.esport-team-grid {
