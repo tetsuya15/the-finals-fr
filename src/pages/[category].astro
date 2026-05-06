@@ -193,7 +193,7 @@ const wikiCards = [
 							mais les line-ups professionnels changent souvent de composition selon les cartes et les patchs.
 							Les tableaux ci-dessous reprennent les <strong>pseudonymes officiels</strong> et, lorsqu’elle est publique,
 							la <strong>composition au Grand Major 2025</strong> (Stockholm, 28–29 novembre 2025) ainsi que l’effectif
-							<strong>encore listé comme actif</strong> sur Liquipedia au moment de la rédaction.
+							<strong>encore listé comme actif</strong> au moment de la rédaction.
 						</p>
 
 						<div class="esport-team-grid">
@@ -250,7 +250,7 @@ const wikiCards = [
 
 									{team.rosterActive && team.rosterActive.length > 0 && (
 										<>
-											<h4 class="esport-subhead">Roster actuel (Liquipedia)</h4>
+											<h4 class="esport-subhead">Roster actuel</h4>
 											<ul class="esport-roster">
 												{team.rosterActive.map((p) => (
 													<li>
@@ -305,40 +305,6 @@ const wikiCards = [
 							))}
 						</div>
 
-						<div class="esport-sources card">
-							<div class="section-label">Sources & fiabilité</div>
-							<p class="esport-sources-lead">
-								Classement général du LAN : wiki communautaire THE FINALS ; résultats détaillés, transferts et gains :
-								<strong>								Liquipedia The Finals</strong> (communauté esport de référence, largement croisée avec les annonces
-								d’organisations et d’Embark/DreamHack). Les illustrations en tête de carte utilisent en priorité des{' '}
-								<strong>visuels locaux</strong> (bundles et assets du jeu / wiki) lorsqu’un fichier est disponible ; sinon le logo
-								Liquipedia de la fiche équipe.
-							</p>
-							<ul class="esport-sources-list">
-								<li>
-									<a href="https://www.thefinals.wiki/wiki/The_Grand_Major_2025" target="_blank" rel="noopener noreferrer">
-										THE FINALS Wiki — The Grand Major 2025
-									</a>{' '}
-									(classement places 1–16)
-								</li>
-								<li>
-									<a href="https://liquipedia.net/thefinals/Grand_Major/2025" target="_blank" rel="noopener noreferrer">
-										Liquipedia — Grand Major 2025
-									</a>{' '}
-									(brackets, dotations)
-								</li>
-								<li>
-									<a href="https://liquipedia.net/thefinals/Portal:Teams" target="_blank" rel="noopener noreferrer">
-										Liquipedia — Portail équipes
-									</a>
-								</li>
-								<li>
-									<a href="https://dreamhack.com/stockholm/the-finals/" target="_blank" rel="noopener noreferrer">
-										DreamHack Stockholm — page événement THE FINALS
-									</a>
-								</li>
-							</ul>
-						</div>
 					</div>
 				</section>
 			)}
@@ -1126,38 +1092,6 @@ const wikiCards = [
 
 			.esport-liquipedia:hover {
 				border-bottom-color: var(--color-rouge);
-				color: var(--color-noir);
-			}
-
-			.esport-sources {
-				margin-top: 2.75rem;
-				padding: 1.75rem 1.5rem 2rem;
-				background: var(--color-cream);
-			}
-
-			.esport-sources-lead {
-				margin: 0.75rem 0 1rem;
-				font-size: 0.92rem;
-				line-height: 1.6;
-				color: var(--color-noir-2);
-				max-width: 75ch;
-			}
-
-			.esport-sources-list {
-				margin: 0;
-				padding-left: 1.15rem;
-				font-size: 0.9rem;
-				line-height: 1.7;
-				color: var(--color-noir-2);
-			}
-
-			.esport-sources-list a {
-				color: var(--color-rouge);
-				text-decoration: underline;
-				text-underline-offset: 3px;
-			}
-
-			.esport-sources-list a:hover {
 				color: var(--color-noir);
 			}
 

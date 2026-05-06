@@ -1,7 +1,6 @@
 /**
- * Données équipes THE FINALS — synthèse à partir de sources tierces répertoriées
- * (Liquipedia, wiki communautaire officiellement relayé par le circuit).
- * Les transferts évoluent vite : les pages Liquipedia restent la référence live.
+ * Données équipes THE FINALS — synthèse à partir de sources tierces répertoriées.
+ * Les transferts évoluent vite : cette base est mise à jour régulièrement.
  */
 export type EsportPlayer = {
 	nick: string;
@@ -17,7 +16,7 @@ export type EsportTeam = {
 	/** Fallback web si aucun visuel local dans `esportTeamLogoImports.ts` */
 	logoUrl: string;
 	palmares: string[];
-	/** Effectif actuel quand il est listé comme actif sur Liquipedia */
+	/** Effectif actuel quand il est listé comme actif */
 	rosterActive?: EsportPlayer[];
 	staff?: { role: string; nick: string }[];
 	/** Line-up principal au Grand Major 2025 (nov. 2025, Stockholm) si différent */
@@ -73,7 +72,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		],
 		gm2025Staff: [{ role: 'Coach', nick: 'Ardy' }],
 		footnote:
-			'Line-up Grand Major 2025 ci-dessus. Liquipedia indique une dissolution du roster « The Finals » en 2026 — suivre la page organisation pour toute relance.',
+			'Line-up Grand Major 2025 ci-dessus. Le roster The Finals est ensuite marqué comme dissous en 2026 — suivre la page organisation pour toute relance.',
 	},
 	{
 		id: 'ssg',
@@ -94,7 +93,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		],
 		gm2025Staff: [{ role: 'Coach', nick: 'Hogz' }],
 		footnote:
-			'Contrats The Finals expirés en décembre 2025 selon Liquipedia ; l’organisation ne liste plus d’effectif actif sur cette scène.',
+			'Contrats The Finals expirés en décembre 2025 ; l’organisation ne liste plus d’effectif actif sur cette scène.',
 	},
 	{
 		id: 'fnatic',
@@ -115,7 +114,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		],
 		gm2025Staff: [{ role: 'Coach', nick: 'Skul' }],
 		footnote:
-			'Ancienne équipe BEAMERS acquise en octobre 2025. Liquipedia note une dissolution Fnatic The Finals en février 2026.',
+			'Ancienne équipe BEAMERS acquise en octobre 2025. La section Fnatic The Finals est ensuite marquée comme dissoute en février 2026.',
 	},
 	{
 		id: 'tsm',
@@ -134,7 +133,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 			{ nick: 'Visions', realName: 'Matt Williams' },
 		],
 		footnote:
-			'Line-up issu de l’ex-roster « No Hours » (octobre 2025). Liquipedia indique une sortie collective du roster en janvier 2026.',
+			'Line-up issu de l’ex-roster « No Hours » (octobre 2025). Une sortie collective du roster est ensuite signalée en janvier 2026.',
 	},
 	{
 		id: 'envy',
@@ -203,7 +202,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		],
 		gm2025Staff: [{ role: 'Coach', nick: 'Yung' }],
 		footnote:
-			'Liquipedia note la sortie du roster compétitif fin 2025 — suivre la structure pour toute suite.',
+			'Sortie du roster compétitif fin 2025 — suivre la structure pour toute suite.',
 	},
 	{
 		id: 'drg',
@@ -226,7 +225,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 			{ role: 'Team Leader', nick: 'NEO' },
 		],
 		footnote:
-			'Lors du LAN Stockholm, un stand-in coach (GEGE) avait remplacé HuiLiRice pour une partie du week-end (raisons personnelles), selon les notes de bracket Liquipedia.',
+			'Lors du LAN Stockholm, un stand-in coach (GEGE) avait remplacé HuiLiRice pour une partie du week-end (raisons personnelles), selon les notes de bracket.',
 	},
 	{
 		id: 'fn-esports',
@@ -279,7 +278,7 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		gm2025Roster: [{ nick: 'NolyX' }, { nick: 'Pacolem' }, { nick: 'TaeK' }],
 		gm2025Staff: [{ role: 'Coach', nick: 'Gr4vii' }],
 		footnote:
-			'Line-up au Grand Major sous bannière Gen.G. Liquipedia mentionne une fermeture ultérieure de la section The Finals et des mouvements vers d’autres tags.',
+			'Line-up au Grand Major sous bannière Gen.G. Une fermeture ultérieure de la section The Finals et des mouvements vers d’autres tags sont ensuite signalés.',
 	},
 	{
 		id: 'five-fears',
