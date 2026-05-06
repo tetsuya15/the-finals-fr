@@ -7,6 +7,7 @@ import { SITE_TITLE } from '../../consts';
 import catEsport from '../../assets/T_UI_S8_MainMenu_BKG.webp';
 import { ESPORT_TEAM_LOCAL_LOGOS } from '../../data/esportTeamLogoImports';
 import { ESPORT_TEAMS } from '../../data/esportTeams';
+const cleanDisplay = (value: string) => value.replaceAll('ó', '-').replaceAll('∑', '-');
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 		<main>
 			<section class="esport-teams-page">
 				<div class="container">
-					<div class="section-label">Esport ù Les Teams</div>
+					<div class="section-label">Esport - Les Teams</div>
 					<h1 class="page-title">&Eacute;quipes du circuit</h1>
 					<p class="page-intro">
 						Toutes les structures majeures de la sc&egrave;ne THE FINALS, avec leur roster connu et leurs performances
@@ -63,7 +64,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 										<div class="esport-pb-layer" data-i="3"></div>
 									</div>
 									<div class="esport-pb-meta">
-										<span class="esport-pb-tag">{team.region}</span>
+										<span class="esport-pb-tag">{cleanDisplay(team.region)}</span>
 										<p class="esport-pb-title">{team.name}</p>
 										<span class="esport-pb-desc">{team.palmares[0]}</span>
 									</div>
@@ -72,13 +73,13 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 								<div class="esport-team-body">
 									<div class="esport-team-head">
 										<h2>{team.name}</h2>
-										<span class="esport-region">{team.region}</span>
+										<span class="esport-region">{cleanDisplay(team.region)}</span>
 									</div>
 
 									<h3 class="esport-subhead">Palmarùs (extraits)</h3>
 									<ul class="esport-palmares">
 										{team.palmares.map((line) => (
-											<li>{line}</li>
+											<li>{cleanDisplay(line)}</li>
 										))}
 									</ul>
 
@@ -98,7 +99,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 												<ul class="esport-staff">
 													{team.staff.map((s) => (
 														<li>
-															<span class="esport-staff-role">{s.role}</span> ù {s.nick}
+															<span class="esport-staff-role">{s.role}</span> - {s.nick}
 														</li>
 													))}
 												</ul>
@@ -121,7 +122,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 												<ul class="esport-staff esport-staff-muted">
 													{team.gm2025Staff.map((s) => (
 														<li>
-															<span class="esport-staff-role">{s.role}</span> ù {s.nick}
+															<span class="esport-staff-role">{s.role}</span> - {s.nick}
 														</li>
 													))}
 												</ul>
@@ -129,7 +130,7 @@ import { ESPORT_TEAMS } from '../../data/esportTeams';
 										</>
 									)}
 
-									{team.footnote && <p class="esport-footnote">{team.footnote}</p>}
+									{team.footnote && <p class="esport-footnote">{cleanDisplay(team.footnote)}</p>}
 
 									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
 										Fiche Liquipedia ->
