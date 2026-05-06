@@ -313,13 +313,7 @@ const wikiCards = [
 				<section class="cat-list">
 					<div class="container">
 						{posts.length === 0 ? (
-							category === 'esport' ? (
-								<p class="esport-articles-soon card">
-									<strong>Articles long-format</strong> (analyses de méta, récaps de LAN…) arrivent sur cette même page.
-									En attendant, les fiches équipes ci-dessus sont mises à jour à partir des bases de données publiques du
-									circuit.
-								</p>
-							) : (
+							category === 'esport' ? null : (
 						<div class="empty card">
 							<div class="section-label">Bientôt — En production</div>
 							<h2 class="empty-title">
@@ -1095,19 +1089,6 @@ const wikiCards = [
 				color: var(--color-noir);
 			}
 
-			.esport-articles-soon {
-				max-width: 52rem;
-				margin: 0 auto;
-				padding: 1.5rem 1.75rem;
-				font-size: 0.95rem;
-				line-height: 1.65;
-				color: var(--color-noir-2);
-				background: var(--color-blanc);
-			}
-
-			.esport-articles-soon strong {
-				color: var(--color-noir);
-			}
 		</style>
 	</body>
 </html>
