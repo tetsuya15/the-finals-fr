@@ -14,6 +14,8 @@ export type EsportTeam = {
 	name: string;
 	region: string;
 	liquipediaUrl: string;
+	/** Fallback web si aucun visuel local dans `esportTeamLogoImports.ts` */
+	logoUrl: string;
 	palmares: string[];
 	/** Effectif actuel quand il est listé comme actif sur Liquipedia */
 	rosterActive?: EsportPlayer[];
@@ -30,6 +32,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'NTMR',
 		region: 'Amérique du Nord — États-Unis (Miami)',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/NTMR',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/d/d4/NTMR_2025_allmode.png/600px-NTMR_2025_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 1ᵉʳ / Champion (dotation LAN 100 000 $ · 37 500 $ pour le vainqueur)',
 			'Pro League S2 — Saison régulière NA : 1ᵉʳ',
@@ -55,6 +59,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Team Secret',
 		region: 'Europe',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Team_Secret',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/4/45/Team_Secret_full_lightmode.png/600px-Team_Secret_full_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 2ᵉ (17 500 $)',
 			'Pro League S2 — Saison régulière EU : 1ᵉʳ',
@@ -74,6 +80,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Spacestation Gaming',
 		region: 'Amérique du Nord — États-Unis',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Spacestation_Gaming',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/4/44/Spacestation_Gaming_2021_full_allmode.png/600px-Spacestation_Gaming_2021_full_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 3ᵉ (10 500 $)',
 			'Pro League S2 — Saison régulière NA : 3ᵉ',
@@ -93,6 +101,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Fnatic',
 		region: 'Europe — Royaume-Uni (Londres)',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Fnatic',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/1/10/Fnatic_2020_full_lightmode.png/600px-Fnatic_2020_full_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 4ᵉ (6 500 $)',
 			'Pro League S2 — Championnat EU : 2ᵉ–3ᵉ',
@@ -112,6 +122,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'TSM',
 		region: 'Amérique du Nord — États-Unis',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/TSM',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/c/c8/TSM_2019_lightmode.png/600px-TSM_2019_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 5ᵉ (3 750 $)',
 			'Gremlin Cup (dec. 2025) : 2ᵉ',
@@ -129,6 +141,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'ENVY',
 		region: 'Amérique du Nord — États-Unis (Dallas)',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/ENVY',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/7/7c/ENVY_2025_full_lightmode.png/600px-ENVY_2025_full_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 6ᵉ (3 750 $)',
 			'Ape Squad: Tidal Survival : Vainqueur',
@@ -154,6 +168,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Pioneers',
 		region: 'Amérique du Nord — États-Unis (Kansas City)',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Pioneers',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/2/2b/Pioneers_2021_full_lightmode.png/600px-Pioneers_2021_full_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 7ᵉ–8ᵉ (3 750 $)',
 			'Ape Squad: Classics — NA League Play 2026 : 3ᵉ',
@@ -173,6 +189,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Alliance',
 		region: 'Europe — Suède',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Alliance',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/a/a9/Alliance_2024_full_allmode.png/600px-Alliance_2024_full_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 7ᵉ–8ᵉ (3 750 $)',
 			'Pro League S2 — Championnat EU : 1ᵉʳ',
@@ -192,6 +210,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Dragon Ranger Gaming',
 		region: 'Asie — Chine',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Dragon_Ranger_Gaming',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/a/a0/Dragon_Ranger_Gaming_full_allmode.png/600px-Dragon_Ranger_Gaming_full_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 9ᵉ (2 000 $)',
 			'Finals China League — Saison 2 : 2ᵉ',
@@ -213,6 +233,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'FN Esports',
 		region: 'Asie — Corée du Sud',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/FN_Esports',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/8/81/FN_Esports_allmode.png/600px-FN_Esports_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 13ᵉ–14ᵉ (1 250 $)',
 			'Korea National League 2025 — Grand Final : Vainqueur',
@@ -231,6 +253,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Vanguard Gaming',
 		region: 'Amérique du Nord — États-Unis',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Vanguard_Gaming',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/2/2e/Vanguard_Gaming_%28The_Finals_Team%29_allmode.png/600px-Vanguard_Gaming_%28The_Finals_Team%29_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 13ᵉ–14ᵉ (1 250 $)',
 			'Grand Major 2025 — Qualif EMEA fermée : qualifiés',
@@ -246,6 +270,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Gen.G Esports',
 		region: 'International — USA / Corée du Sud',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Gen.G_Esports',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/0/07/Gen.G_Esports_2026_allmode.png/600px-Gen.G_Esports_2026_allmode.png',
 		palmares: [
 			'Grand Major 2025 — 15ᵉ–16ᵉ (1 250 $)',
 			'Acquisition du roster Que Du Love (octobre 2025)',
@@ -260,6 +286,8 @@ export const ESPORT_TEAMS: EsportTeam[] = [
 		name: 'Five Fears',
 		region: 'Amériques (organisation) · roster européen',
 		liquipediaUrl: 'https://liquipedia.net/thefinals/Five_Fears',
+		logoUrl:
+			'https://liquipedia.net/commons/images/thumb/2/2c/Five_Fears_lightmode.png/600px-Five_Fears_lightmode.png',
 		palmares: [
 			'Grand Major 2025 — 16ᵉ (1 250 $)',
 			'Ape Squad: Classics — EMEA League Play 2026 : 8ᵉ',

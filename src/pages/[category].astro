@@ -15,6 +15,7 @@ import wikiClasses from '../assets/cat-lore.jpg';
 import wikiMaps from '../assets/the-finals-monaco-map.jpg';
 import wikiWeapons from '../assets/The-Finals-Season-8-header.jpg';
 import wikiGadgets from '../assets/SEASON-9-LAUNCH-TRAILER-_-THE-FINALS-0-45-screenshot.webp';
+import { ESPORT_TEAM_LOCAL_LOGOS } from '../data/esportTeamLogoImports';
 import { ESPORT_TEAMS } from '../data/esportTeams';
 
 const CAT_IMG = {
@@ -198,6 +199,43 @@ const wikiCards = [
 						<div class="esport-team-grid">
 							{ESPORT_TEAMS.map((team) => (
 								<article class="esport-team-card card">
+									<div
+										class="esport-team-visual"
+										data-bundle={ESPORT_TEAM_LOCAL_LOGOS[team.id] ? 'true' : undefined}
+									>
+										{ESPORT_TEAM_LOCAL_LOGOS[team.id] ? (
+											<Image
+												src={ESPORT_TEAM_LOCAL_LOGOS[team.id]!}
+												alt={`Visuel ${team.name}`}
+												width={800}
+												height={450}
+												loading="lazy"
+												quality={85}
+											/>
+										) : (
+											<img
+												src={team.logoUrl}
+												alt={`Logo ${team.name}`}
+												loading="lazy"
+												decoding="async"
+												width={600}
+												height={300}
+											/>
+										)}
+										<div class="esport-pb" aria-hidden="true">
+											<div class="esport-pb-layer" data-i="0"></div>
+											<div class="esport-pb-layer" data-i="1"></div>
+											<div class="esport-pb-layer" data-i="2"></div>
+											<div class="esport-pb-layer" data-i="3"></div>
+										</div>
+										<div class="esport-pb-meta">
+											<span class="esport-pb-tag">{team.region}</span>
+											<p class="esport-pb-title">{team.name}</p>
+											<span class="esport-pb-desc">{team.palmares[0]}</span>
+										</div>
+									</div>
+
+									<div class="esport-team-body">
 									<div class="esport-team-head">
 										<h3>{team.name}</h3>
 										<span class="esport-region">{team.region}</span>
@@ -262,6 +300,7 @@ const wikiCards = [
 									<a class="esport-liquipedia" href={team.liquipediaUrl} target="_blank" rel="noopener noreferrer">
 										Fiche Liquipedia →
 									</a>
+									</div>
 								</article>
 							))}
 						</div>
@@ -270,8 +309,10 @@ const wikiCards = [
 							<div class="section-label">Sources & fiabilité</div>
 							<p class="esport-sources-lead">
 								Classement général du LAN : wiki communautaire THE FINALS ; résultats détaillés, transferts et gains :
-								<strong>Liquipedia The Finals</strong> (communauté esport de référence, largement croisée avec les annonces
-								d’organisations et d’Embark/DreamHack).
+								<strong>								Liquipedia The Finals</strong> (communauté esport de référence, largement croisée avec les annonces
+								d’organisations et d’Embark/DreamHack). Les illustrations en tête de carte utilisent en priorité des{' '}
+								<strong>visuels locaux</strong> (bundles et assets du jeu / wiki) lorsqu’un fichier est disponible ; sinon le logo
+								Liquipedia de la fiche équipe.
 							</p>
 							<ul class="esport-sources-list">
 								<li>
@@ -784,9 +825,187 @@ const wikiCards = [
 				display: flex;
 				flex-direction: column;
 				align-items: stretch;
-				padding: 1.35rem 1.4rem 1.5rem;
+				padding: 0;
+				overflow: hidden;
 				background: var(--color-blanc);
 				min-height: 100%;
+				isolation: isolate;
+			}
+
+			.esport-team-body {
+				display: flex;
+				flex-direction: column;
+				flex: 1;
+				align-items: stretch;
+				padding: 1.35rem 1.4rem 1.5rem;
+			}
+
+			/* Bandeau logo — même principe que les cartes « Les Maps » (blur progressif au survol) */
+			.esport-team-visual {
+				position: relative;
+				height: 11.5rem;
+				min-height: 11.5rem;
+				flex-shrink: 0;
+				overflow: hidden;
+				background: #0a0a0a;
+			}
+
+			.esport-team-visual img,
+			.esport-team-visual :global(img) {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				object-position: center;
+				padding: 0.85rem 1rem;
+				box-sizing: border-box;
+				display: block;
+				transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+			}
+
+			.esport-team-visual[data-bundle] img,
+			.esport-team-visual[data-bundle] :global(img) {
+				object-fit: cover;
+				padding: 0;
+			}
+
+			.esport-team-card:hover .esport-team-visual img,
+			.esport-team-card:hover .esport-team-visual :global(img) {
+				transform: scale(1.04);
+			}
+
+			.esport-pb {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 78%;
+				pointer-events: none;
+				opacity: 0;
+				transition: opacity 0.25s ease-out;
+			}
+
+			.esport-team-card:hover .esport-pb {
+				opacity: 1;
+			}
+
+			.esport-pb-layer {
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				border-radius: inherit;
+			}
+
+			.esport-pb-layer[data-i='0'] {
+				backdrop-filter: blur(1px);
+				-webkit-backdrop-filter: blur(1px);
+				-webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 40%, transparent 60%);
+				mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 40%, transparent 60%);
+			}
+
+			.esport-pb-layer[data-i='1'] {
+				backdrop-filter: blur(3px);
+				-webkit-backdrop-filter: blur(3px);
+				-webkit-mask-image: linear-gradient(180deg, transparent 20%, #000 40%, #000 60%, transparent 80%);
+				mask-image: linear-gradient(180deg, transparent 20%, #000 40%, #000 60%, transparent 80%);
+			}
+
+			.esport-pb-layer[data-i='2'] {
+				backdrop-filter: blur(6px);
+				-webkit-backdrop-filter: blur(6px);
+				-webkit-mask-image: linear-gradient(180deg, transparent 40%, #000 60%, #000 80%, transparent 100%);
+				mask-image: linear-gradient(180deg, transparent 40%, #000 60%, #000 80%, transparent 100%);
+			}
+
+			.esport-pb-layer[data-i='3'] {
+				backdrop-filter: blur(10px);
+				-webkit-backdrop-filter: blur(10px);
+				-webkit-mask-image: linear-gradient(180deg, transparent 60%, #000 80%, #000 100%);
+				mask-image: linear-gradient(180deg, transparent 60%, #000 80%, #000 100%);
+			}
+
+			.esport-pb-meta {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				padding: 0.75rem 1rem 0.95rem;
+				color: #fff;
+				opacity: 0;
+				transform: translateY(8px);
+				transition: opacity 0.25s ease-out, transform 0.3s ease-out;
+				pointer-events: none;
+			}
+
+			.esport-team-card:hover .esport-pb-meta {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.esport-pb-tag {
+				display: inline-block;
+				font-family: var(--font-mono);
+				font-size: 0.62rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: #fff;
+				background: var(--color-rouge);
+				padding: 0.2rem 0.45rem;
+				border-radius: 0.2rem;
+				max-width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				vertical-align: top;
+			}
+
+			.esport-pb-title {
+				margin: 0.35rem 0 0.35rem;
+				font-family: var(--font-display);
+				font-size: 1.05rem;
+				font-weight: 800;
+				letter-spacing: 0.02em;
+				text-transform: uppercase;
+				line-height: 1.12;
+				text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+			}
+
+			.esport-pb-desc {
+				margin: 0;
+				font-size: 0.78rem;
+				line-height: 1.45;
+				color: rgba(255, 255, 255, 0.94);
+				text-shadow: 0 2px 10px rgba(0, 0, 0, 0.72);
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			@media (hover: none) {
+				.esport-pb {
+					opacity: 1;
+				}
+
+				.esport-pb-meta {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				.esport-pb,
+				.esport-pb-meta,
+				.esport-team-visual img,
+				.esport-team-visual :global(img) {
+					transition: none;
+				}
+
+				.esport-team-card:hover .esport-team-visual img,
+				.esport-team-card:hover .esport-team-visual :global(img) {
+					transform: none;
+				}
 			}
 
 			.esport-team-head h3 {
